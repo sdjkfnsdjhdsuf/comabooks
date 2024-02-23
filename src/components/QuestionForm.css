@@ -1,0 +1,126 @@
+.question-form {
+    width: 100%;
+    /* height: 90vh; */
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 160px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.question {
+    font-size: 24px;
+    color: black;
+    font-family: 'Noto Sans';
+    font-weight: 500;
+    line-height: 1.3;
+    width: 80%;
+    /* height: 100px; */
+}
+
+.question-number-title {
+    font-size: 18px;
+    color: black;
+    font-family: 'Noto Sans';
+}
+
+@media (max-width: 768px) {
+    .question {
+        width: 100%;
+        height: unset;
+    }
+
+    .question-form {
+    gap: 20px;
+    margin-top: 100px;
+    }
+
+    .answer-area { 
+    padding: 16px;
+    }
+
+    .edit-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+.answer-area {
+    border-radius: 16px;
+    width: 100%;
+    font-size: 16px;
+    padding: 30px;
+    font-family: 'Noto Sans';
+    resize: none;
+    border: none;
+    transition: 300ms;
+    line-height: 1.5;
+    overflow-y: hidden;
+}
+
+.answer-area:focus {
+    outline: 0px;
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-button, .confirm-button {
+    padding: 10px 40px;
+    border: 0px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Noto Sans';
+    /* font-weight: 700; */
+}
+
+.preview-button {
+    border: 0px;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.viewicon {
+    width: 32px;
+    height: auto;
+}
+
+
+
+.confirm-button:not(:disabled),
+.edit-button:not(:disabled) {
+  background-color: black;
+  color: white;
+}
+
+.preview-button:not(:disabled) {
+    background-color: black;
+    color: white;
+}
+
+
+.confirm-button:disabled,
+.edit-button:disabled, .preview-button:disabled {
+  background-color: grey;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.answer-area:not(:disabled) {
+    /* background-color: #EFEFEF; */
+    background-color: white;
+    border: 1px solid #D9D9D9;
+}
+
+.answer-area:disabled {
+    background-color: #DDDDDD;
+}
