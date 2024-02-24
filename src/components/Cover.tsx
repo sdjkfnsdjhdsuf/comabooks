@@ -1,10 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import './Cover.css';
-import defaultCover from "assets/defaultcover.png";
-import cover1 from 'assets/cover1.png';
-import cover2 from 'assets/cover3.png';
-import cover3 from 'assets/cover4.png';
+import defaultCover from "assets/red front.png";
+import cover1 from 'assets/yellow front.png';
+import cover2 from 'assets/black fornt.png';
+import cover3 from 'assets/blue front.png';
+import cover4 from 'assets/green front.png';
+import cover5 from 'assets/light green front.png';
 
 function Cover() {
     // add get inputs from mongodb
@@ -32,6 +34,8 @@ function Cover() {
         cover2: cover1,
         cover3: cover2,
         cover4: cover3,
+        cover5: cover4,
+        cover6: cover5
       };
     
       const handleColorSelect = (color: string) => {
