@@ -74,6 +74,10 @@
     color: white;
   }
 
+  .sidebar-bottom-fixed-cover.clicked {
+    background-color: #7544B3;
+  }
+
   .sidebar-bottom-fixed-finish {
     background-color: #282828;
     color: #929292;

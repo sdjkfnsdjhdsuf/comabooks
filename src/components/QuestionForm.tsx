@@ -11,17 +11,38 @@ import { Preview } from "./Preview";
 import viewicon from "assets/viewicon.png";
 
 import { AnswerEntityDto, AnswerService, QuestionTemplateDto } from "generated";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatchType, answerSlice } from "routes/Forms";
 // import { TextChangeRange } from "typescript";
 
 const QuestionForm = ({
-  answer,
+  // answerId,
   question,
   pageNumber,
 }: {
-  answer: AnswerEntityDto;
+  // answer: AnswerEntityDto;
   question: QuestionTemplateDto;
   pageNumber: number;
 }) => {
+  const dispatch: AppDispatchType = useDispatch();
+  const ansersSelector = useSelector(
+    (state: {
+      answers: {
+        value: Record<string, AnswerEntityDto> | null;
+        template: QuestionTemplateDto[];
+      };
+    }) => state.answers
+  );
+  const answer: AnswerEntityDto = (ansersSelector.value ?? {})[
+    question._id
+  ] ?? {
+    _id: "",
+    questionId: question._id,
+    answer: "",
+    templateId: "",
+    userId: "",
+  };
+
   const [newAnswer, setAnswer] = useState(answer.answer);
   const [isEditable, setIsEditable] = useState(
     !answer.answer.replaceAll(" ", "")
@@ -56,6 +77,14 @@ const QuestionForm = ({
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
+      );
+      const newValue = { ...ansersSelector.value };
+      newValue[response.questionId] = response;
+      dispatch(
+        answerSlice.actions.setValue({
+          answers: newValue,
+          payloadTempl: ansersSelector.template,
+        })
       );
       console.log(response);
     } catch (error) {

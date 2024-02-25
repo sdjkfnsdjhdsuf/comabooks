@@ -1,19 +1,26 @@
 import React from "react";
 import { useState } from "react";
 import './Cover.css';
-import defaultCover from "assets/red front.png";
-import cover1 from 'assets/yellow front.png';
-import cover2 from 'assets/black fornt.png';
-import cover3 from 'assets/blue front.png';
-import cover4 from 'assets/green front.png';
-import cover5 from 'assets/light green front.png';
+import cover1 from "assets/red front.png";
+import cover2 from 'assets/yellow front.png';
+import cover3 from 'assets/black fornt.png';
+import cover4 from 'assets/blue front.png';
+import cover5 from 'assets/green front.png';
+import cover6 from 'assets/light green front.png';
+
+import colorButton1 from "assets/red.png";
+import colorButton2 from 'assets/yellow.png';
+import colorButton3 from 'assets/black.png';
+import colorButton4 from 'assets/blue.png';
+import colorButton5 from 'assets/green.png';
+import colorButton6 from 'assets/light-green.png';
 
 function Cover() {
     // add get inputs from mongodb
     const [authorName, setAuthorName] = useState("");
     const [bookTitle, setBookTitle] = useState("");
     const [partnerName, setPartnerName] = useState("");
-    const [coverColor, setCoverColor] = useState(defaultCover);
+    const [coverColor, setCoverColor] = useState(cover1);
     const [isEditable, setIsEditable] = useState(true);
 
     const handleSave = () => {
@@ -29,13 +36,28 @@ function Cover() {
         [key: string]: string;
       };
 
+    type CoverSelectorColors = {
+        [key: string]: string;
+      };
+
+
     const coverColors: CoverColors = {
-        cover1: defaultCover,
-        cover2: cover1,
-        cover3: cover2,
-        cover4: cover3,
-        cover5: cover4,
-        cover6: cover5
+        cover1: cover1,
+        cover2: cover2,
+        cover3: cover3,
+        cover4: cover4,
+        cover5: cover5,
+        cover6: cover6
+      };
+
+
+      const coverSelectorColors: CoverSelectorColors = {
+        colorButton1: colorButton1,
+        colorButton2: colorButton2,
+        colorButton3: colorButton3,
+        colorButton4: colorButton4,
+        colorButton5: colorButton5,
+        colorButton6: colorButton6
       };
     
       const handleColorSelect = (color: string) => {
@@ -101,22 +123,28 @@ function Cover() {
 
 
             <div className="color-selector">
-                {Object.keys(coverColors).map((color) => (
+            {Object.keys(coverSelectorColors).map((colorKey) => {
+                const color = colorKey.replace('colorButton', 'cover');
+                return (
                 <button
-                    key={color}
+                    key={colorKey}
                     style={{
-                        backgroundColor: !isEditable ? '#DDDDDD' : 'transparent',
-                        backgroundImage: !isEditable ? 'none' : `url(${coverColors[color]})`,
-                        border: !isEditable ? 'none' : '1px solid black',
-                        cursor: !isEditable ? 'not-allowed' : 'pointer',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
+                    backgroundColor: !isEditable ? '#DDDDDD' : 'transparent',
+                    backgroundImage: !isEditable ? 'none' : `url(${coverSelectorColors[colorKey]})`,
+                    border: !isEditable ? 'none' : '1px solid black',
+                    cursor: !isEditable ? 'not-allowed' : 'pointer',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    width: '40px',
+                    height: '40px',
                     }}
                     onClick={() => handleColorSelect(color)}
                     disabled={!isEditable}
                 />
-                ))}
+                );
+            })}
             </div>
+            
 
             <div className="input-save-button">
                 <button onClick={handleSave}>

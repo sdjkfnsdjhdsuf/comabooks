@@ -9,7 +9,7 @@ import axios from "axios";
 import { serviceOptions } from "generated";
 
 export const instance = axios.create({
-  baseURL: "https://api.comabooks.org/api",
+  baseURL: "https://api.comabooks.org",
 });
 serviceOptions.axios = instance
 const root = ReactDOM.createRoot(

@@ -1,23 +1,60 @@
 import "./index.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import logo from "assets/comabooks-white.svg";
 import { AnswerEntityDto, QuestionTemplateDto } from "generated";
+import { useSelector } from "react-redux";
 
 const NavbarLoginned = ({
   setCurrentPage,
   questions,
   pagesFilled,
-  answers,
+  // answers,
   currentPage,
   onEditCover,
 }: {
   setCurrentPage: (val: number) => void;
   questions: QuestionTemplateDto[];
   pagesFilled: number;
-  answers: AnswerEntityDto[];
+  // answers: AnswerEntityDto[];
   currentPage: number;
   onEditCover: () => void;
 }) => {
+  const [isCoverButtonClicked, setIsCoverButtonClicked] = useState(false);
+
+  const ansersSelector = useSelector(
+    (state: {
+      answers: {
+        value: Record<string, AnswerEntityDto> | null;
+        template: QuestionTemplateDto[];
+      };
+    }) => state.answers
+  );
+
+  const getAnswerAsArray = (): AnswerEntityDto[] => {
+    return ansersSelector.template.map(
+      (val) =>
+        ansersSelector.value![val._id] ?? {
+          _id: "",
+          questionId: val._id,
+          answer: "",
+          templateId: "",
+          userId: "",
+        }
+    );
+  };
+  const answers = getAnswerAsArray()
+
+  const handleEditCoverClick = () => {
+    onEditCover(); 
+    setIsCoverButtonClicked(true); 
+  };
+
+  const wrappedSetCurrentPage = (pageIndex: number) => {
+    setCurrentPage(pageIndex);
+    setIsCoverButtonClicked(false);
+  };
+
   return (
     <aside className="sidebar">
       <div className="forms-info-container">
@@ -55,7 +92,7 @@ const NavbarLoginned = ({
           return (
             <li key={index}>
               <button
-                onClick={() => setCurrentPage(index + 1)}
+                onClick={() => wrappedSetCurrentPage(index + 1)}
                 style={{
                   backgroundColor: bgColor,
                   borderRadius: "4px",
@@ -68,8 +105,10 @@ const NavbarLoginned = ({
         })}
       </ul>
       <div className="sidebar-bottom-fixed">
-        <button className="sidebar-bottom-fixed-cover" onClick={onEditCover}>
-          Изменить обложку
+        <button
+            className={`sidebar-bottom-fixed-cover ${isCoverButtonClicked ? "clicked" : ""}`}
+            onClick={handleEditCoverClick}
+        >Изменить обложку
         </button>
 
         <button className="sidebar-bottom-fixed-finish">Завершить книгу</button>

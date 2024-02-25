@@ -7,7 +7,7 @@ import "./Forms.css";
 import nexticon from "assets/nexticon.png";
 import backicon from "assets/backicon.png";
 import QuestionForm from "../components/QuestionForm";
-import axios from "axios";
+// import axios from "axios";
 import {
   AnswerEntityDto,
   AnswerService,
@@ -15,6 +15,46 @@ import {
   TempalteResponceDto,
   TemplateService,
 } from "generated";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+
+import { createSlice } from "@reduxjs/toolkit";
+
+export const answerSlice = createSlice({
+  name: "answers",
+
+  initialState: {
+    value: null,
+
+    template: [],
+  } as {
+    value: Record<string, AnswerEntityDto> | null;
+    template: QuestionTemplateDto[];
+  },
+  reducers: {
+    setValue: (
+      state,
+      action: {
+        payload: {
+          answers: Record<string, AnswerEntityDto>;
+          payloadTempl: QuestionTemplateDto[];
+        };
+      }
+    ) => {
+      state.value = action.payload.answers;
+      state.template = action.payload.payloadTempl;
+    },
+  },
+});
+
+// import { createStore ,} from "redux";
+const store = configureStore({
+  reducer: {
+    answers: answerSlice.reducer,
+  },
+});
+
+export type AppDispatchType = typeof store.dispatch;
 
 const getPageFilled = (
   questionTemplateDto: QuestionTemplateDto[],
@@ -38,18 +78,18 @@ function Forms() {
     QuestionTemplateDto[]
   >([]);
 
-  const getAnswerAsArray = (): AnswerEntityDto[] => {
-    return questionTempalteDto.map(
-      (val) =>
-        answersDto[val._id] ?? {
-          _id: "",
-          questionId: val._id,
-          answer: "",
-          templateId: "",
-          userId: "",
-        }
-    );
-  };
+  // const getAnswerAsArray = (): AnswerEntityDto[] => {
+  //   return questionTempalteDto.map(
+  //     (val) =>
+  //       answersDto[val._id] ?? {
+  //         _id: "",
+  //         questionId: val._id,
+  //         answer: "",
+  //         templateId: "",
+  //         userId: "",
+  //       }
+  //   );
+  // };
   const [showCoverEditor, setShowCoverEditor] = useState(false);
 
   const totalPages = Math.ceil(questionTempalteDto.length / questionsPerPage);
@@ -80,14 +120,22 @@ function Forms() {
         );
 
       setQuestionTempalteDto(responseQuestions[0].questions);
-      setAnswersDTO(
-        responseAnswers.reduce<Record<string, AnswerEntityDto>>((prev, val) => {
+      const newAnsers = responseAnswers.reduce<Record<string, AnswerEntityDto>>(
+        (prev, val) => {
           prev[val.questionId] = val;
           return prev;
-        }, {})
+        },
+        {}
+      );
+      setAnswersDTO(newAnsers);
+      store.dispatch(
+        answerSlice.actions.setValue({
+          answers: newAnsers,
+          payloadTempl: responseQuestions[0].questions,
+        })
       );
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   };
 
@@ -97,57 +145,59 @@ function Forms() {
 
   if (questionTempalteDto.length == 0) return <></>;
   return (
-    <div className="forms-page">
-      <div className="navbarLoginned">
-        <NavbarLoginned
-          setCurrentPage={handleSetCurrentPage}
-          questions={questionTempalteDto}
-          pagesFilled={getPageFilled(questionTempalteDto, answersDto)}
-          answers={getAnswerAsArray()}
-          currentPage={currentPage}
-          onEditCover={() => setShowCoverEditor(true)}
-        />
-      </div>
-      <div className="navbarLoginnedMobile">
-        <NavbarLoginnedMobile
-          setCurrentPage={handleSetCurrentPage}
-          questions={questionTempalteDto}
-          pagesFilled={getPageFilled(questionTempalteDto, answersDto)}
-          answers={getAnswerAsArray()}
-          currentPage={currentPage}
-          onEditCover={() => setShowCoverEditor(true)}
-        />
-      </div>
-      <div className="forms-container">
-        {showCoverEditor ? (
-          <Cover />
-        ) : (
-          <>
-            <QuestionForm
-              key={questionTempalteDto[currentPage - 1]._id}
-              question={questionTempalteDto[currentPage - 1]}
-              answer={getAnswerAsArray()[currentPage - 1]}
-              pageNumber={currentPage}
-            />
+    <Provider store={store}>
+      <div className="forms-page">
+        <div className="navbarLoginned">
+          <NavbarLoginned
+            setCurrentPage={handleSetCurrentPage}
+            questions={questionTempalteDto}
+            pagesFilled={getPageFilled(questionTempalteDto, answersDto)}
+            // answers={getAnswerAsArray()}
+            currentPage={currentPage}
+            onEditCover={() => setShowCoverEditor(true)}
+          />
+        </div>
+        <div className="navbarLoginnedMobile">
+          <NavbarLoginnedMobile
+            setCurrentPage={handleSetCurrentPage}
+            questions={questionTempalteDto}
+            pagesFilled={getPageFilled(questionTempalteDto, answersDto)}
+            // answers={getAnswerAsArray()}
+            currentPage={currentPage}
+            onEditCover={() => setShowCoverEditor(true)}
+          />
+        </div>
+        <div className="forms-container">
+          {showCoverEditor ? (
+            <Cover />
+          ) : (
+            <>
+              <QuestionForm
+                key={questionTempalteDto[currentPage - 1]._id}
+                question={questionTempalteDto[currentPage - 1]}
+                // answer={getAnswerAsArray()[currentPage - 1]}
+                pageNumber={currentPage}
+              />
 
-            <div className="pagination-controls">
-              <button
-                onClick={() => setCurrentPage(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                <img src={backicon} alt="Back" className="back-icon" />
-              </button>
-              <button
-                onClick={() => setCurrentPage(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              >
-                <img src={nexticon} alt="Next" className="next-icon" />
-              </button>
-            </div>
-          </>
-        )}
+              <div className="pagination-controls">
+                <button
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  <img src={backicon} alt="Back" className="back-icon" />
+                </button>
+                <button
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  <img src={nexticon} alt="Next" className="next-icon" />
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </Provider>
   );
 }
 

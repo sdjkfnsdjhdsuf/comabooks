@@ -3,6 +3,7 @@ import "./index.css";
 import { Link } from "react-router-dom";
 import logo from "assets/comabooks-white.svg";
 import { AnswerEntityDto, QuestionTemplateDto } from "generated";
+import { useSelector } from "react-redux";
 <Link to="/">
   <img src={logo} alt="Logo" className="logo" />
 </Link>;
@@ -11,19 +12,40 @@ const NavbarLoginnedMobile = ({
   questions,
   pagesFilled,
   setCurrentPage,
-  answers,
+  // answers,
   currentPage,
   onEditCover,
 }: {
   questions: QuestionTemplateDto[];
   pagesFilled: number;
   setCurrentPage: (val: number) => void;
-  answers: AnswerEntityDto[];
+  // answers: AnswerEntityDto[];
   currentPage: number;
   onEditCover: () => void;
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const ansersSelector = useSelector(
+    (state: {
+      answers: {
+        value: Record<string, AnswerEntityDto> | null;
+        template: QuestionTemplateDto[];
+      };
+    }) => state.answers
+  );
 
+  const [isOpen, setIsOpen] = useState(false);
+  const getAnswerAsArray = (): AnswerEntityDto[] => {
+    return ansersSelector.template.map(
+      (val) =>
+        ansersSelector.value![val._id] ?? {
+          _id: "",
+          questionId: val._id,
+          answer: "",
+          templateId: "",
+          userId: "",
+        }
+    );
+  };
+  const answers = getAnswerAsArray();
   return (
     <aside className={`sidebar-mobile ${isOpen ? "open" : ""}`}>
       <button className="hamburger-icon" onClick={() => setIsOpen(!isOpen)}>
