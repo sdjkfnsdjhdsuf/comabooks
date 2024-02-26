@@ -111,7 +111,7 @@ const NavbarLoginned = ({
         >Изменить обложку
         </button>
 
-        <button className="sidebar-bottom-fixed-finish">Завершить книгу</button>
+
       </div>
     </aside>
   );

@@ -48,17 +48,15 @@ const QuestionForm = ({
     !answer.answer.replaceAll(" ", "")
   );
   const [showPreview, setShowPreview] = useState(false);
-  const textareaRef = useRef<any>();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (textareaRef.current) {
       const textarea = textareaRef.current;
-      textarea.style.height = "auto";
-      textarea.style.overflow = "hidden";
-      textarea.style.height = `${Math.max(textarea.scrollHeight, 200)}px`;
-      textarea.style.overflow = "";
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
     }
-  }, [answer]);
+  }, [newAnswer]);
 
   const saveAnswerToDatabase = async (
     questionId: string,
@@ -147,7 +145,7 @@ const QuestionForm = ({
       {showPreview && (
         <Preview
           isOpen={showPreview}
-          question={question.question}
+          question={question.question}  
           answer={newAnswer}
           pageNumber={pageNumber}
           onClose={handleClosePreview}

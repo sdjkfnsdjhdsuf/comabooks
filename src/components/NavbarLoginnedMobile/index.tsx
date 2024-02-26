@@ -23,6 +23,8 @@ const NavbarLoginnedMobile = ({
   currentPage: number;
   onEditCover: () => void;
 }) => {
+
+  
   const ansersSelector = useSelector(
     (state: {
       answers: {
@@ -31,7 +33,8 @@ const NavbarLoginnedMobile = ({
       };
     }) => state.answers
   );
-
+  
+  const [isCoverButtonClicked, setIsCoverButtonClicked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const getAnswerAsArray = (): AnswerEntityDto[] => {
     return ansersSelector.template.map(
@@ -46,6 +49,20 @@ const NavbarLoginnedMobile = ({
     );
   };
   const answers = getAnswerAsArray();
+
+  const handleEditCoverClick = () => {
+    onEditCover();
+    setIsCoverButtonClicked(true);
+    setIsOpen(false); // Optionally close the mobile sidebar upon clicking
+  };
+
+  // Wrap setCurrentPage to reset cover button clicked state
+  const wrappedSetCurrentPage = (pageIndex: number) => {
+    setCurrentPage(pageIndex);
+    setIsCoverButtonClicked(false);
+    setIsOpen(false);
+  };
+
   return (
     <aside className={`sidebar-mobile ${isOpen ? "open" : ""}`}>
       <button className="hamburger-icon" onClick={() => setIsOpen(!isOpen)}>
@@ -84,7 +101,7 @@ const NavbarLoginnedMobile = ({
               return (
                 <li key={index}>
                   <button
-                    onClick={() => setCurrentPage(index + 1)}
+                    onClick={() => wrappedSetCurrentPage(index + 1)}
                     style={{
                       backgroundColor: bgColor,
                       borderRadius: "4px",
@@ -98,16 +115,14 @@ const NavbarLoginnedMobile = ({
           </ul>
 
           <div className="sidebar-bottom-fixed-mobile">
-            <button
-              className="sidebar-bottom-fixed-cover"
-              onClick={onEditCover}
+          <button
+              className={`sidebar-bottom-fixed-cover ${isCoverButtonClicked ? "clicked" : ""}`}
+              onClick={handleEditCoverClick}
             >
               Изменить обложку
             </button>
 
-            <button className="sidebar-bottom-fixed-finish">
-              Завершить книгу
-            </button>
+
           </div>
         </>
       )}

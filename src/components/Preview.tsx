@@ -16,21 +16,29 @@ export const Preview = ({
 }) => {
   if (!isOpen) return null;
 
+  const isOddPageNumber = pageNumber % 2 !== 0;
+
   return (
     <div className="book-preview-backdrop" onClick={onClose}>
-      <div
-        className="book-preview-content"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="book-preview-content" onClick={(e) => e.stopPropagation()}>
         <p className="preview-question">{question}</p>
         <p className="preview-answer">{answer}</p>
         <div className="preview-colon">
-          <p>{pageNumber}</p>
-          <p>You Own My Heart</p>
+          {isOddPageNumber ? (
+            <>
+              <p>{pageNumber}</p>
+              <p>Любовь к тебе бесконечна</p>
+            </>
+          ) : (
+            <>
+              <p>Аскар Абдрахманов</p>
+              <p>{pageNumber}</p>
+            </>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-// export default Preview;
+export default Preview;
