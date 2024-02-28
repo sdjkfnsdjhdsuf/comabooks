@@ -70,8 +70,8 @@ const NavbarLoginnedMobile = ({
       </button>
       {isOpen && (
         <>
-          <div className="forms-info-container">
-            <div className="forms">
+          <div className="forms-info-container-mobile">
+            <div className="forms-mobile">
               <Link to="/">
                 <img src={logo} alt="Logo" className="logo" />
               </Link>

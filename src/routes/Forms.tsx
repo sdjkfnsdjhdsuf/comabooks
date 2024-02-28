@@ -56,15 +56,15 @@ const store = configureStore({
 
 export type AppDispatchType = typeof store.dispatch;
 
+const MAX_CHARS_PER_PAGE = 380;
+
 const getPageFilled = (
   questionTemplateDto: QuestionTemplateDto[],
   answersDto: Record<string, AnswerEntityDto>
 ) => {
   return questionTemplateDto.reduce((totalPages, val) => {
-    const wordCount = (answersDto[val._id]?.answer ?? "")
-      .split(/\s+/)
-      .filter(Boolean).length;
-    return totalPages + (wordCount > 0 ? Math.ceil(wordCount / 60) : 0);
+    const charsCount = (answersDto[val._id]?.answer ?? "").length;
+    return totalPages + Math.ceil(charsCount / MAX_CHARS_PER_PAGE);
   }, 0);
 };
 const questionsPerPage = 1;

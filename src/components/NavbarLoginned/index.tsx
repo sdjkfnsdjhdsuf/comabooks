@@ -9,17 +9,16 @@ const NavbarLoginned = ({
   setCurrentPage,
   questions,
   pagesFilled,
-  // answers,
   currentPage,
   onEditCover,
 }: {
   setCurrentPage: (val: number) => void;
   questions: QuestionTemplateDto[];
   pagesFilled: number;
-  // answers: AnswerEntityDto[];
   currentPage: number;
   onEditCover: () => void;
 }) => {
+  
   const [isCoverButtonClicked, setIsCoverButtonClicked] = useState(false);
 
   const ansersSelector = useSelector(
@@ -30,6 +29,8 @@ const NavbarLoginned = ({
       };
     }) => state.answers
   );
+
+  
 
   const getAnswerAsArray = (): AnswerEntityDto[] => {
     return ansersSelector.template.map(
