@@ -35,7 +35,7 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
   const [isEditable, setIsEditable] = useState(
     !(answerSelector?.answer ?? "").replaceAll(" ", "")
   );
-  const [showPreview, setShowPreview] = useState(false);
+  // const [showPreview, setShowPreview] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -49,16 +49,6 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setAnswer(e.target.value);
   };
-
-  const handlePreview = () => {
-    setShowPreview(true);
-  };
-
-  const handleClosePreview = () => {
-    dispatch(switchPreview(false));
-  };
-
-  console.log(previewShow);
 
   return (
     <div className="question-form">
@@ -97,13 +87,7 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
         </button>
       </div>
       {previewShow && (
-        <Preview
-          isOpen={showPreview}
-          question={question.question}
-          answer={newAnswer}
-          pageNumber={currentPage}
-          onClose={handleClosePreview}
-        />
+        <Preview question={question.question} answer={newAnswer} />
       )}
     </div>
   );

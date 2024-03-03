@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./index.css";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "store";
+import { switchPreview } from "slicers/preview_slicer";
 
-interface PreviewProps {
-  isOpen: boolean;
-  onClose: () => void;
-  question: string;
-  answer: string;
-  pageNumber: number;
-}
+// interface PreviewProps {
+
+//   onClose: () => void;
+//   question: string;
+//   answer: string;
+//   pageNumber: number;
+// }
 
 const MAX_CHARS_PER_PAGE = 280;
 
@@ -32,17 +35,40 @@ const splitAnswerIntoPages = (answer: string): string[] => {
   return pages;
 };
 
-export const Preview: React.FC<PreviewProps> = ({
-  onClose,
+export const Preview = ({
   question,
   answer,
-  pageNumber,
+}: {
+  question: string;
+  answer: string;
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
   const answerPages = splitAnswerIntoPages(answer);
+  const pageNumber = useSelector<RootState, number>(
+    (state) => state.page.value
+  );
   const isOddPageNumber = pageNumber % 2 !== 0;
 
+  useEffect(() => {
+    const keyDownHandler = (event: any) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        dispatch(switchPreview(false));
+      }
+    };
+
+    document.addEventListener("keydown", keyDownHandler);
+
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, []);
+
   return (
-    <div className="book-preview-backdrop" onClick={onClose}>
+    <div
+      className="book-preview-backdrop"
+      onClick={() => dispatch(switchPreview(false))}
+    >
       {answerPages.map((pageContent, index) => (
         <div
           key={index}
