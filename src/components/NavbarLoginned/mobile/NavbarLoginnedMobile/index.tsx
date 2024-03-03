@@ -2,65 +2,39 @@ import React, { useState } from "react";
 import "./index.css";
 import { Link } from "react-router-dom";
 import logo from "assets/comabooks-white.svg";
-import { AnswerEntityDto, QuestionTemplateDto } from "generated";
+import {
+  AnswerEntityDto,
+  QuestionTemplateDto,
+  TempalteResponceDto,
+} from "generated";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "store";
+import { AppDispatch, RootState } from "store";
 import { thunkSetPage } from "slicers/page_slicer";
 <Link to="/">
   <img src={logo} alt="Logo" className="logo" />
 </Link>;
 
-const NavbarLoginnedMobile = ({
-  questions,
-  pagesFilled,
-
-  currentPage,
-  onEditCover,
-}: {
-  questions: QuestionTemplateDto[];
-  pagesFilled: number;
-
-  currentPage: number;
-  onEditCover: () => void;
-}) => {
+const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const ansersSelector = useSelector(
-    (state: {
-      answers: {
-        value: Record<string, AnswerEntityDto> | null;
-        template: QuestionTemplateDto[];
-      };
-    }) => state.answers
+  const templateDto = useSelector<RootState, TempalteResponceDto | undefined>(
+    (state) => state.templates.templates.find((val) => val._id == templateId)
   );
-
-  const [isCoverButtonClicked, setIsCoverButtonClicked] = useState(false);
+  const answerMap = useSelector<RootState, Record<string, AnswerEntityDto>>(
+    (state) => state.activeAnswers.answers
+  );
+  const currentPage = useSelector<RootState, number>(
+    (state) => state.page.value
+  );
   const [isOpen, setIsOpen] = useState(false);
-  const getAnswerAsArray = (): AnswerEntityDto[] => {
-    return ansersSelector.template.map(
-      (val) =>
-        ansersSelector.value![val._id] ?? {
-          _id: "",
-          questionId: val._id,
-          answer: "",
-          templateId: "",
-          userId: "",
-        }
-    );
-  };
-  const answers = getAnswerAsArray();
+  const pageFilled = Object.values(answerMap).filter((val) =>
+    val.answer.replaceAll(" ", "")
+  ).length;
 
-  const handleEditCoverClick = () => {
-    onEditCover();
-    setIsCoverButtonClicked(true);
-    setIsOpen(false); // Optionally close the mobile sidebar upon clicking
-  };
-
-  // Wrap setCurrentPage to reset cover button clicked state
+  const handleEditCoverClick = () => {};
   const wrappedSetCurrentPage = (pageIndex: number) => {
     dispatch(thunkSetPage(pageIndex));
-    setIsCoverButtonClicked(false);
-    setIsOpen(false);
   };
+  if (templateDto == null) return <></>;
 
   return (
     <aside className={`sidebar-mobile ${isOpen ? "open" : ""}`}>
@@ -75,17 +49,23 @@ const NavbarLoginnedMobile = ({
                 <img src={logo} alt="Logo" className="logo" />
               </Link>
               <div className="forms-info">
-                <progress value={pagesFilled} max={200} />
+                <progress
+                  value={pageFilled}
+                  max={templateDto.questions.length}
+                />
                 <div className="page-numbers">
-                  {pagesFilled}/200 страниц заполнено
+                  {pageFilled}/{templateDto.questions.length} страниц заполнено
                 </div>
               </div>
             </div>
           </div>
           <ul className="questions-list-mobile">
-            {questions.map((question, index) => {
-              const isCurrent = index + 1 === currentPage;
-              const isAnswered = answers[index].answer.replaceAll(" ", "");
+            {templateDto.questions.map((templateQuestion, index) => {
+              const isCurrent = index == currentPage;
+              const isAnswered =
+                answerMap[templateQuestion._id]?.answer?.replaceAll(" ", "") ??
+                "";
+
               let bgColor = "transparent";
               if (isCurrent) {
                 bgColor = "#845B99";
@@ -100,13 +80,13 @@ const NavbarLoginnedMobile = ({
               return (
                 <li key={index}>
                   <button
-                    onClick={() => wrappedSetCurrentPage(index + 1)}
+                    onClick={() => wrappedSetCurrentPage(index)}
                     style={{
                       backgroundColor: bgColor,
                       borderRadius: "4px",
                     }}
                   >
-                    {index + 1}. {question.question}
+                    {index + 1}. {templateQuestion.question}
                   </button>
                 </li>
               );
@@ -115,9 +95,7 @@ const NavbarLoginnedMobile = ({
 
           <div className="sidebar-bottom-fixed-mobile">
             <button
-              className={`sidebar-bottom-fixed-cover ${
-                isCoverButtonClicked ? "clicked" : ""
-              }`}
+              className={`sidebar-bottom-fixed-cover`}
               onClick={handleEditCoverClick}
             >
               Изменить обложку

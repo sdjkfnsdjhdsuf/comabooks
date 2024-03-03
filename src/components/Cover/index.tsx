@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import './Cover.css';
+import './index.css';
 import cover1 from "assets/red front.png";
 import cover2 from 'assets/yellow front.png';
 import cover3 from 'assets/black fornt.png';

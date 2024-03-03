@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavbarLoginned from "../components/NavbarLoginned";
-import NavbarLoginnedMobile from "../components/NavbarLoginnedMobile";
+import NavbarLoginnedMobile from "../components/NavbarLoginned/mobile/NavbarLoginnedMobile";
 import Cover from "../components/Cover";
 import AddPhoto from "components/AddPhoto";
 
@@ -45,65 +45,17 @@ function Forms() {
     setIsAddingPhoto(!isAddingPhoto);
     setShowCoverEditor(false);
   };
-  const [answersDto, setAnswersDTO] = useState<Record<string, AnswerEntityDto>>(
-    {}
-  );
+
   const [questionTempalteDto, setQuestionTempalteDto] = useState<
     QuestionTemplateDto[]
   >([]);
 
   const [showCoverEditor, setShowCoverEditor] = useState(false);
 
-  const totalPages = Math.ceil(questionTempalteDto.length / questionsPerPage);
-
-  const handleSetCurrentPage = (page: number) => {
-    setCurrentPage(page);
-    setShowCoverEditor(false);
-  };
-
-  const fetchData = async () => {
-    try {
-      // const responseQuestions =
-      //   await TemplateService.templateControllerGetTemplate({
-      //     headers: {
-      //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-      //     },
-      //   });
-      // const responseAnswers =
-      //   await AnswerService.answersControllerGetMyAnswersByTemplate(
-      //     {
-      //       id: responseQuestions[0]._id,
-      //     },
-      //     {
-      //       headers: {
-      //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-      //       },
-      //     }
-      //   );
-      // setQuestionTempalteDto(responseQuestions[0].questions);
-      // const newAnsers = responseAnswers.reduce<Record<string, AnswerEntityDto>>(
-      //   (prev, val) => {
-      //     prev[val.questionId] = val;
-      //     return prev;
-      //   },
-      //   {}
-      // );
-      // setAnswersDTO(newAnsers);
-      // store.dispatch(
-      //   answerSlice.actions.setValue({
-      //     answers: newAnsers,
-      //     payloadTempl: responseQuestions[0].questions,
-      //   })
-      // );
-    } catch (e) {
-      console.log(e);
-    }
-  };
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
-      console.log("GO PAGE /");
       navigate("/", {
         replace: true,
       });

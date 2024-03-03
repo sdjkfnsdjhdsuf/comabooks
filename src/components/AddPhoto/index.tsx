@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, ChangeEvent, MouseEvent } from 'react';
-import './AddPhoto.css';
+import './index.css';
 import viewicon from "assets/viewicon.png";
 
 const AddPhoto = () => {

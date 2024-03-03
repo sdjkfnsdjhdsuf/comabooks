@@ -27,6 +27,14 @@ export const answersSlice = createSlice({
           {}
         );
         state.loading = false;
+      })
+      .addCase(setAnswers.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(setAnswers.fulfilled, (state, action) => {
+        const payload = action.payload;
+        state.answers[payload._id] = payload;
+        state.loading = false;
       });
   },
 });
@@ -44,5 +52,26 @@ export const fetchAnswers = createAsyncThunk(
         }
       );
     return responseAnswers;
+  }
+);
+
+export const setAnswers = createAsyncThunk(
+  "answers/set",
+  async (payload: { questionId: string; text: string }) => {
+    const { questionId, text } = payload;
+    const newAnswer = await AnswerService.answersControllerEditAnswer(
+      {
+        id: questionId,
+        body: {
+          questionMessage: text,
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    return newAnswer;
   }
 );

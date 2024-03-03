@@ -32,49 +32,31 @@ const mockPhotos: Photo[] = [
   { id: "photo12", title: "Family picnic", date: "2021-09-05" },
 ];
 
-const NavbarLoginned = ({
-  templateId,
-
-  onEditCover,
-  onToggleView,
-}: {
-  templateId: string;
-  onEditCover: () => void;
-  onToggleView: () => void;
-}) => {
+const NavbarLoginned = ({ templateId }: { templateId: string }) => {
   const dispatch = useDispatch<AppDispatch>();
   const templateDto = useSelector<RootState, TempalteResponceDto | undefined>(
     (state) => state.templates.templates.find((val) => val._id == templateId)
   );
-
   const answerMap = useSelector<RootState, Record<string, AnswerEntityDto>>(
     (state) => state.activeAnswers.answers
   );
   const currentPage = useSelector<RootState, number>(
     (state) => state.page.value
   );
-
-  const [isCoverButtonClicked, setIsCoverButtonClicked] = useState(false);
   const [isViewingPhotos, setIsViewingPhotos] = useState(false);
+  const pageFilled = Object.values(answerMap).filter((val) =>
+    val.answer.replaceAll(" ", "")
+  ).length;
 
   const handleTogglePhotos = () => {
     setIsViewingPhotos(!isViewingPhotos);
-    onToggleView();
-  };
-
-  const handleEditCoverClick = () => {
-    onEditCover();
-    setIsCoverButtonClicked(true);
   };
 
   const wrappedSetCurrentPage = (pageIndex: number) => {
     dispatch(thunkSetPage(pageIndex));
-    setIsCoverButtonClicked(false);
   };
+  const showCoverPage = () => {};
 
-  const pageFilled = Object.values(answerMap).filter((val) =>
-    val.answer.replaceAll(" ", "")
-  ).length;
   if (templateDto == null) return <></>;
 
   return (
@@ -87,10 +69,7 @@ const NavbarLoginned = ({
           <div className="forms-info">
             <progress value={pageFilled} max={templateDto.questions.length} />
             <div className="page-numbers">
-              {pageFilled}
-              {pageFilled <= templateDto.questions.length
-                ? `/${templateDto.questions.length} страниц заполнено`
-                : " страниц заполнено"}
+              {pageFilled}/{templateDto.questions.length} страниц заполнено
             </div>
           </div>
         </div>
@@ -111,7 +90,7 @@ const NavbarLoginned = ({
       ) : (
         <ul className="questions-list">
           {templateDto.questions.map((templateQuestion, index) => {
-            const isCurrent = index + 1 === currentPage;
+            const isCurrent = index === currentPage;
             const isAnswered =
               answerMap[templateQuestion._id]?.answer?.replaceAll(" ", "") ??
               "";
@@ -130,7 +109,7 @@ const NavbarLoginned = ({
             return (
               <li key={index}>
                 <button
-                  onClick={() => wrappedSetCurrentPage(index + 1)}
+                  onClick={() => wrappedSetCurrentPage(index)}
                   style={{
                     backgroundColor: bgColor,
                     borderRadius: "4px",
@@ -151,10 +130,8 @@ const NavbarLoginned = ({
           {isViewingPhotos ? "Перейти к вопросам" : "Перейти к фото"}
         </button>
         <button
-          className={`sidebar-bottom-fixed-cover ${
-            isCoverButtonClicked ? "clicked" : ""
-          }`}
-          onClick={handleEditCoverClick}
+          className={`sidebar-bottom-fixed-cover`}
+          onClick={showCoverPage}
         >
           Изменить обложку
         </button>

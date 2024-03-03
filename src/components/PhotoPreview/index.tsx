@@ -1,5 +1,5 @@
 import React from 'react';
-import './Preview.css';
+import './index.css';
 
 interface PhotoPreviewProps {
   isOpen: boolean;
