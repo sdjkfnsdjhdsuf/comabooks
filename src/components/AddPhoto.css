@@ -1,0 +1,104 @@
+.add-photo-form {
+    display: flex;
+    width: 100%;
+    padding-top: 200px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.form-group-photo {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+@media (max-width: 700px) {
+    .form-group {
+        width: 100%;
+    } 
+
+    .form-group-photo {
+        width: 100%;
+    } 
+}
+
+.form-group label {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-family: 'Noto Sans';
+}
+
+.form-group-photo label {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-family: 'Noto Sans';
+}
+
+.form-group textarea {
+    border-radius: 16px;
+    width: 100%;
+    font-size: 16px;
+    padding: 30px;
+    font-family: 'Noto Sans';
+    resize: none;
+    border: 1px solid #D9D9D9;
+    transition: 300ms;
+    line-height: 1.5;
+    overflow-y: hidden;
+    display: flex;
+}
+
+
+.form-group-photo input {
+    border-radius: 16px;
+    width: 100%;
+    font-size: 16px;
+    font-family: 'Noto Sans';
+    resize: none;
+    border: 1px solid #D9D9D9;
+    transition: 300ms;
+    line-height: 1.5;
+    overflow-y: hidden;
+    background-color: transparent;
+}
+
+.form-group input {
+    border-radius: 16px;
+    width: 100%;
+    font-size: 16px;
+    padding: 30px;
+    font-family: 'Noto Sans';
+    resize: none;
+    border: 1px solid #D9D9D9;
+    transition: 300ms;
+    line-height: 1.5;
+    overflow-y: hidden;
+    background-color: transparent;
+}
+
+.form-group textarea:focus {
+    outline: none;
+}
+
+.add-photo-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.input-save-button-add {
+    padding: 10px 40px;
+    border: 0px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'Noto Sans';
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    background-color: black;
+    color: white;
+}

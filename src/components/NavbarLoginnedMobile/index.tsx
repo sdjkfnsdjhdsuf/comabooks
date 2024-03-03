@@ -3,7 +3,9 @@ import "./index.css";
 import { Link } from "react-router-dom";
 import logo from "assets/comabooks-white.svg";
 import { AnswerEntityDto, QuestionTemplateDto } from "generated";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "store";
+import { thunkSetPage } from "slicers/page_slicer";
 <Link to="/">
   <img src={logo} alt="Logo" className="logo" />
 </Link>;
@@ -11,20 +13,17 @@ import { useSelector } from "react-redux";
 const NavbarLoginnedMobile = ({
   questions,
   pagesFilled,
-  setCurrentPage,
-  // answers,
+
   currentPage,
   onEditCover,
 }: {
   questions: QuestionTemplateDto[];
   pagesFilled: number;
-  setCurrentPage: (val: number) => void;
-  // answers: AnswerEntityDto[];
+
   currentPage: number;
   onEditCover: () => void;
 }) => {
-
-  
+  const dispatch = useDispatch<AppDispatch>();
   const ansersSelector = useSelector(
     (state: {
       answers: {
@@ -33,7 +32,7 @@ const NavbarLoginnedMobile = ({
       };
     }) => state.answers
   );
-  
+
   const [isCoverButtonClicked, setIsCoverButtonClicked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const getAnswerAsArray = (): AnswerEntityDto[] => {
@@ -58,7 +57,7 @@ const NavbarLoginnedMobile = ({
 
   // Wrap setCurrentPage to reset cover button clicked state
   const wrappedSetCurrentPage = (pageIndex: number) => {
-    setCurrentPage(pageIndex);
+    dispatch(thunkSetPage(pageIndex));
     setIsCoverButtonClicked(false);
     setIsOpen(false);
   };
@@ -115,14 +114,14 @@ const NavbarLoginnedMobile = ({
           </ul>
 
           <div className="sidebar-bottom-fixed-mobile">
-          <button
-              className={`sidebar-bottom-fixed-cover ${isCoverButtonClicked ? "clicked" : ""}`}
+            <button
+              className={`sidebar-bottom-fixed-cover ${
+                isCoverButtonClicked ? "clicked" : ""
+              }`}
               onClick={handleEditCoverClick}
             >
               Изменить обложку
             </button>
-
-
           </div>
         </>
       )}

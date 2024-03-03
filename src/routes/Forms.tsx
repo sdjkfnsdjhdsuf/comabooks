@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import NavbarLoginned from "../components/NavbarLoginned";
 import NavbarLoginnedMobile from "../components/NavbarLoginnedMobile";
 import Cover from "../components/Cover";
+import AddPhoto from "components/AddPhoto";
 
 import "./Forms.css";
 import nexticon from "assets/nexticon.png";
 import backicon from "assets/backicon.png";
 import QuestionForm from "../components/QuestionForm";
-// import axios from "axios";
 import {
   AnswerEntityDto,
   AnswerService,
@@ -15,46 +15,13 @@ import {
   TempalteResponceDto,
   TemplateService,
 } from "generated";
-import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
 import { createSlice } from "@reduxjs/toolkit";
-
-export const answerSlice = createSlice({
-  name: "answers",
-
-  initialState: {
-    value: null,
-
-    template: [],
-  } as {
-    value: Record<string, AnswerEntityDto> | null;
-    template: QuestionTemplateDto[];
-  },
-  reducers: {
-    setValue: (
-      state,
-      action: {
-        payload: {
-          answers: Record<string, AnswerEntityDto>;
-          payloadTempl: QuestionTemplateDto[];
-        };
-      }
-    ) => {
-      state.value = action.payload.answers;
-      state.template = action.payload.payloadTempl;
-    },
-  },
-});
-
-// import { createStore ,} from "redux";
-const store = configureStore({
-  reducer: {
-    answers: answerSlice.reducer,
-  },
-});
-
-export type AppDispatchType = typeof store.dispatch;
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { fetchTemplates } from "slicers/templates/template_thrunk";
+import { AppDispatch } from "store";
 
 const MAX_CHARS_PER_PAGE = 380;
 
@@ -70,7 +37,14 @@ const getPageFilled = (
 const questionsPerPage = 1;
 
 function Forms() {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [isAddingPhoto, setIsAddingPhoto] = useState(false);
+  const togglePhotoQuestionView = () => {
+    setIsAddingPhoto(!isAddingPhoto);
+    setShowCoverEditor(false);
+  };
   const [answersDto, setAnswersDTO] = useState<Record<string, AnswerEntityDto>>(
     {}
   );
@@ -78,18 +52,6 @@ function Forms() {
     QuestionTemplateDto[]
   >([]);
 
-  // const getAnswerAsArray = (): AnswerEntityDto[] => {
-  //   return questionTempalteDto.map(
-  //     (val) =>
-  //       answersDto[val._id] ?? {
-  //         _id: "",
-  //         questionId: val._id,
-  //         answer: "",
-  //         templateId: "",
-  //         userId: "",
-  //       }
-  //   );
-  // };
   const [showCoverEditor, setShowCoverEditor] = useState(false);
 
   const totalPages = Math.ceil(questionTempalteDto.length / questionsPerPage);
@@ -101,103 +63,109 @@ function Forms() {
 
   const fetchData = async () => {
     try {
-      const responseQuestions =
-        await TemplateService.templateControllerGetTemplate({
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-      const responseAnswers =
-        await AnswerService.answersControllerGetMyAnswersByTemplate(
-          {
-            id: responseQuestions[0]._id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-
-      setQuestionTempalteDto(responseQuestions[0].questions);
-      const newAnsers = responseAnswers.reduce<Record<string, AnswerEntityDto>>(
-        (prev, val) => {
-          prev[val.questionId] = val;
-          return prev;
-        },
-        {}
-      );
-      setAnswersDTO(newAnsers);
-      store.dispatch(
-        answerSlice.actions.setValue({
-          answers: newAnsers,
-          payloadTempl: responseQuestions[0].questions,
-        })
-      );
+      // const responseQuestions =
+      //   await TemplateService.templateControllerGetTemplate({
+      //     headers: {
+      //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+      //     },
+      //   });
+      // const responseAnswers =
+      //   await AnswerService.answersControllerGetMyAnswersByTemplate(
+      //     {
+      //       id: responseQuestions[0]._id,
+      //     },
+      //     {
+      //       headers: {
+      //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+      //       },
+      //     }
+      //   );
+      // setQuestionTempalteDto(responseQuestions[0].questions);
+      // const newAnsers = responseAnswers.reduce<Record<string, AnswerEntityDto>>(
+      //   (prev, val) => {
+      //     prev[val.questionId] = val;
+      //     return prev;
+      //   },
+      //   {}
+      // );
+      // setAnswersDTO(newAnsers);
+      // store.dispatch(
+      //   answerSlice.actions.setValue({
+      //     answers: newAnsers,
+      //     payloadTempl: responseQuestions[0].questions,
+      //   })
+      // );
     } catch (e) {
       console.log(e);
     }
   };
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (!localStorage.getItem("token")) {
+      console.log("GO PAGE /");
+      navigate("/", {
+        replace: true,
+      });
+      return;
+    }
+    dispatch(fetchTemplates());
+  }, [dispatch]);
 
   if (questionTempalteDto.length == 0) return <></>;
   return (
-    <Provider store={store}>
-      <div className="forms-page">
-        <div className="navbarLoginned">
-          <NavbarLoginned
-            setCurrentPage={handleSetCurrentPage}
-            questions={questionTempalteDto}
-            pagesFilled={getPageFilled(questionTempalteDto, answersDto)}
-            // answers={getAnswerAsArray()}
-            currentPage={currentPage}
-            onEditCover={() => setShowCoverEditor(true)}
-          />
-        </div>
-        <div className="navbarLoginnedMobile">
-          <NavbarLoginnedMobile
-            setCurrentPage={handleSetCurrentPage}
-            questions={questionTempalteDto}
-            pagesFilled={getPageFilled(questionTempalteDto, answersDto)}
-            // answers={getAnswerAsArray()}
-            currentPage={currentPage}
-            onEditCover={() => setShowCoverEditor(true)}
-          />
-        </div>
-        <div className="forms-container">
-          {showCoverEditor ? (
-            <Cover />
-          ) : (
-            <>
-              <QuestionForm
-                key={questionTempalteDto[currentPage - 1]._id}
-                question={questionTempalteDto[currentPage - 1]}
-                // answer={getAnswerAsArray()[currentPage - 1]}
-                pageNumber={currentPage}
-              />
-
-              <div className="pagination-controls">
-                <button
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  <img src={backicon} alt="Back" className="back-icon" />
-                </button>
-                <button
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                >
-                  <img src={nexticon} alt="Next" className="next-icon" />
-                </button>
-              </div>
-            </>
-          )}
-        </div>
+    <div className="forms-page">
+      {/* <div className="navbarLoginned">
+        <NavbarLoginned
+          setCurrentPage={handleSetCurrentPage}
+          questions={questionTempalteDto}
+          pagesFilled={getPageFilled(questionTempalteDto, answersDto)}
+          currentPage={currentPage}
+          onEditCover={() => setShowCoverEditor(true)}
+          onToggleView={togglePhotoQuestionView}
+        />
       </div>
-    </Provider>
+      <div className="navbarLoginnedMobile">
+        <NavbarLoginnedMobile
+          setCurrentPage={handleSetCurrentPage}
+          questions={questionTempalteDto}
+          pagesFilled={getPageFilled(questionTempalteDto, answersDto)}
+          currentPage={currentPage}
+          onEditCover={() => setShowCoverEditor(true)}
+        />
+      </div>
+      <div className="forms-container">
+        {showCoverEditor ? (
+          <Cover />
+        ) : isAddingPhoto ? (
+          <AddPhoto />
+        ) : (
+          <>
+            <QuestionForm
+              key={questionTempalteDto[currentPage - 1]._id}
+              question={questionTempalteDto[currentPage - 1]}
+              // answer={getAnswerAsArray()[currentPage - 1]}
+              pageNumber={currentPage}
+            />
+
+            <div className="pagination-controls">
+              <button
+                onClick={() => setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                <img src={backicon} alt="Back" className="back-icon" />
+              </button>
+              <button
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                <img src={nexticon} alt="Next" className="next-icon" />
+              </button>
+            </div>
+          </>
+        )}
+      </div> */}
+    </div>
   );
 }
 

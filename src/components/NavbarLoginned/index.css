@@ -50,6 +50,32 @@
     padding-right: 20px;
     padding-bottom: 150px;
   }
+
+  .photo-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    padding-top: 150px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .photo-list-one {
+    text-align: left;
+    width: 100%;
+    background-color: #2B2B2B;
+    border: none;
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    color: white;
+    margin-bottom: 10px;
+    font-family: 'Noto Sans';
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   
   .questions-list li button {
     text-align: left;
@@ -67,9 +93,6 @@
     text-overflow: ellipsis; */
   }
   
-  .questions-list li button:hover {
-    background-color: #1B1B1B;
-  }
 
 
   .sidebar-bottom-fixed {
@@ -88,33 +111,42 @@
     backdrop-filter: blur(40px);
   }
 
-  .sidebar-bottom-fixed-cover, .sidebar-bottom-fixed-finish {
+  .sidebar-bottom-fixed-cover {
     width: 100%;
     border: 0px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 12px;
     font-family: 'Noto Sans';
-    background-color: white;
-    color: black;
     padding: 12px 0px;
-  }
-
-  .sidebar-bottom-fixed-cover {
     background-color: #282828;
     color: white;
+  }
+
+  .sidebar-bottom-fixed-add-photo {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    width: 100%;
+  }
+
+  .sidebar-bottom-fixed-add-photo button {
+    border: 0.5px solid rgb(194, 194, 194);
+    background-color: transparent;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 12px;
+    font-family: 'Noto Sans';
+    padding: 12px 0px;
+    color: white;
+    margin-bottom: 150px;
+    width: 100%;
   }
 
   .sidebar-bottom-fixed-cover.clicked {
     background-color: #7544B3;
   }
 
-  .sidebar-bottom-fixed-finish {
-    background-color: #282828;
-    color: #929292;
-  }
 
 
 

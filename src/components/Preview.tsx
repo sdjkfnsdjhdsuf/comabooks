@@ -9,7 +9,7 @@ interface PreviewProps {
   pageNumber: number;
 }
 
-const MAX_CHARS_PER_PAGE = 380;
+const MAX_CHARS_PER_PAGE = 280;
 
 const splitAnswerIntoPages = (answer: string): string[] => {
   const words = answer.split(/\s+/);
