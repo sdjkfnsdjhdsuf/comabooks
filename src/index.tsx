@@ -10,6 +10,8 @@ import { Provider } from "react-redux"; // Импорт Provider
 import { store } from "./store"; // Импорт store
 import FormTemplate from "routes/FormTemplate";
 
+import { CoverPage } from "routes/CoverPage";
+
 export const instance = axios.create({
   baseURL: "https://api.comabooks.org",
 });
@@ -25,6 +27,7 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/forms" element={<Forms />} />
         <Route path="/forms/:id" element={<FormTemplate />} />
+        <Route path="/cover/:id" element={<CoverPage />}></Route>
         <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>
     </BrowserRouter>

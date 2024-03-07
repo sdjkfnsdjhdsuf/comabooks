@@ -20,9 +20,13 @@ function FormTemplate() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const currentPage = useSelector<RootState, number>(
-    (state) => state.page.value
-  );
+  const currentPage = useSelector<RootState, number | null>((state) => {
+    return state.page.value;
+  });
+
+  if (currentPage == null) {
+    dispatch(thunkSetPage(0));
+  }
   const isLoading = useSelector<RootState, boolean>(
     (state) => state.activeAnswers.loading
   );
@@ -63,14 +67,14 @@ function FormTemplate() {
         ) : (
           <>
             <QuestionForm
-              key={templateDto.questions[currentPage]?._id ?? ""}
-              question={templateDto.questions[currentPage]}
+              key={templateDto.questions[currentPage ?? 0]?._id ?? ""}
+              question={templateDto.questions[currentPage ?? 0]}
             />
 
             <div className="pagination-controls">
               <button
                 onClick={() =>
-                  dispatch(thunkSetPage(Math.max(currentPage - 1, 0)))
+                  dispatch(thunkSetPage(Math.max((currentPage ?? 0) - 1, 0)))
                 }
                 disabled={currentPage == 0}
               >
@@ -81,7 +85,7 @@ function FormTemplate() {
                   dispatch(
                     thunkSetPage(
                       Math.min(
-                        currentPage + 1,
+                        (currentPage ?? 0) + 1,
                         templateDto.questions.length - 1
                       )
                     )

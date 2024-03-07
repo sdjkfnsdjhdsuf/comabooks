@@ -1,5 +1,5 @@
 import "./index.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import logo from "assets/comabooks-white.svg";
 import {
@@ -32,7 +32,13 @@ const mockPhotos: Photo[] = [
   { id: "photo12", title: "Family picnic", date: "2021-09-05" },
 ];
 
-const NavbarLoginned = ({ templateId }: { templateId: string }) => {
+const NavbarLoginned = ({
+  templateId,
+  isCover = false,
+}: {
+  templateId: string;
+  isCover?: boolean;
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   const templateDto = useSelector<RootState, TempalteResponceDto | undefined>(
     (state) => state.templates.templates.find((val) => val._id == templateId)
@@ -40,13 +46,14 @@ const NavbarLoginned = ({ templateId }: { templateId: string }) => {
   const answerMap = useSelector<RootState, Record<string, AnswerEntityDto>>(
     (state) => state.activeAnswers.answers
   );
-  const currentPage = useSelector<RootState, number>(
+  const currentPage = useSelector<RootState, number | null>(
     (state) => state.page.value
   );
   const [isViewingPhotos, setIsViewingPhotos] = useState(false);
   const pageFilled = Object.values(answerMap).filter((val) =>
     val.answer.replaceAll(" ", "")
   ).length;
+  const navigate = useNavigate();
 
   const handleTogglePhotos = () => {
     setIsViewingPhotos(!isViewingPhotos);
@@ -55,7 +62,9 @@ const NavbarLoginned = ({ templateId }: { templateId: string }) => {
   const wrappedSetCurrentPage = (pageIndex: number) => {
     dispatch(thunkSetPage(pageIndex));
   };
-  const showCoverPage = () => {};
+  const showCoverPage = () => {
+    navigate(`/cover/${templateId}`);
+  };
 
   if (templateDto == null) return <></>;
 
@@ -66,6 +75,7 @@ const NavbarLoginned = ({ templateId }: { templateId: string }) => {
           <Link to="/">
             <img src={logo} alt="Logo" className="logo" />
           </Link>
+
           <div className="forms-info">
             <progress value={pageFilled} max={templateDto.questions.length} />
             <div className="page-numbers">

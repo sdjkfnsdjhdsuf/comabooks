@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface PageState {
-  value: number;
+  value: number | null;
 }
 
 export const pageSlice = createSlice({
   name: "page",
   initialState: {
-    value: 0,
+    value: null,
   } as PageState,
   reducers: {},
   extraReducers: (builder) => {
@@ -19,7 +19,7 @@ export const pageSlice = createSlice({
 
 export const thunkSetPage = createAsyncThunk(
   "page/set",
-  async (newNage: number) => {
+  async (newNage: number | null) => {
     return newNage;
   }
 );

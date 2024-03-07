@@ -23,7 +23,7 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
     (state) => state.preview.value
   );
   const currentPage = useSelector<RootState, number>(
-    (state) => state.page.value
+    (state) => state.page.value ?? 0
   );
   const answerSelector = useSelector<RootState, AnswerEntityDto | null>(
     (state) => {

@@ -22,7 +22,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const answerMap = useSelector<RootState, Record<string, AnswerEntityDto>>(
     (state) => state.activeAnswers.answers
   );
-  const currentPage = useSelector<RootState, number>(
+  const currentPage = useSelector<RootState, number | null>(
     (state) => state.page.value
   );
   const [isOpen, setIsOpen] = useState(false);

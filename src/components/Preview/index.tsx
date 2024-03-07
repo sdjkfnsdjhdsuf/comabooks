@@ -45,7 +45,7 @@ export const Preview = ({
   const dispatch = useDispatch<AppDispatch>();
   const answerPages = splitAnswerIntoPages(answer);
   const pageNumber = useSelector<RootState, number>(
-    (state) => state.page.value
+    (state) => state.page.value ?? 0
   );
   const isOddPageNumber = pageNumber % 2 !== 0;
 
