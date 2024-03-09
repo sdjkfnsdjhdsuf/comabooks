@@ -1,5 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import './index.css';
 import cover1 from "assets/red front.png";
 import cover2 from 'assets/yellow front.png';
@@ -15,20 +15,51 @@ import colorButton5 from 'assets/green.png';
 import colorButton6 from 'assets/light-green.png';
 
 function Cover() {
-    // add get inputs from mongodb  
     const [authorName, setAuthorName] = useState("");
     const [bookTitle, setBookTitle] = useState("");
     const [partnerName, setPartnerName] = useState("");
     const [coverColor, setCoverColor] = useState(cover1);
     const [isEditable, setIsEditable] = useState(true);
+    const [id, setId] = useState('');
 
-    const handleSave = () => {
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('https://api.comabooks.org/cover/{id}');
+                const data = response.data.coverEntityDto;
+                setAuthorName(data.fullName);
+                setBookTitle(data.bookName);
+                setPartnerName(data.fullNamePartner);
+                setId(data._id);
+            } catch (error) {
+                console.error('There was an error fetching the cover data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const handleSave = async () => {
         if (isEditable) {
-            // For post axios, add function for color string
-            console.log("Saving data:", { authorName, bookTitle, partnerName, coverColor });
+  
+          const coverData = {
+            fullName: authorName,
+            bookName: bookTitle,
+            fullNamePartner: partnerName,
+            coverUrl: coverColor,
+            id: id,
+          };
+      
+          try {
+            const response = await axios.post(`https://api.comabooks.org/cover/${id}`, coverData);
+            console.log("Data saved:", response.data);
+          } catch (error) {
+            console.error('There was an error saving the cover data:', error);
+          }
         }
         setIsEditable(!isEditable);
-    };
+      };
+      
 
 
     type CoverColors = {

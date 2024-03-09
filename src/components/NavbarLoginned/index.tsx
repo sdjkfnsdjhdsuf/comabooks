@@ -85,13 +85,14 @@ const NavbarLoginned = ({
       </div>
       {isViewingPhotos ? (
         <>
-          <ul className="photo-list">
+          {/* <ul className="photo-list">
             {mockPhotos.map((photo) => (
               <li key={photo.id}>
                 <div className="photo-list-one">{photo.title}</div>
               </li>
             ))}
-          </ul>
+          </ul> */}
+          <div className="photo-list-one-test">Данная функция добавится в ближайшее время, пока пишите редактору, он поможет добавить воспоминания с фото!</div>
           <div className="sidebar-bottom-fixed-add-photo">
             <button>+ Добавить фото </button>
           </div>

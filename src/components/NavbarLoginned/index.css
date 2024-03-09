@@ -84,6 +84,21 @@
   text-overflow: ellipsis;
 }
 
+.photo-list-one-test {
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  color: white;
+  margin-bottom: 10px;
+  font-family: "Noto Sans";
+  font-size: 12px;
+  padding-top: 150px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .questions-list li button {
   text-align: left;
   width: 100%;

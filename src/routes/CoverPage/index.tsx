@@ -1,7 +1,5 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
 import "./index.css";
-import NavbarLoginned from "components/NavbarLoginned";
-import NavbarLoginnedMobile from "components/NavbarLoginned/mobile/NavbarLoginnedMobile";
 import arrow from 'assets/arrow.png'
 import Cover from "components/Cover";
 import { useEffect } from "react";

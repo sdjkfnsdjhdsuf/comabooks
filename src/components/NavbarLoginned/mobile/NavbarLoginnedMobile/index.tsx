@@ -85,13 +85,14 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
           </div>
           {isViewingPhotos ? (
             <>
-              <ul className="photo-list-mobile">
+              {/* <ul className="photo-list-mobile">
                 {mockPhotos.map((photo) => (
                   <li key={photo.id}>
                     <div className="photo-list-one-mobile">{photo.title}</div>
                   </li>
                 ))}
-              </ul>
+              </ul> */}
+              <div className="photo-list-one-mobile-test">Данная функция добавится в ближайшее время, пока пишите редактору, он поможет добавить воспоминания с фото!</div>
               <div className="sidebar-bottom-fixed-add-photo-mobile">
                 <button>+ Добавить фото </button>
               </div>
