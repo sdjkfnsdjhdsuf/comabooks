@@ -31,11 +31,14 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
     }
   );
 
+  const isLoading = useSelector<RootState, boolean>(
+    (state) => state.activeAnswers.loading
+  );
   const [newAnswer, setAnswer] = useState(answerSelector?.answer ?? "");
   const [isEditable, setIsEditable] = useState(
     !(answerSelector?.answer ?? "").replaceAll(" ", "")
   );
-  // const [showPreview, setShowPreview] = useState(false);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -62,30 +65,37 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
         placeholder="Напишите сюда ответ..."
         disabled={!isEditable}
       />
-      <div className="edit-buttons">
-        <button
-          className={isEditable ? "confirm-button" : "edit-button"}
-          onClick={() => {
-            dispatch(
-              setAnswers({
-                text: textareaRef.current?.value ?? "",
-                questionId: question._id,
-              })
-            );
-          }}
-        >
-          {isEditable ? "Сохранить" : "Изменить"}
-        </button>
+      {!isLoading && (
+        <div className="edit-buttons">
+          <button
+            className={isEditable ? "confirm-button" : "edit-button"}
+            onClick={async () => {
+              if (isEditable) {
+                setIsEditable(false);
+                await dispatch(
+                  setAnswers({
+                    text: textareaRef.current?.value ?? "",
+                    questionId: question._id,
+                  })
+                );
+              } else {
+                setIsEditable(true);
+              }
+            }}
+          >
+            {isEditable ? "Сохранить" : "Изменить"}
+          </button>
 
-        <button
-          className="preview-button"
-          onClick={() => {
-            dispatch(switchPreview(true));
-          }}
-        >
-          <img src={viewicon} alt="Viewicon" className="viewicon" />
-        </button>
-      </div>
+          <button
+            className="preview-button"
+            onClick={() => {
+              dispatch(switchPreview(true));
+            }}
+          >
+            <img src={viewicon} alt="Viewicon" className="viewicon" />
+          </button>
+        </div>
+      )}
       {previewShow && (
         <Preview question={question.question} answer={newAnswer} />
       )}

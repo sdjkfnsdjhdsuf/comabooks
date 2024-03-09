@@ -1,12 +1,12 @@
-.forms-page {
+.cover-main-page {
   display: flex;
   flex-direction: row;
   /* height: 100vh; */
 }
 
-.forms-container {
+.cover-main-container {
   margin-left: auto;
-  width: 83%;
+  width: 100%;
   /* margin-top: 200px; */
   display: flex;
   flex-direction: column;
@@ -14,9 +14,24 @@
   /* height: 100%; */
 }
 
+.arrow-icon {
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  top: 20px;
+  left: 60px;
+  z-index: 10000;
+}
+
 @media (max-width: 768px) {
   .forms-container {
     width: 100%;
+  }
+
+  .arrow-icon {
+    width: 40px;
+    height: 40px;
+    left: 30px;
   }
 }
 

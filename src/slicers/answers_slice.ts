@@ -33,7 +33,8 @@ export const answersSlice = createSlice({
       })
       .addCase(setAnswers.fulfilled, (state, action) => {
         const payload = action.payload;
-        state.answers[payload._id] = payload;
+
+        state.answers[payload.questionId] = payload;
         state.loading = false;
       });
   },

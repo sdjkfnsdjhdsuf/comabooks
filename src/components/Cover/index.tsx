@@ -7,7 +7,6 @@ import cover3 from 'assets/black fornt.png';
 import cover4 from 'assets/blue front.png';
 import cover5 from 'assets/green front.png';
 import cover6 from 'assets/light green front.png';
-
 import colorButton1 from "assets/red.png";
 import colorButton2 from 'assets/yellow.png';
 import colorButton3 from 'assets/black.png';
@@ -16,7 +15,7 @@ import colorButton5 from 'assets/green.png';
 import colorButton6 from 'assets/light-green.png';
 
 function Cover() {
-    // add get inputs from mongodb
+    // add get inputs from mongodb  
     const [authorName, setAuthorName] = useState("");
     const [bookTitle, setBookTitle] = useState("");
     const [partnerName, setPartnerName] = useState("");

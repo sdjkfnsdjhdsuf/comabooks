@@ -1,10 +1,9 @@
 import "./index.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import logo from "assets/comabooks-white.svg";
 import {
   AnswerEntityDto,
-  QuestionTemplateDto,
   TempalteResponceDto,
 } from "generated";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,7 +40,7 @@ const NavbarLoginned = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const templateDto = useSelector<RootState, TempalteResponceDto | undefined>(
-    (state) => state.templates.templates.find((val) => val._id == templateId)
+    (state) => state.templates.templates.find((val) => val._id === templateId)
   );
   const answerMap = useSelector<RootState, Record<string, AnswerEntityDto>>(
     (state) => state.activeAnswers.answers
@@ -79,7 +78,7 @@ const NavbarLoginned = ({
           <div className="forms-info">
             <progress value={pageFilled} max={templateDto.questions.length} />
             <div className="page-numbers">
-              {pageFilled}/{templateDto.questions.length} страниц заполнено
+              {pageFilled}/{templateDto.questions.length} вопросов отвечено
             </div>
           </div>
         </div>

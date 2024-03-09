@@ -1,8 +1,8 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import "./index.css";
 import NavbarLoginned from "components/NavbarLoginned";
 import NavbarLoginnedMobile from "components/NavbarLoginned/mobile/NavbarLoginnedMobile";
-
+import arrow from 'assets/arrow.png'
 import Cover from "components/Cover";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -36,14 +36,9 @@ export const CoverPage = () => {
   }, [dispatch]);
 
   return (
-    <div className="forms-page">
-      <div className="navbarLoginned">
-        <NavbarLoginned templateId={templateId!} />
-      </div>
-      <div className="navbarLoginnedMobile">
-        <NavbarLoginnedMobile templateId={templateId!} />
-      </div>
-      <div className="forms-container">
+    <div className="cover-main-page">
+      <div className="cover-main-container">
+        <Link to={`/forms/${templateId}`} ><img src={arrow} className='arrow-icon' /></Link>
         <Cover />
       </div>
     </div>

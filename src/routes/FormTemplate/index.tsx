@@ -27,9 +27,7 @@ function FormTemplate() {
   if (currentPage == null) {
     dispatch(thunkSetPage(0));
   }
-  const isLoading = useSelector<RootState, boolean>(
-    (state) => state.activeAnswers.loading
-  );
+  
   const templateDto = useSelector<RootState, TempalteResponceDto | undefined>(
     (state) => {
       return state.templates.templates.find((val) => val._id == templateId);
@@ -49,7 +47,7 @@ function FormTemplate() {
   }, [dispatch]);
   if (templateId == null) return <></>;
   if (templateDto == null) return <></>;
-  if (isLoading) return <></>;
+  // if (isLoading) return <></>;
 
   return (
     <div className="forms-page">
