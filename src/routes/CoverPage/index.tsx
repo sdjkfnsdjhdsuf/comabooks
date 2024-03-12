@@ -1,6 +1,6 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
 import "./index.css";
-import arrow from 'assets/arrow.png'
+import arrow from "assets/arrow.png";
 import Cover from "components/Cover";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,13 +13,6 @@ export const CoverPage = () => {
   const { id: templateId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-
-  const currentPage = useSelector<RootState, number | null>((state) => {
-    if (state.page.value == null) {
-      dispatch(thunkSetPage(null));
-    }
-    return state.page.value;
-  });
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -36,7 +29,9 @@ export const CoverPage = () => {
   return (
     <div className="cover-main-page">
       <div className="cover-main-container">
-        <Link to={`/forms/${templateId}`} ><img src={arrow} className='arrow-icon' /></Link>
+        <Link to={`/forms/${templateId}`}>
+          <img src={arrow} className="arrow-icon" />
+        </Link>
         <Cover />
       </div>
     </div>

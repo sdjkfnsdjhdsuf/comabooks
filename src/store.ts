@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { answersSlice } from "slicers/answers_slice";
+import { coverSlice } from "slicers/cover_slicer";
 import { pageSlice } from "slicers/page_slicer";
 import { previewSlicer } from "slicers/preview_slicer";
 
@@ -11,6 +12,7 @@ export const store = configureStore({
     templates: templateSlice.reducer,
     page: pageSlice.reducer,
     preview: previewSlicer.reducer,
+    cover: coverSlice.reducer,
   },
 });
 

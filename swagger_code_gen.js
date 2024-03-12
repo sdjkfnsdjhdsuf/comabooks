@@ -1,7 +1,8 @@
 const { codegen } = require("swagger-axios-codegen");
 
+console.log("WELL");
 codegen({
-  remoteUrl: "http://192.168.100.150:3000/api_json",
+  remoteUrl: "https://api.comabooks.org/api_json",
   outputDir: "./src/generated",
   useStaticMethod: true,
 });

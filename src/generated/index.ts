@@ -206,6 +206,53 @@ export class TemplateService {
   }
 }
 
+export class CoverService {
+  /**
+   *
+   */
+  static coverControllerSetCoverByTemplateId(
+    params: {
+      /**  */
+      id: string;
+      /** requestBody */
+      body?: CoverInputDto;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<CoverEntityDto> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/cover/{id}';
+      url = url.replace('{id}', params['id'] + '');
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params.body;
+
+      configs.data = data;
+
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
+  static coverControllerGetCover(
+    params: {
+      /**  */
+      id: string;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<CoverResponceDto> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/cover/{id}';
+      url = url.replace('{id}', params['id'] + '');
+
+      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
+
+      axios(configs, resolve, reject);
+    });
+  }
+}
+
 export interface AnswerEntityDto {
   /**  */
   _id: string;
@@ -262,3 +309,46 @@ export interface TempalteResponceDto {
   /**  */
   questions: QuestionTemplateDto[];
 }
+
+export interface CoverInputDto {
+  /**  */
+  fullName: string;
+
+  /**  */
+  fullNamePartner: string;
+
+  /**  */
+  bookName: string;
+
+  /**  */
+  coverUrl: string;
+}
+
+export interface CoverEntityDto {
+  /**  */
+  templateId: string;
+
+  /**  */
+  _id: string;
+
+  /**  */
+  userId: string;
+
+  /**  */
+  fullName: string;
+
+  /**  */
+  fullNamePartner: string;
+
+  /**  */
+  bookName: string;
+
+  /**  */
+  coverUrl: string;
+}
+
+export interface CoverResponceDto {
+  /**  */
+  value: CombinedValueTypes;
+}
+export type CombinedValueTypes = CoverEntityDto;
