@@ -65,6 +65,11 @@ const NavbarLoginned = ({
     navigate(`/cover/${templateId}`);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate(`/`);
+  };
+
   if (templateDto == null) return <></>;
 
   return (
@@ -144,6 +149,12 @@ const NavbarLoginned = ({
           onClick={showCoverPage}
         >
           Изменить обложку
+        </button>
+        <button
+          className={`sidebar-bottom-fixed-cover`}
+          onClick={handleLogout}
+        >
+          Выйти из аккаунта
         </button>
       </div>
     </aside>

@@ -46,6 +46,11 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
 
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate(`/`);
+  };
+
   const showCoverPage = () => {
     navigate(`/cover/${templateId}`);
   };
@@ -145,6 +150,12 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
               onClick={showCoverPage}
             >
               Изменить обложку
+            </button>
+            <button
+              className={`sidebar-bottom-fixed-cover`}
+              onClick={handleLogout}
+            >
+              Выйти из аккаунта
             </button>
           </div>
         </>
