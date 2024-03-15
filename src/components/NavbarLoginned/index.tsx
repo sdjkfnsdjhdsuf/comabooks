@@ -49,9 +49,16 @@ const NavbarLoginned = ({
     (state) => state.page.value
   );
   const [isViewingPhotos, setIsViewingPhotos] = useState(false);
-  const pageFilled = Object.values(answerMap).filter((val) =>
-    val.answer.replaceAll(" ", "")
-  ).length;
+  const calculatePagesFilled = () => {
+    const charsPerPage = 250;
+    const initialPages = 8; // Initial pages for chapters, etc.
+    const pageCounts = Object.values(answerMap).reduce((total, val) => {
+      const answerLength = val.answer.replaceAll(" ", "").length;
+      return total + Math.ceil(answerLength / charsPerPage);
+    }, 0);
+    return initialPages + pageCounts;
+  };
+  const pageFilled = calculatePagesFilled();
   const navigate = useNavigate();
 
   const handleTogglePhotos = () => {
