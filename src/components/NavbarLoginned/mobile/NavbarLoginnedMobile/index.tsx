@@ -90,7 +90,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                   max={templateDto.questions.length}
                 />
                 <div className="page-numbers">
-                  {pageFilled}/{templateDto.questions.length} вопросов отвечено
+                  {pageFilled} страниц заполнено
                 </div>
               </div>
             </div>

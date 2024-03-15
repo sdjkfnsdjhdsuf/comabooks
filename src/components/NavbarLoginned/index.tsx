@@ -90,7 +90,7 @@ const NavbarLoginned = ({
           <div className="forms-info">
             <progress value={pageFilled} max={templateDto.questions.length} />
             <div className="page-numbers">
-              {pageFilled}/{templateDto.questions.length} вопросов отвечено
+              {pageFilled} страниц заполнено
             </div>
           </div>
         </div>
