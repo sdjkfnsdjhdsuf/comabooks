@@ -3,6 +3,7 @@ import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store";
 import { switchPreview } from "slicers/preview_slicer";
+import { CoverEntityDto } from "generated";
 
 // interface PreviewProps {
 
@@ -47,6 +48,9 @@ export const Preview = ({
   const pageNumber = useSelector<RootState, number>(
     (state) => state.page.value ?? 0
   );
+  const coverData = useSelector<RootState, CoverEntityDto | null>(
+    (state) => state.cover.value
+  );
   const isOddPageNumber = pageNumber % 2 !== 0;
 
   useEffect(() => {
@@ -81,11 +85,11 @@ export const Preview = ({
             {isOddPageNumber ? (
               <>
                 <p>{pageNumber + index + 1}</p>
-                <p>Любовь к тебе бесконечна</p>
+                <p>{coverData?.bookName || "\u00A0"}</p>
               </>
             ) : (
               <>
-                <p>Аскар Абдрахманов</p>
+                <p>{coverData?.fullName || "\u00A0"}</p>
                 <p>{pageNumber + index + 1}</p>
               </>
             )}

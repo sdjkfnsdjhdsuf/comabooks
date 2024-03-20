@@ -1,7 +1,66 @@
+.add-photo-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.photo-preview-container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+}
+
+.photo-preview {
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 384px;
+    height: 630px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+
+.photo-preview-media {
+    margin-top: 100px;
+    width: 190px;
+    height: 190px;
+    object-fit: cover;
+}
+
+.photo-preview-date {
+    font-size: 12px;
+    margin-top: 20px;
+    line-height: 1;
+    font-family: 'Playfair Display';
+}
+
+.photo-preview-description {
+    font-size: 12px;
+    margin-top: 20px;
+    line-height: 1;
+    width: 60%;
+    font-style: italic;
+    font-family: 'Playfair Display';
+}
+
+.preview-photo-colon {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 12px;
+    margin-top: auto;
+    margin-bottom: 50px;
+    padding: 0 50px;
+}
+
 .add-photo-form {
     display: flex;
-    width: 100%;
-    padding-top: 200px;
+    width: 50%;
+    padding-top: 100px;
 }
 
 .form-group {
@@ -16,7 +75,41 @@
     width: 60%;
 }
 
+.upload-icon-label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    border: 1px solid #D9D9D9;
+    padding: 30px;
+}
+
+
 @media (max-width: 700px) {
+    .photo-preview { 
+        height: 600px;
+    }
+
+    .add-photo-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .photo-preview-container {
+        width: 100%;
+        order: 1;
+    }
+
+    .add-photo-form {
+        width: 100%;
+        order: 2;
+        padding-top: 50px;
+        padding-bottom: 100px;
+    }
+
     .form-group {
         width: 100%;
     } 
@@ -24,6 +117,19 @@
     .form-group-photo {
         width: 100%;
     } 
+}
+
+@media (max-width: 420px) { 
+    .photo-preview { 
+        height: 545px;
+    }
+
+    .photo-preview-media {
+        margin-top: 100px;
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+    }
 }
 
 .form-group label {

@@ -107,6 +107,27 @@ export class PagedResultDto<T = any> implements IPagedResult<T> {
 // customer definition
 // empty
 
+export class UplaodService {
+  /**
+   *
+   */
+  static awsUploadControllerUploadFile(
+    params: {
+      /**  */
+      file: any;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<string> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/upload';
+
+      const configs: IRequestConfig = getConfigs('post', 'multipart/form-data', url, options);
+
+      axios(configs, resolve, reject);
+    });
+  }
+}
+
 export class AnswerService {
   /**
    *
@@ -253,6 +274,94 @@ export class CoverService {
   }
 }
 
+export class PhotoService {
+  /**
+   *
+   */
+  static photoControllerGetPhotos(
+    params: {
+      /**  */
+      templateId: string;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<PhotoEnityDto[]> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/photo/{templateId}/';
+      url = url.replace('{templateId}', params['templateId'] + '');
+
+      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
+
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
+  static photoControllerEditPhoto(
+    params: {
+      /**  */
+      photoId: string;
+      /** requestBody */
+      body?: PhotoEnityDto;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<PhotoEnityDto> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/photo/edit/{photoId}';
+      url = url.replace('{photoId}', params['photoId'] + '');
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params.body;
+
+      configs.data = data;
+
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
+  static photoControllerEditAnswer(
+    params: {
+      /** requestBody */
+      body?: AddPhotoEnityDto;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<PhotoEnityDto> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/photo/add';
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params.body;
+
+      configs.data = data;
+
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
+  static photoControllerDeletePhoto(
+    params: {
+      /**  */
+      photoId: string;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/photo/delete/{photoId}';
+      url = url.replace('{photoId}', params['photoId'] + '');
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      axios(configs, resolve, reject);
+    });
+  }
+}
+
 export interface AnswerEntityDto {
   /**  */
   _id: string;
@@ -350,5 +459,39 @@ export interface CoverEntityDto {
 export interface CoverResponceDto {
   /**  */
   value: CombinedValueTypes;
+}
+
+export interface PhotoEnityDto {
+  /**  */
+  _id: string;
+
+  /**  */
+  photoUrl: string;
+
+  /**  */
+  date: Date;
+
+  /**  */
+  description: string;
+
+  /**  */
+  templateId: string;
+
+  /**  */
+  userId: string;
+}
+
+export interface AddPhotoEnityDto {
+  /**  */
+  photoUrl: string;
+
+  /**  */
+  date: Date;
+
+  /**  */
+  description: string;
+
+  /**  */
+  templateId: string;
 }
 export type CombinedValueTypes = CoverEntityDto;

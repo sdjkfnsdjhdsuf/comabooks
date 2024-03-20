@@ -1,31 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "assets/comabooks-white.svg";
 import {
   AnswerEntityDto,
+  PhotoEnityDto,
   TempalteResponceDto,
 } from "generated";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store";
 import { thunkSetPage } from "slicers/page_slicer";
+import { fetchPhotos } from "slicers/photos_slicer";
 
-// Assuming mockPhotos is available globally or imported
-const mockPhotos = [
-  { id: "photo1", title: "Sunset at the beach", date: "2021-07-01" },
-  { id: "photo2", title: "A day in the mountains", date: "2021-08-15" },
-  { id: "photo3", title: "Family picnic", date: "2021-09-05" },
-  { id: "photo4", title: "Sunset at the beach", date: "2021-07-01" },
-  { id: "photo5", title: "A day in the mountains", date: "2021-08-15" },
-  { id: "photo6", title: "Family picnic", date: "2021-09-05" },
-  { id: "photo7", title: "Sunset at the beach", date: "2021-07-01" },
-  { id: "photo8", title: "A day in the mountains", date: "2021-08-15" },
-  { id: "photo9", title: "Family picnic", date: "2021-09-05" },
-  { id: "photo10", title: "Sunset at the beach", date: "2021-07-01" },
-  { id: "photo11", title: "A day in the mountains", date: "2021-08-15" },
-  { id: "photo12", title: "Family picnic", date: "2021-09-05" },
-  // add the rest of your photos here
-];
 
 const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -51,6 +37,16 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   };
   const pageFilled = calculatePagesFilled();
 
+  useEffect(() => {
+    if (isViewingPhotos) {
+        dispatch(fetchPhotos(templateId));
+    }
+}, [dispatch, isViewingPhotos, templateId]);
+
+const photos = useSelector<RootState, PhotoEnityDto[]>(state => 
+  Object.values(state.photos.photos)
+);
+
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -68,6 +64,14 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
 
   const handleTogglePhotos = () => {
     setIsViewingPhotos(!isViewingPhotos);
+  };
+
+  const addNewPhoto = () => {
+    navigate(`/addphoto/${templateId}`)
+  }
+
+  const handlePhotoClick = (photoId: string) => {
+    navigate(`/addphoto/${templateId}/${photoId}`);
   };
 
   if (templateDto == null) return <></>;
@@ -97,16 +101,15 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
           </div>
           {isViewingPhotos ? (
             <>
-              {/* <ul className="photo-list-mobile">
-                {mockPhotos.map((photo) => (
-                  <li key={photo.id}>
-                    <div className="photo-list-one-mobile">{photo.title}</div>
-                  </li>
-                ))}
-              </ul> */}
-              <div className="photo-list-one-mobile-test">Данная функция добавится в ближайшее время, пока пишите редактору, он поможет добавить воспоминания с фото!</div>
-              <div className="sidebar-bottom-fixed-add-photo-mobile">
-                <button>+ Добавить фото </button>
+          <ul className="photo-list-mobile">
+                        {photos.map((photo) => (
+                            <li key={photo._id} onClick={() => handlePhotoClick(photo._id)}>
+                                <div className="photo-list-one">{photo.description}</div>
+                            </li>
+                        ))}
+          </ul>
+              <div className="sidebar-bottom-add-photo-mobile">
+                <button onClick={addNewPhoto}>+ Добавить фото </button>
               </div>
             </>
           ) : (

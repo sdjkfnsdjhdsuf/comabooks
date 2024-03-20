@@ -50,6 +50,14 @@
   padding-bottom: 300px;
 }
 
+.photo-list-mobile {
+  list-style-type: none;
+  width: 100%;
+  padding-top: 150px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .questions-list-mobile li button {
   text-align: left;
   width: 100%;
@@ -190,7 +198,6 @@ progress::-moz-progress-bar {
   padding-top: 150px;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 300px;
   width: 100%;
   overflow-y:scroll;
 }
@@ -227,14 +234,14 @@ progress::-moz-progress-bar {
   padding-right: 20px;
 }
 
-.sidebar-bottom-fixed-add-photo-mobile {
+.sidebar-bottom-add-photo-mobile {
   padding-left: 20px;
   padding-right: 20px;
   display: flex;
   width: 100%;
 }
 
-.sidebar-bottom-fixed-add-photo-mobile button {
+.sidebar-bottom-add-photo-mobile button {
   border: 0.5px solid rgb(194, 194, 194);
   background-color: transparent;
   border-radius: 8px;
