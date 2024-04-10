@@ -94,57 +94,57 @@ const navitage = useNavigate();
         <div className='landing-format-grid'>
             <div className='landing-format-card'>
                 <div className='landing-how-card-title'>Парню</div>
-                <div className='landing-how-card-text'>202 вопросов</div>
+                <div className='landing-how-card-text'>211 вопросов</div>
             </div>
 
             <div className='landing-format-card'>
                 <div className='landing-how-card-title'>Девушке</div>
-                <div className='landing-how-card-text'>202 вопросов</div>
+                <div className='landing-how-card-text'>211 вопросов</div>
             </div>
 
             <div className='landing-format-card'>
                 <div className='landing-how-card-title'>Мужу</div>
-                <div className='landing-how-card-text'>202 вопросов</div>
+                <div className='landing-how-card-text'>211 вопросов</div>
             </div>
 
             <div className='landing-format-card'>
                 <div className='landing-how-card-title'>Жене</div>
-                <div className='landing-how-card-text'>202 вопросов</div>
+                <div className='landing-how-card-text'>211 вопросов</div>
             </div>
 
             <div className='landing-format-card'>
                 <div className='landing-how-card-title'>Родителям</div>
-                <div className='landing-how-card-text'>250 вопросов</div>
+                <div className='landing-how-card-text'>260 вопросов</div>
             </div>
 
             <div className='landing-format-card'>
                 <div className='landing-how-card-title'>Маме</div>
-                <div className='landing-how-card-text'>210 вопросов</div>
+                <div className='landing-how-card-text'>170 вопросов</div>
             </div>
 
             <div className='landing-format-card'>
                 <div className='landing-how-card-title'>Папе</div>
-                <div className='landing-how-card-text'>210 вопросов</div>
+                <div className='landing-how-card-text'>170 вопросов</div>
             </div>
 
             <div className='landing-format-card'>
                 <div className='landing-how-card-title'>Брату</div>
-                <div className='landing-how-card-text'>195 вопросов</div>
+                <div className='landing-how-card-text'>165 вопросов</div>
             </div>
 
             <div className='landing-format-card'>
                 <div className='landing-how-card-title'>Сестре</div>
-                <div className='landing-how-card-text'>195 вопросов</div>
+                <div className='landing-how-card-text'>165 вопросов</div>
             </div>
 
             <div className='landing-format-card'>
                 <div className='landing-how-card-title'>Другу</div>
-                <div className='landing-how-card-text'>185 вопросов</div>
+                <div className='landing-how-card-text'>173 вопросов</div>
             </div>
 
             <div className='landing-format-card'>
                 <div className='landing-how-card-title'>Подруге</div>
-                <div className='landing-how-card-text'>185 вопросов</div>
+                <div className='landing-how-card-text'>173 вопросов</div>
             </div>
 
             <div className='landing-format-card'>
@@ -161,34 +161,34 @@ const navitage = useNavigate();
         </div>
 
         <div className='landing-questions-grid'>
-            <div className='landing-question-card'>
-                <div className='landing-how-card-title'>- Можно ли сделать формат под меня?</div>
-                <div className='landing-how-card-text'>На нашей платформе есть более десяти форматов под каждого получателя: партнеру, родителям, друзьям и тд.</div>
-            </div>
-
-            <div className='landing-question-card'>
-                <div className='landing-how-card-title'>- Можно ли добавить что-то от себя?</div>
-                <div className='landing-how-card-text'>Наш менеджер проконсультирует вас, откроет вам доступ к платформе под ваш формат.</div>
-            </div>
-
-            <div className='landing-question-card'>
-                <div className='landing-how-card-title'>- У меня есть готовое содержание моей книги. Могу я через вас ее издать?</div>
-                <div className='landing-how-card-text'>После произведения оплаты и получения доступа к платформе, вы сможете начать заполнять содержание вашей будущей книги.</div>
-            </div>
-
-            <div className='landing-question-card'>
+        <div className='landing-question-card'>
                 <div className='landing-how-card-title'>- Сколько времени займет написать книгу?</div>
-                <div className='landing-how-card-text'>На нашей платформе можно добавить воспоминания в виде фото, даты и краткого описания.</div>
+                <div className='landing-how-card-text'>На заполнение содержания книги в среднем уходит 3-5 дней. На редактирование, печать и верстку еще 1-3 дня. В итоге, на получение собственной книги до вашей двери уйдет порядка 5-8 дней.</div>
             </div>
 
             <div className='landing-question-card'>
                 <div className='landing-how-card-title'>- Доставляете только по Казахстану?</div>
-                <div className='landing-how-card-text'>Вам также дается возможность самостоятельно выбрать обложку под будущую книгу, указать название и инициалы автора.</div>
+                <div className='landing-how-card-text'>Мы доставляем экспресс доставкой по всему миру. 1-3 дня.</div>
             </div>
 
             <div className='landing-question-card'>
                 <div className='landing-how-card-title'>- Нужно обязательно ответить на все вопросы?</div>
-                <div className='landing-how-card-text'>Как только работа над содержанием завершена, наши редакторы приступают верстать ее под печать.</div>
+                <div className='landing-how-card-text'>Необязательно, можно пропускать. Главное - заполнить 160-200 страниц. Индикатор количества страниц показан на платформе.</div>
+            </div>
+
+            <div className='landing-question-card'>
+                <div className='landing-how-card-title'>- Можно ли сделать формат под меня?</div>
+                <div className='landing-how-card-text'>Да, конечно! Мы можем собрать персональный формат исходя из вашей ситуации.</div>
+            </div>
+
+            <div className='landing-question-card'>
+                <div className='landing-how-card-title'>- Можно ли добавить что-то от себя?</div>
+                <div className='landing-how-card-text'>Да, наши редакторы воплотят в реальность любые ваши задумки.</div>
+            </div>
+
+            <div className='landing-question-card'>
+                <div className='landing-how-card-title'>- У меня есть готовое содержание моей книги. Могу я через вас ее издать?</div>
+                <div className='landing-how-card-text'>да, конечно, мы поможем с изданием книги в одном экземпляре.</div>
             </div>
         </div>
 
