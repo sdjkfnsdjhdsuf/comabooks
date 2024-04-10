@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store";
 import { switchPreview } from "slicers/preview_slicer";
 import { setAnswers } from "slicers/answers_slice";
+import { setEditing } from "slicers/editing_slicer";
 // import { AppDispatchType, answerSlice } from "routes/Forms";
 
 const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
@@ -68,6 +69,7 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
       {!isLoading && (
         <div className="edit-buttons">
           <button
+            
             className={isEditable ? "confirm-button" : "edit-button"}
             onClick={async () => {
               if (isEditable) {

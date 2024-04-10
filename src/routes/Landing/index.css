@@ -1,0 +1,325 @@
+.landing-page {
+    width: 100%;
+    height: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.landing-hiro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    width: 100%;
+    position: relative;
+}
+
+.landing-hiro-column {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 1000;
+    top: 30%;
+    left: 30px;
+}
+
+.landing-hiro-title {
+    font-size: 48px;
+    color: white;
+    margin-bottom: 20px;
+    width: 70%;
+    font-family: "Forum";
+}
+
+.landing-hiro-text {
+    font-size: 18px;
+    color: white;
+    font-family: 'Inter';
+    width: 60%;
+}
+
+.landing-how-grid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 100px;
+}
+
+.landing-how-card {
+    border-radius: 12px;
+    border: 1px solid #E8CFD1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    cursor: pointer;
+    transition: 200ms;
+}
+
+.landing-question-card {
+    border-radius: 12px;
+    border: 1px solid #E8CFD1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.landing-how-card:hover {
+    background-color: #e1b4b7;
+}
+
+.landing-how-card-title {
+    font-size: 20px;
+    font-family: "Inter";
+    font-weight: 700;
+    color: black;
+}
+
+.landing-how-card-text {
+    font-size: 16px;
+    font-family: "Inter";
+    color: #994D4F;
+}
+
+.landing-title-text-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 50px;
+}
+
+.landing-column-title {
+    font-size: 48px;
+    color: black;
+    font-family: "Forum";
+}
+
+.landing-column-text {
+    font-size: 18px;
+    color: black;
+    font-family: 'Inter';
+}
+
+.landing-questions-grid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+    margin-bottom: 100px;
+}
+
+.landing-buttons-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.landing-whatsapp-button {
+    border-radius: 6px;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Inter";
+    color: white;
+    background-color: #23CC44;
+}
+
+.landing-instagram-button {
+    border-radius: 6px;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Inter";
+    color: white;
+    background: linear-gradient(
+    to right,
+    #833ab4,#fd1d1d,#fcb045
+  );
+}
+
+.landing-button {
+    border-radius: 6px;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Inter";
+    color: #9b3d44;
+    background-color: white;
+    margin-top: 20px;
+}
+
+.landing-action-button {
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: "Inter";
+    color: #ffffff;
+    background-color: #BD0F17;
+    margin-top: 20px;
+}
+
+.lading-action {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.landing-action-title {
+    font-size: 36px;
+    color: black;
+    font-weight: 700;
+    width: 50%;
+    text-align: center;
+    font-family: "Inter";
+}
+
+.landing-we {
+    width: 100%;
+}
+
+.landing-format-grid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 100px;
+}
+
+.landing-format-card {
+    border-radius: 12px;
+    border: 1px solid #E8CFD1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 200ms;
+}
+
+.landing-format-card:hover {
+    background-color: #e1b4b7;
+}
+
+/* .landing-format-card:last-child {
+    background-color: #E8CFD1;
+} */
+
+@media (max-width: 700px) {
+
+    .landing-hiro {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        width: 100%;
+        position: relative;
+    }
+
+    .landing-hiro-media-mobile {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        position: relative;
+        border-radius: 12px;
+    }
+
+    .landing-hiro-media {
+        display: none;
+    }
+
+    .landing-how-grid {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 20px;
+        margin-bottom: 100px;
+    }
+
+    .landing-column-title {
+        font-size: 42px;
+        color: black;
+    }
+    
+    .landing-column-text {
+        font-size: 16px;
+        color: black;
+        font-family: 'Inter';
+    }
+
+    .landing-hiro-column {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        z-index: 1000;
+        bottom: 50px;
+        top: unset;
+        left: 30px;
+    }
+
+    .landing-hiro-title {
+        font-size: 36px;
+        color: white;
+        margin-bottom: 20px;
+        width: 100%;
+        font-family: "Forum";
+    }
+    
+    .landing-hiro-text {
+        font-size: 16px;
+        color: white;
+        font-family: 'Inter';
+        width: 90%;
+    }
+
+    .landing-action-title {
+        font-size: 30px;
+        color: black;
+        font-weight: 700;
+        width: 100%;
+        text-align: center;
+        font-family: "Inter";
+    }
+
+    .landing-format-grid {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 20px;
+        margin-bottom: 100px;
+    }
+
+    .landing-title-text-column {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+}
+
+@media (min-width: 700px) {
+    .landing-hiro-media-mobile {
+        display: none;
+    }
+
+    .landing-hiro-media {
+        width: 100%;
+        height: 600px;
+        object-fit: cover;
+        position: relative;
+        border-radius: 12px;
+    }
+}

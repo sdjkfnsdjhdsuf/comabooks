@@ -9,10 +9,10 @@ import { serviceOptions } from "generated";
 import { Provider } from "react-redux"; // Импорт Provider
 import { store } from "./store"; // Импорт store
 import FormTemplate from "routes/FormTemplate";
-
 import { CoverPage } from "routes/CoverPage";
 import { TokenChecker } from "token_wrapper";
 import AddPhoto from "components/AddPhoto";
+import Landing from "routes/Landing";
 // import AddPhoto from "components/AddPhoto";
 
 export const instance = axios.create({
@@ -28,7 +28,8 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Home />} />
         <Route path="/forms" element={<Forms />} />
         <Route path="/forms/:id" element={<FormTemplate />} />
         <Route path="/addphoto/:templateId" element={<AddPhoto />} />

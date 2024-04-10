@@ -10,8 +10,8 @@ const Navbar = () => {
       <Link to="/">
         <img src={logo} alt="Logo" className="logo" />
       </Link>
-      <Link to="/">
-        <img src={shopicon} alt="Shop-icon" className="shop-icon" />
+      <Link to="/login" style={{textDecoration: 'none', fontSize: '14px', color: 'white', backgroundColor: '#BD0F17', borderRadius: '8px', padding: '10px 16px', fontFamily: 'Inter', fontWeight: '700'}}>
+        Войти
       </Link>
     </div>
   );
