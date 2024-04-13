@@ -108,10 +108,10 @@ const handleTogglePhotos = () => {
                                 <div className="photo-list-one">{photo.description}</div>
                             </li>
                         ))}
-          </ul>
           <div className="sidebar-bottom-fixed-add-photo">
             <button onClick={addNewPhoto}>+ Добавить фото </button>
           </div>
+          </ul>
         </>
       ) : (
         <ul className="questions-list">

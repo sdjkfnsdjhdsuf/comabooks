@@ -107,10 +107,10 @@ const photos = useSelector<RootState, PhotoEnityDto[]>(state =>
                                 <div className="photo-list-one">{photo.description}</div>
                             </li>
                         ))}
-          </ul>
-              <div className="sidebar-bottom-add-photo-mobile">
+                                      <div className="sidebar-bottom-add-photo-mobile">
                 <button onClick={addNewPhoto}>+ Добавить фото </button>
               </div>
+          </ul>
             </>
           ) : (
             <ul className="questions-list-mobile">
