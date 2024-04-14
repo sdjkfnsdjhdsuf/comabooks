@@ -5,12 +5,6 @@ import { CoverState } from "slicers/cover_slicer";
 import { AppDispatch, RootState } from "store";
 import axios from "axios";
 import "./index.css";
-import cover1 from "assets/red front.png";
-import cover2 from "assets/yellow front.png";
-import cover3 from "assets/black fornt.png";
-import cover4 from "assets/blue front.png";
-import cover5 from "assets/green front.png";
-import cover6 from "assets/light green front.png";
 import colorButton1 from "assets/red.png";
 import colorButton2 from "assets/yellow.png";
 import colorButton3 from "assets/black.png";
@@ -28,10 +22,19 @@ function Cover() {
     (state) => state.cover.value
   );
 
+  const coverColors: Record<CoverKey, string> = {
+    cover1: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/red+front+(3).png",
+    cover2: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/yellow+front+1.png",
+    cover3: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/black+fornt+(2).png",
+    cover4: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/blue+front+(2).png",
+    cover5: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/green+front+(2).png",
+    cover6: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/light+green+front+(2).png",
+};
+
   const [authorName, setAuthorName] = useState("");
   const [bookTitle, setBookTitle] = useState("");
   const [partnerName, setPartnerName] = useState("");
-  const [coverColor, setCoverColor] = useState(cover1);
+  const [coverColor, setCoverColor] = useState(coverColors.cover1);
   const [isEditable, setIsEditable] = useState(true);
   const navigate = useNavigate();
 
@@ -81,21 +84,11 @@ function Cover() {
     setIsEditable(!isEditable);
   };
 
-  type CoverColors = {
-    [key: string]: string;
-  };
+  type CoverKey = 'cover1' | 'cover2' | 'cover3' | 'cover4' | 'cover5' | 'cover6';
+
 
   type CoverSelectorColors = {
     [key: string]: string;
-  };
-
-  const coverColors: CoverColors = {
-    cover1: cover1,
-    cover2: cover2,
-    cover3: cover3,
-    cover4: cover4,
-    cover5: cover5,
-    cover6: cover6,
   };
 
   const coverSelectorColors: CoverSelectorColors = {
@@ -108,11 +101,12 @@ function Cover() {
   };
 
   const handleColorSelect = (color: string) => {
-    const coverImage = coverColors[color];
+    const coverKey = color as CoverKey;
+    const coverImage = coverColors[coverKey];
     if (coverImage) {
-      setCoverColor(coverImage);
+        setCoverColor(coverImage);
     }
-  };
+};
 
   return (
     <div className="cover-page">
