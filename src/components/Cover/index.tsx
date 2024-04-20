@@ -34,6 +34,7 @@ function Cover() {
   const [authorName, setAuthorName] = useState("");
   const [bookTitle, setBookTitle] = useState("");
   const [partnerName, setPartnerName] = useState("");
+  const [displayPartnerName, setDisplayPartnerName] = useState(true);
   const [coverColor, setCoverColor] = useState(coverColors.cover1);
   const [isEditable, setIsEditable] = useState(true);
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ function Cover() {
             bookName: bookTitle,
             coverUrl: coverColor,
             fullName: authorName,
-            fullNamePartner: partnerName,
+            fullNamePartner: partnerName
           })
         );
         console.log("Data saved");
@@ -106,6 +107,18 @@ function Cover() {
     if (coverImage) {
         setCoverColor(coverImage);
     }
+};
+
+const receiverHolder = (templateId: string | undefined) => {
+  if (templateId === '65fb40c5b63f0df17f6ce6ae') {
+    return 'Полное имя мамы';
+  } else if (templateId === '65fb7789f6d6c9118d3caead') {
+    return 'Полное имя сестры';
+  } else if (templateId === '661970fd80f5c5317e0882c3') {
+    return 'Полное имя подруги';
+  } else {
+    return 'Полное имя партнера';
+  }
 };
 
   return (
@@ -142,7 +155,7 @@ function Cover() {
           </div>
 
           <div className="input">
-            <div className="input-title">Полное имя партнера</div>
+            <div className="input-title">{receiverHolder(templateId)}</div>
             <input
               type="text"
               placeholder="Напишите сюда ответ..."
@@ -150,7 +163,18 @@ function Cover() {
               onChange={(e) => setPartnerName(e.target.value)}
               disabled={!isEditable}
             />
+            <div className="nopartner">
+            <label>
+              <input
+                type="checkbox"
+                checked={!displayPartnerName}
+                onChange={() => setDisplayPartnerName(!displayPartnerName)}
+              />
+              Не отображать на обложке
+            </label>
+            </div>
           </div>
+          
 
           <div className="input">
             <div className="input-title">Название книги</div>
@@ -208,7 +232,7 @@ function Cover() {
               {authorName ? authorName : "\u00A0"}
             </div>
             <div className="partner-name">
-              {partnerName ? partnerName : "\u00A0"}
+              {displayPartnerName ? partnerName : "\u00A0"}
             </div>
           </div>
         </div>

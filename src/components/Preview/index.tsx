@@ -68,6 +68,8 @@ export const Preview = ({
     };
   }, []);
 
+  
+
   return (
     <div
       className="book-preview-backdrop"

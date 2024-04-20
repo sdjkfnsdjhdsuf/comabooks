@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "assets/comabooks-white.svg";
+import hamburger from "assets/hamburger-icon.png";
 import {
   AnswerEntityDto,
   PhotoEnityDto,
@@ -79,7 +80,7 @@ const photos = useSelector<RootState, PhotoEnityDto[]>(state =>
   return (
     <aside className={`sidebar-mobile ${isOpen ? "open" : ""}`}>
       <button className="hamburger-icon" onClick={() => setIsOpen(!isOpen)}>
-        ☰
+        <img src={hamburger} style={{width: '20px', height: '20px', objectFit: 'cover'}} />
       </button>
       {isOpen && (
         <>
