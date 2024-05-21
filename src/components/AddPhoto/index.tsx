@@ -29,6 +29,10 @@ const AddPhoto = () => {
   const coverData = useSelector<RootState, CoverEntityDto | null>(
     (state) => state.cover.value
   );
+
+  const [hideDate, setHideDate] = useState<boolean>(false);
+  const [hideDescription, setHideDescription] = useState<boolean>(false);
+  const [questionTxt, setQuestionTxt] = useState<string>("");
   
   useEffect(() => {
     if (textareaRef.current) {
@@ -62,6 +66,9 @@ const AddPhoto = () => {
             setPhotoDate(new Date(photoDetails.date));
             setPhotoDescription(photoDetails.description);
             setPhotoFile(photoDetails.photoUrl);
+            setHideDate(photoDetails.hideDate);
+            setHideDescription(photoDetails.hideDescription);
+            setQuestionTxt(photoDetails.questionTxt);
             setIsEditable(false);
           }
         } catch (error) {
@@ -101,6 +108,9 @@ const AddPhoto = () => {
         description: photoDescription,
         photoUrl: photoFile,
         templateId: templateId,
+        hideDate: hideDate,
+        hideDescription: hideDescription,
+        questionTxt: questionTxt,
       };
 
       if (isEditable) {

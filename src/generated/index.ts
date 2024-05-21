@@ -212,6 +212,31 @@ export class AuthService {
   }
 }
 
+export class UserService {
+  /**
+   *
+   */
+  static userControllerCreateUser(
+    params: {
+      /** requestBody */
+      body?: CreateUserRequestDto;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<string> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/user/create';
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params.body;
+
+      configs.data = data;
+
+      axios(configs, resolve, reject);
+    });
+  }
+}
+
 export class TemplateService {
   /**
    *
@@ -278,6 +303,28 @@ export class PhotoService {
   /**
    *
    */
+  static photoControllerGetPhotoById(
+    params: {
+      /**  */
+      templateId: string;
+      /**  */
+      questionId: string;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<PhotoEnityDto> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/photo/{templateId}/{questionId}';
+      url = url.replace('{templateId}', params['templateId'] + '');
+      url = url.replace('{questionId}', params['questionId'] + '');
+
+      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
+
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
   static photoControllerGetPhotos(
     params: {
       /**  */
@@ -286,7 +333,7 @@ export class PhotoService {
     options: IRequestOptions = {}
   ): Promise<PhotoEnityDto[]> {
     return new Promise((resolve, reject) => {
-      let url = basePath + '/photo/{templateId}/';
+      let url = basePath + '/photo/{templateId}';
       url = url.replace('{templateId}', params['templateId'] + '');
 
       const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
@@ -362,6 +409,97 @@ export class PhotoService {
   }
 }
 
+export class ReadyService {
+  /**
+   *
+   */
+  static generateAnswersReadyTemplate(
+    params: {
+      /**  */
+      id: string;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/ready/template/{id}';
+      url = url.replace('{id}', params['id'] + '');
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      axios(configs, resolve, reject);
+    });
+  }
+}
+
+export class AnswerSmartService {
+  /**
+   *
+   */
+  static answerSmartControllerGetMyAnswersByTemplate(
+    params: {
+      /**  */
+      id: string;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<AnswerSmartEntityDto[]> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/answerSmart/my/{id}';
+      url = url.replace('{id}', params['id'] + '');
+
+      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
+
+      axios(configs, resolve, reject);
+    });
+  }
+  /**
+   *
+   */
+  static answerSmartControllerEditAnswer(
+    params: {
+      /**  */
+      id: string;
+      /** requestBody */
+      body?: AnswerEditDto;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<AnswerSmartEntityDto> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/answerSmart/edit/{id}';
+      url = url.replace('{id}', params['id'] + '');
+
+      const configs: IRequestConfig = getConfigs('post', 'application/json', url, options);
+
+      let data = params.body;
+
+      configs.data = data;
+
+      axios(configs, resolve, reject);
+    });
+  }
+}
+
+export class OrderService {
+  /**
+   *
+   */
+  static orderStatusControllerGetByTemplateId(
+    params: {
+      /**  */
+      id: string;
+    } = {} as any,
+    options: IRequestOptions = {}
+  ): Promise<OrdersStatusDTO> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/order/template/{id}';
+      url = url.replace('{id}', params['id'] + '');
+
+      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
+
+      axios(configs, resolve, reject);
+    });
+  }
+}
+
 export interface AnswerEntityDto {
   /**  */
   _id: string;
@@ -398,6 +536,17 @@ export interface SignResponceDto {
 
   /**  */
   refreshToken: string;
+}
+
+export interface CreateUserRequestDto {
+  /**  */
+  userName: string;
+
+  /**  */
+  password: string;
+
+  /**  */
+  templateId: string;
 }
 
 export interface QuestionTemplateDto {
@@ -479,6 +628,15 @@ export interface PhotoEnityDto {
 
   /**  */
   userId: string;
+
+  /**  */
+  hideDate: boolean;
+
+  /**  */
+  hideDescription: boolean;
+
+  /**  */
+  questionTxt: string;
 }
 
 export interface AddPhotoEnityDto {
@@ -493,5 +651,45 @@ export interface AddPhotoEnityDto {
 
   /**  */
   templateId: string;
+
+  /**  */
+  hideDate: boolean;
+
+  /**  */
+  hideDescription: boolean;
+
+  /**  */
+  questionTxt: string;
+}
+
+export interface AnswerSmartEntityDto {
+  /**  */
+  _id: string;
+
+  /**  */
+  questionId: string;
+
+  /**  */
+  answer: string;
+
+  /**  */
+  userId: string;
+
+  /**  */
+  templateId: string;
+
+  /**  */
+  smartAnswer: string;
+}
+
+export interface OrdersStatusDTO {
+  /**  */
+  status: EnumOrdersStatusDTOStatus;
 }
 export type CombinedValueTypes = CoverEntityDto;
+export enum EnumOrdersStatusDTOStatus {
+  'writing' = 'writing',
+  'waiting' = 'waiting',
+  'proccessing' = 'proccessing',
+  'done' = 'done'
+}

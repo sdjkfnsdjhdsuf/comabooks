@@ -39,6 +39,7 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
   const [isEditable, setIsEditable] = useState(
     !(answerSelector?.answer ?? "").replaceAll(" ", "")
   );
+  const [saveAlert, setsaveAlert] = useState(false);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -56,6 +57,13 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
 
   return (
     <div className="question-form">
+
+      {saveAlert &&
+      <div className="alert-popup">
+        Ошибка при сохранении, попробуйте еще раз!
+      </div>
+      }
+
       <label className="question-number-title">Вопрос {currentPage + 1}</label>
       <label className="question">{question.question}</label>
       <textarea

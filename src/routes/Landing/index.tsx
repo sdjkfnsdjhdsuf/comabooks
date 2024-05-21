@@ -84,7 +84,7 @@ const [isNavVisible, setIsNavVisible] = useState(false);
                 <div className={`navigation ${isNavVisible ? 'show' : 'hide'}`}>
                     <Link to="/login">Войти</Link>
                     <Link to="https://www.instagram.com/comabooks/">Instagram</Link>
-                    {/* <Link to="/page2">Условия использования</Link> */}
+                    <Link to="/policies">Условия использования</Link>
                     <Link to="http://wa.me/77476738427">Заказать</Link>
                 </div>
             </div>

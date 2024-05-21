@@ -29,6 +29,17 @@
     font-family: 'Noto Sans';
 }
 
+.alert-popup {
+    position: absolute;
+    top: 70px;
+    font-size: 16px;
+    color: rgb(204, 30, 30);
+    background-color: rgb(255, 207, 207);
+    border: 1px solid rgb(244, 132, 132);
+    padding: 5px 16px;
+    border-radius: 12px;
+}
+
 @media (max-width: 768px) {
     .question {
         width: 100%;

@@ -32,7 +32,11 @@ function Forms() {
   );
   if (templateDto != null) {
     if (templateDto.length == 1) {
-      navigate(templateDto[0]._id);
+      if (templateDto[0]._id === '664c8b6cee4baadac60d5207') {
+        navigate(`new/${templateDto[0]._id}`);
+      } else {
+        navigate(templateDto[0]._id);
+      }
     }
   }
 

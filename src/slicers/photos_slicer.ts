@@ -73,6 +73,9 @@ export const addPhoto = createAsyncThunk(
     date: Date;
     description: string;
     templateId: string;
+    hideDate: boolean;
+    hideDescription: boolean;
+    questionTxt: string;
   }) => {
     const responsePhoto = await PhotoService.photoControllerEditAnswer(
       {
@@ -81,6 +84,9 @@ export const addPhoto = createAsyncThunk(
           description: payload.description,
           photoUrl: payload.photoUrl,
           templateId: payload.templateId,
+          hideDate: payload.hideDate,
+          hideDescription: payload.hideDescription,
+          questionTxt: payload.questionTxt
         },
       },
       {
@@ -95,8 +101,8 @@ export const addPhoto = createAsyncThunk(
 
 export const updatePhoto = createAsyncThunk(
   "photos/update",
-  async (payload: { photoId: string; photoUrl: string; date: Date; description: string; templateId: string; userId: string }) => {
-    const { photoId, photoUrl, date, description, templateId, userId } = payload;
+  async (payload: { photoId: string; photoUrl: string; date: Date; description: string; templateId: string; userId: string; hideDate: boolean; hideDescription: boolean; questionTxt: string; }) => {
+    const { photoId, photoUrl, date, description, templateId, userId, hideDate, hideDescription, questionTxt} = payload;
     const response = await PhotoService.photoControllerEditPhoto({
       photoId,
       body: {
@@ -106,6 +112,9 @@ export const updatePhoto = createAsyncThunk(
         description,
         templateId,
         userId,
+        hideDate,
+        hideDescription,
+        questionTxt
       },
     }, {
       headers: {
