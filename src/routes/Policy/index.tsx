@@ -54,7 +54,7 @@ function Policy() {
         </div>
 
 
-        <div className='policy-title'>Политика конфиденциальности</div>
+        <div className='policy-title'>Политика использования</div>
 
         <div className='policy-term'>
             <div className='policy-term-title'>Введение</div>
