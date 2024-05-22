@@ -1,16 +1,14 @@
 import { useEffect } from "react";
-
-import "./Forms.css";
-
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTemplates } from "slicers/templates/template_thrunk";
 import { AppDispatch, RootState } from "store";
 import { TempalteResponceDto } from "generated";
 
+import "./Forms.css";
+
 function Forms() {
   const navigate = useNavigate();
-
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -22,7 +20,7 @@ function Forms() {
     }
 
     dispatch(fetchTemplates());
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
   const templateDto = useSelector<RootState, TempalteResponceDto[] | null>(
     (state) => {
@@ -30,15 +28,21 @@ function Forms() {
       return state.templates.templates;
     }
   );
-  if (templateDto != null) {
-    if (templateDto.length == 1) {
-      if (templateDto[0]._id === '664c8b6cee4baadac60d5207') {
-        navigate(`new/${templateDto[0]._id}`);
-      } else {
-        navigate(templateDto[0]._id);
+
+  const templateIds: string[] = ['664c8b6cee4baadac60d5207', '664b85f9f88f1b24892d6716'];
+
+  useEffect(() => {
+    if (templateDto != null) {
+      if (templateDto.length === 1) {
+        const templateId = templateDto[0]._id;
+        if (templateIds.includes(templateId)) {
+          navigate(`new/${templateId}`);
+        } else {
+          navigate(templateId);
+        }
       }
     }
-  }
+  }, [templateDto, navigate, templateIds]);
 
   return <div></div>;
 }
