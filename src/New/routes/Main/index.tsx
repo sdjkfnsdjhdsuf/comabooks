@@ -119,7 +119,7 @@ const Main: React.FC = () => {
     };
 
     const checkReadyToSubmit = (answersMap: { [key: string]: string }) => {
-        const ready = Object.values(answersMap).every(answer => countWords(answer) >= 50);
+        const ready = Object.values(answersMap).every(answer => countWords(answer) >= 30);
         setReadyToSubmit(ready);
     };
 
@@ -171,7 +171,7 @@ const Main: React.FC = () => {
                                 onChange={(event) => handleAnswerChange(index, event, questionObj._id)}
                                 placeholder="Напишите сюда ответ..."
                             />
-                            <div className={`word-counter ${countWords(answers[questionObj._id] || "") < 50 ? 'red' : 'black'}`}>
+                            <div className={`word-counter ${countWords(answers[questionObj._id] || "") < 30 ? 'red' : 'black'}`}>
                                 {countWords(answers[questionObj._id] || "")} слов
                             </div>
                         </div>
