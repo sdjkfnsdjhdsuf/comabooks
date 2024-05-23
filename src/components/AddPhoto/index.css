@@ -31,6 +31,13 @@
     object-fit: cover;
 }
 
+.photo-preview-media.centered {
+    margin-top: 200px;
+    width: 190px;
+    height: 190px;
+    object-fit: cover;
+}
+
 .photo-preview-date {
     font-size: 12px;
     margin-top: 20px;
@@ -81,10 +88,34 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 16px;
+    border-radius: 8px;
     border: 1px solid #D9D9D9;
     padding: 30px;
+    cursor: pointer;
 }
+
+.upload-icon {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
+
+.hidephoto {
+    display: flex;
+    width: 60%;
+}
+
+.hidephoto label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Inter';
+  }
+
+  .hidephoto label input {
+    width: 20px;
+    height: 20px;
+  }
 
 
 @media (max-width: 700px) {
@@ -117,6 +148,10 @@
     .form-group-photo {
         width: 100%;
     } 
+
+    .hidephoto {
+        width: 100%;
+    }
 }
 
 @media (max-width: 420px) { 
@@ -129,6 +164,10 @@
         width: 160px;
         height: 160px;
         object-fit: cover;
+    }
+
+    .hidephoto {
+        width: 100%;
     }
 }
 
@@ -145,7 +184,7 @@
 }
 
 .form-group textarea {
-    border-radius: 16px;
+    border-radius: 8px;
     width: 100%;
     font-size: 16px;
     padding: 30px;
@@ -160,7 +199,7 @@
 
 
 .form-group-photo input {
-    border-radius: 16px;
+    border-radius: 8px;
     width: 100%;
     font-size: 16px;
     font-family: 'Noto Sans';
@@ -173,10 +212,24 @@
 }
 
 .form-group input {
-    border-radius: 16px;
+    border-radius: 8px;
     width: 100%;
     font-size: 16px;
     padding: 30px;
+    font-family: 'Noto Sans';
+    resize: none;
+    border: 1px solid #D9D9D9;
+    transition: 300ms;
+    line-height: 1.5;
+    overflow-y: hidden;
+    background-color: transparent;
+}
+
+.form-group select {
+    border-radius: 8px;
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
     font-family: 'Noto Sans';
     resize: none;
     border: 1px solid #D9D9D9;

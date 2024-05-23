@@ -33,6 +33,7 @@ const AddPhoto = () => {
   const [hideDate, setHideDate] = useState<boolean>(false);
   const [hideDescription, setHideDescription] = useState<boolean>(false);
   const [questionTxt, setQuestionTxt] = useState<string>("");
+  const [questions, setQuestions] = useState<{ number: number; question: string }[]>([]);
   
   useEffect(() => {
     if (textareaRef.current) {
@@ -41,6 +42,44 @@ const AddPhoto = () => {
       textarea.style.height = `${textarea.scrollHeight}px`;
     }
   }, []);
+
+  useEffect(() => {
+    if (templateId) {
+      const fetchQuestionsAndAnswers = async () => {
+        try {
+          const [questionsResponse, answersResponse] = await Promise.all([
+            fetch(`https://api.comabooks.org/questions/${templateId}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+              },
+            }).then(res => res.json()),
+            fetch(`https://api.comabooks.org/answers/my/${templateId}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+              },
+            }).then(res => res.json()),
+          ]);
+
+          const filteredAnswers = answersResponse.filter((answer: any) => answer.answer !== "-" && answer.answer.trim() !== "");
+
+          const questionsWithAnswers = questionsResponse.map((question: any, index: number) => {
+            const answer = filteredAnswers.find((ans: any) => ans.questionId === question._id);
+            return answer ? { number: index + 1, question: question.question } : null;
+          }).filter((question: any) => question !== null);
+
+          setQuestions(questionsWithAnswers);
+        } catch (error) {
+          console.error('Error fetching questions and answers:', error);
+        }
+      };
+
+      fetchQuestionsAndAnswers();
+    }
+  }, [templateId]);
 
   const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPhotoDate(new Date(e.target.value));
@@ -191,6 +230,17 @@ const AddPhoto = () => {
           disabled={!isEditable}
           style={{ backgroundColor: isEditable ? 'white' : '#DDDDDD' }}/>
       </div>
+      <div className="hidephoto">
+            <label>
+              <input
+                type="checkbox"
+                checked={hideDate}
+                onChange={() => setHideDate(!hideDate)}
+                disabled={!isEditable}
+              />
+              Скрыть дату
+            </label>
+      </div>
       <div className="form-group">
         <label htmlFor="photoDescription">Описание</label>
         <textarea
@@ -200,6 +250,31 @@ const AddPhoto = () => {
           onChange={handleDescriptionChange}
           disabled={!isEditable}
           style={{ backgroundColor: isEditable ? 'white' : '#DDDDDD' }}/>
+      </div>
+      <div className="hidephoto">
+            <label>
+              <input
+                type="checkbox"
+                checked={hideDescription}
+                onChange={() => setHideDescription(!hideDescription)}
+                disabled={!isEditable}
+              />
+              Скрыть описание
+            </label>
+      </div>
+      <div className="form-group">
+      <label htmlFor="questionTxt">После какого вопроса поставить фото</label>
+      <select
+            id="questionTxt"
+            value={questionTxt || ''}
+            onChange={(e) => setQuestionTxt(e.target.value)}
+            disabled={!isEditable}
+          >
+            <option value="">Выбрать вопрос</option>
+            {questions.map((pair, idx) => (
+              <option key={idx} value={pair.question}>{pair.number}. {pair.question}</option>
+            ))}
+      </select>
       </div>
       <div className="add-photo-buttons">
         <button
@@ -221,9 +296,17 @@ const AddPhoto = () => {
 
     <div className="photo-preview-container">
         <div className="photo-preview">
-          {photoFile && <img className="photo-preview-media" src={photoFile} alt="Preview" />}
-          {photoDate && <div className="photo-preview-date">{formattedDate}</div>}
-          {photoDescription && <div className="photo-preview-description">{photoDescription}</div>}
+          {photoFile && (
+              <img
+                className={`photo-preview-media ${
+                  hideDate && hideDescription ? "centered" : ""
+                }`}
+                src={photoFile}
+                alt="Preview"
+              />
+          )}
+          {photoDate && !hideDate && <div className="photo-preview-date">{formattedDate}</div>}
+          {photoDescription && !hideDescription && <div className="photo-preview-description">{photoDescription}</div>}
           <div className="preview-photo-colon">
             <p>{coverData?.bookName || "\u00A0"}</p>
             <p>95</p>
