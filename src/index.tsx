@@ -15,6 +15,7 @@ import Landing from "routes/Landing";
 import Main from "New/routes/Main";
 import FormsWrapper from "routes/FormsWrapper";
 import Policy from "routes/Policy";
+import Landing2 from "routes/Landing/Landing2";
 // import AddPhoto from "components/AddPhoto";
 
 export const instance = axios.create({
@@ -31,6 +32,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/ads" element={<Landing2 />} />
         <Route path="/login" element={<Home />} />
         <Route path="/forms" element={<Forms />} />
         <Route path="/forms/:id" element={<FormsWrapper />} />

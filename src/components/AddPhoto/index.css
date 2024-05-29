@@ -117,6 +117,34 @@
     height: 20px;
   }
 
+  .notify-popup {
+    height: 100vh;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5000;
+    padding: 0 10px
+}
+
+.notify-popup-content {
+    background-color: white;
+    font-family: 'Inter';
+    border-radius: 16px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    max-width: 500px;
+    border: 1px solid rgb(183, 183, 183)
+}
+
 
 @media (max-width: 700px) {
     .photo-preview { 

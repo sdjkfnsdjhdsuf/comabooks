@@ -12,10 +12,6 @@ import book7 from 'assets/book7.png'
 import book8 from 'assets/book8.png'
 import survey from 'assets/icon-survey.png'
 import step1 from 'assets/first.png'
-import result1 from 'assets/results1.png'
-import result2 from 'assets/results2.png'
-import result3 from 'assets/results3.png'
-import result4 from 'assets/results4.png'
 import review1 from 'assets/review1.jpeg'
 import review2 from 'assets/review2.jpeg'
 import review3 from 'assets/review3.jpeg'
@@ -27,7 +23,6 @@ import tiktok1 from 'assets/tiktok1.png'
 import tiktok2 from 'assets/tiktok2.png'
 import tiktok3 from 'assets/tiktok3.png'
 import tiktok4 from 'assets/tiktok4.png'
-import kaspi from 'assets/kaspi.png'
 import mockup1 from 'assets/mm1.png'
 import mockup2 from 'assets/mm2.png'
 import mockup3 from 'assets/mm3.png'
@@ -37,8 +32,6 @@ import mockup6 from 'assets/mm6.png'
 import verstka from 'assets/verstka.png'
 import print from 'assets/print.png'
 import wrapper from 'assets/wrapper.png'
-import result5 from 'assets/result5.png'
-import result6 from 'assets/result6.png'
 
 function Landing() {
 const navigate = useNavigate();
@@ -56,12 +49,14 @@ const [isNavVisible, setIsNavVisible] = useState(false);
   'Представьте, как вы посвящаете книгу другу. Такого подарка он еще точно не получал!',
   'Представьте, как вы посвящаете книгу подруге. Такого подарка она еще точно не получала!',
   'Представьте, как вы посвящаете книгу коллеге. Такого подарка он еще точно не получал!'];
+
   const handleOrder = () => {
-    const message = `Здравствуйте, пишу с сайта по поводу книги. Можете проконсультировать?`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/77476738427?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
+      const message = `Здравствуйте! Пишу с сайта по поводу книги. Можете проконсультировать?`;
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/77476738427?text=${encodedMessage}`;
+      window.open(whatsappUrl, '_blank');
   };
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentRecipient(prevRecipient => {
@@ -101,7 +96,7 @@ const [isNavVisible, setIsNavVisible] = useState(false);
                 <div className='hiro-column-title'>Напиши книгу своим любимым</div>
                 <div className='hiro-column-text'>С нами вы можете посвятить собственную книгу любимым: второй половинке, родителям, друзьям и т.д.</div>
                 <div className='hiro-column-button'>
-                    <button onClick={handleOrder} className='landing-button'>Заказать</button>
+                    <button onClick={handleOrder} className='landing-button-ads'>Перейти в WhatsApp</button>
                 </div>
             </div>
         </div>
@@ -246,20 +241,6 @@ const [isNavVisible, setIsNavVisible] = useState(false);
         </div>
 
         <div className='results'>
-            <div className='landing-label'>результат</div>
-            <div className='results-title'>Вот такую книгу на 200-300 страниц вы получите через 4-7 дней после начала!</div>
-
-            <div className='results-grid'>
-                <img className='results-img' src={result1} />
-                <img className='results-img' src={result2} />
-                <img className='results-img' src={result3} />
-                <img className='results-img' src={result4} />
-                <img className='results-img' src={result5} />
-                <img className='results-img' src={result6} />
-            </div>
-        </div>
-
-        <div className='results'>
             <div className='landing-label'>отзывы</div>
             <div className='reviews-title'>Наши книги укрепляют отношения!</div>
 
@@ -283,25 +264,11 @@ const [isNavVisible, setIsNavVisible] = useState(false);
             </div>
         </div>
 
-        <div className='price'>
-            <div className='landing-label'>сколько это стоит</div>
-            <div className='reviews-title'>Текущая цена - 39.000тг</div>
-            <div className='price-text'>В эту цену входит все - редактура, верстка, печать и упаковка. </div>
-            <div className='price-text'>Можно предоплатой либо Kaspi рассрочкой 0-0-12. </div>
-            <img src={kaspi} />
-        </div>
-
-        {/* <div className='faq'>
-            <div className='landing-label'>ответы на частые вопросы</div>
-            <div className='price-text'>В эту цену входит все - редактура, верстка, печать и упаковка. </div>
-            <div className='price-text'>Можно предоплатой либо каспи рассрочкой 0-0-12. </div>
-        </div> */}
-
         <div className='end'>
             <div className='end-title1'>😍✨</div>
             <div className='end-title2'>{currentRecipient}</div>
             <div className='hiro-column-button'>
-                <button onClick={handleOrder} className='landing-button'>Заказать</button>
+            <button onClick={handleOrder} className='landing-button-ads'>Перейти в WhatsApp</button>
             </div>
         </div>
     </div>

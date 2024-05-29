@@ -34,6 +34,8 @@ const AddPhoto = () => {
   const [hideDescription, setHideDescription] = useState<boolean>(false);
   const [questionTxt, setQuestionTxt] = useState<string>("");
   const [questions, setQuestions] = useState<{ number: number; question: string }[]>([]);
+
+  const [notify, setNotify] = useState(false)
   
   useEffect(() => {
     if (textareaRef.current) {
@@ -86,7 +88,10 @@ const AddPhoto = () => {
   };
 
   const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setPhotoDescription(e.target.value);
+    const description = e.target.value;
+    if (description.length <= 200) {
+      setPhotoDescription(description);
+    }
   };
 
   useEffect(() => {
@@ -141,7 +146,7 @@ const AddPhoto = () => {
 
   const handleSave = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (photoDate && photoDescription && photoFile && templateId) {
+    if (photoDate && photoDescription && photoFile && templateId && questionTxt) {
       const photoData = {
         date: photoDate,
         description: photoDescription,
@@ -164,6 +169,11 @@ const AddPhoto = () => {
       }
 
       setIsEditable(!isEditable);
+    } else {
+      setNotify(true)
+      setTimeout(() => {
+        setNotify(false)
+      }, 2000)
     }
   };
 
@@ -204,6 +214,12 @@ const AddPhoto = () => {
   return (
     <>
     <div className="add-photo-container">
+      {notify && 
+      <div className="notify-popup">
+        <div className="notify-popup-content">
+        Для сохранения заполните все поля!
+        </div>
+      </div>}
     <form className="add-photo-form" onSubmit={(e) => e.preventDefault()}>
       <div className="form-group-photo">
         <label htmlFor="photoFile">Фото</label>
