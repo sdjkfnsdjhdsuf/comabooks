@@ -32,7 +32,7 @@
 
 .sidebar-mobile.open {
   width: 80%;
-  background-color: black;
+  background: linear-gradient(360deg, rgba(18,22,31,1) 0%, rgba(39,46,61,1) 100%);
   align-items: center;
   overflow-y: auto;
 }
@@ -135,7 +135,7 @@ progress {
   width: 90%;
   height: 12px;
   color: white;
-  background-color: black;
+  background-color: transparent;
   border: 0.5px solid white;
   border-radius: 32px;
   margin-top: 10px;
@@ -144,12 +144,12 @@ progress {
 }
 
 progress::-webkit-progress-bar {
-  background-color: black;
+  background-color: transparent;
   border-radius: 32px;
 }
 
 progress[value]::-webkit-progress-value {
-  background-color: #A11C1D;
+  background-color: #6d94c9;
   /* border-radius: 32px; */
   border-radius: 32px 0 0 32px;
 }
@@ -163,7 +163,7 @@ progress[value="100"]::-webkit-progress-value {
 }
 
 progress::-moz-progress-bar {
-  background-color: black;
+  background-color: transparent;
   border-radius: 32px;
 }
 

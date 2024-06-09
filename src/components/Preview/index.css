@@ -1,6 +1,6 @@
 
 .book-preview-backdrop {
-    position: fixed;
+    /* position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -11,34 +11,42 @@
     overflow-y: auto;
     padding-top: 30px;
     padding-bottom: 30px;
-    /* justify-content: center; */
     align-items: center;
     z-index: 10;
+    gap: 10px; */
+
+    display: flex;
+    flex-direction: column;
+    padding: 60px;
+    border-radius: 6px;
+    background: linear-gradient(0deg, rgba(34,38,47,1) 0%, rgba(42,52,76,1) 100%);
     gap: 10px;
+    width: 100%;
+    align-items: center;
   }
   
   .book-preview-content {
     background: white;
-    padding: 80px 60px;
+    padding: 30px 20px;
     display: flex;
     flex-direction: column;
-    min-width: 500px;
-    min-height: 800px;
-    width: 500px;
-    height: 800px;
+    min-width: 222px;
+    min-height: 362px;
+    width: 222px;
+    height: 362px;
     z-index: 11;
     text-align: left;
   }
   
   .preview-question {
-    font-size: 14px;
+    font-size: 8px;
     color: black;
     font-family: Arial, Helvetica, sans-serif;
-    margin-bottom: 30px;
+    margin-bottom: 16px;
   }
 
   .preview-answer {
-    font-size: 30px;
+    font-size: 16px;
     line-height: 1.1;
     color: black;
     font-family: "Playfair Display";
@@ -49,7 +57,7 @@
     flex-direction: row;
     justify-content: space-between;
     margin-top: auto;
-    font-size: 16px;
+    font-size: 8px;
     color: black;
     font-family: "Playfair Display";
   }

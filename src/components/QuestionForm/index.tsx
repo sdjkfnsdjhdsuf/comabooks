@@ -57,15 +57,13 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
 
   return (
     <div className="question-form">
-
-      {saveAlert &&
-      <div className="alert-popup">
-        Ошибка при сохранении, попробуйте еще раз!
+      <div className="question-form-question">
+        <label className="question-number-title">Вопрос {currentPage + 1}</label>
+        <label className="question">{question.question}</label>
       </div>
-      }
 
-      <label className="question-number-title">Вопрос {currentPage + 1}</label>
-      <label className="question">{question.question}</label>
+      <div className="question-form-answer">
+      <label className="question-answer-label">Ответ</label>
       <textarea
         ref={textareaRef}
         className="answer-area"
@@ -74,10 +72,8 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
         placeholder="Напишите сюда ответ..."
         disabled={!isEditable}
       />
-      {!isLoading && (
         <div className="edit-buttons">
           <button
-            
             className={isEditable ? "confirm-button" : "edit-button"}
             onClick={async () => {
               if (isEditable) {
@@ -95,20 +91,11 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
           >
             {isEditable ? "Сохранить" : "Изменить"}
           </button>
-
-          <button
-            className="preview-button"
-            onClick={() => {
-              dispatch(switchPreview(true));
-            }}
-          >
-            <img src={viewicon} alt="Viewicon" className="viewicon" />
-          </button>
         </div>
-      )}
-      {previewShow && (
-        <Preview question={question.question} answer={newAnswer} />
-      )}
+      </div>
+
+      <Preview question={question.question} answer={newAnswer ? newAnswer : 'Ваш ответ будет здесь'} />
+
     </div>
   );
 };

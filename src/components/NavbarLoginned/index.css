@@ -4,7 +4,7 @@
   top: 0;
   width: 17%;
   overflow-y: auto;
-  background-color: black;
+  background: linear-gradient(360deg, rgba(18,22,31,1) 0%, rgba(39,46,61,1) 100%);
   /* padding: 20px; */
   height: 100vh;
 }
@@ -71,9 +71,9 @@
 .photo-list-one {
   text-align: left;
   width: 100%;
-  background-color: #2b2b2b;
+  background-color: #4F545B;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 16px;
   cursor: pointer;
   color: white;
@@ -88,7 +88,7 @@
 .photo-list-one-test {
   text-align: center;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 16px;
   cursor: pointer;
   color: white;
@@ -111,9 +111,9 @@
   margin-bottom: 10px;
   font-family: "Noto Sans";
   font-size: 12px;
-  /* white-space: nowrap;
+  white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; */
+    text-overflow: ellipsis;
 }
 
 .sidebar-bottom-fixed {
@@ -130,17 +130,18 @@
   /* background-color: black; */
   background-color: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(40px);
+  border-top: 1px solid #58626E
 }
 
 .sidebar-bottom-fixed-cover {
   width: 100%;
   border: 0px;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 12px;
   font-family: "Noto Sans";
-  padding: 12px 0px;
-  background-color: #282828;
+  padding: 8px 0px;
+  background-color: transparent;
   color: white;
 }
 
@@ -152,7 +153,7 @@
 .sidebar-bottom-fixed-add-photo button {
   border: 0.5px solid rgb(194, 194, 194);
   background-color: transparent;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 12px;
   font-family: "Noto Sans";

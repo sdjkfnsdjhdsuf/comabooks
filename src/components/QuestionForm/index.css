@@ -1,31 +1,29 @@
 .question-form {
     width: 100%;
     /* height: 90vh; */
-    max-width: 900px;
+    max-width: 500px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 160px;
     justify-content: center;
     align-items: center;
-    text-align: center;
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
 .question {
-    font-size: 24px;
-    color: black;
+    font-size: 16px;
+    color: white;
     font-family: 'Noto Sans';
-    font-weight: 500;
     line-height: 1.3;
     width: 80%;
     /* height: 100px; */
 }
 
 .question-number-title {
-    font-size: 18px;
-    color: black;
+    font-size: 12px;
+    color: white;
     font-family: 'Noto Sans';
 }
 
@@ -62,16 +60,33 @@
 }
 
 .answer-area {
-    border-radius: 16px;
+    border-radius: 6px;
     width: 100%;
     font-size: 16px;
-    padding: 30px;
+    padding: 50px 30px 80px 30px;
     font-family: 'Noto Sans';
     resize: none;
     border: none;
     transition: 300ms;
     line-height: 1.5;
     overflow-y: hidden;
+    min-height: 300px;
+}
+
+.question-form-answer {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.question-answer-label {
+    font-size: 12px;
+    color: black;
+    font-family: 'Noto Sans';
+    position: absolute;
+    top: 30px;
+    left: 30px;
 }
 
 .answer-area:focus {
@@ -80,22 +95,25 @@
 
 .edit-buttons {
     display: flex;
-    gap: 10px;
+    gap: 5px;
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
 }
 
 .edit-button, .confirm-button {
-    padding: 10px 40px;
+    padding: 10px 14px;
     border: 0px;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 12px;
     font-family: 'Noto Sans';
     /* font-weight: 700; */
 }
 
 .preview-button {
     border: 0px;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
     padding: 5px;
 }
@@ -105,16 +123,24 @@
     height: auto;
 }
 
+.question-form-question {
+    display: flex;
+    flex-direction: column;
+    padding: 26px;
+    border-radius: 6px;
+    background: linear-gradient(0deg, rgba(34,38,47,1) 0%, rgba(42,52,76,1) 100%);
+    gap: 10px
+}
 
 
 .confirm-button:not(:disabled),
 .edit-button:not(:disabled) {
-  background-color: black;
+  background-color: #363E50;
   color: white;
 }
 
 .preview-button:not(:disabled) {
-    background-color: black;
+    background-color: #363E50;
     color: white;
 }
 
@@ -134,4 +160,10 @@
 
 .answer-area:disabled {
     background-color: #DDDDDD;
+}
+
+@media (max-width: 900px) {
+    .answer-area {
+        padding: 50px 30px 100px 30px;
+    }
 }

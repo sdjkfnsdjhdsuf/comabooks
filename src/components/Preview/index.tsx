@@ -1,17 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store";
 import { switchPreview } from "slicers/preview_slicer";
 import { CoverEntityDto } from "generated";
-
-// interface PreviewProps {
-
-//   onClose: () => void;
-//   question: string;
-//   answer: string;
-//   pageNumber: number;
-// }
 
 const MAX_CHARS_PER_PAGE = 280;
 
@@ -53,22 +45,6 @@ export const Preview = ({
   );
   const isOddPageNumber = pageNumber % 2 !== 0;
 
-  useEffect(() => {
-    const keyDownHandler = (event: any) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        dispatch(switchPreview(false));
-      }
-    };
-
-    document.addEventListener("keydown", keyDownHandler);
-
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-    };
-  }, []);
-
-  
 
   return (
     <div
@@ -81,17 +57,17 @@ export const Preview = ({
           className="book-preview-content"
           onClick={(e) => e.stopPropagation()}
         >
-          <p className="preview-question">{question}</p>
-          <p className="preview-answer">{pageContent}</p>
+          <p className="preview-question">{question || '\u00A0'}</p>
+          <p className="preview-answer">{pageContent || '\u00A0'}</p>
           <div className="preview-colon">
             {isOddPageNumber ? (
               <>
                 <p>{pageNumber + index + 1}</p>
-                <p>{coverData?.bookName || "\u00A0"}</p>
+                <p>{coverData?.bookName || "Название книги"}</p>
               </>
             ) : (
               <>
-                <p>{coverData?.fullName || "\u00A0"}</p>
+                <p>{coverData?.fullName || "Ваше имя"}</p>
                 <p>{pageNumber + index + 1}</p>
               </>
             )}

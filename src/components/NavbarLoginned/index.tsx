@@ -123,13 +123,13 @@ const handleTogglePhotos = () => {
 
             let bgColor = "transparent";
             if (isCurrent) {
-              bgColor = "#A11C1D";
+              bgColor = "#3C4045";
             }
             if (isAnswered && !isCurrent) {
-              bgColor = "#491D1E";
+              bgColor = "#4F545B";
             }
             if (isAnswered && isCurrent) {
-              bgColor = "#A11C1D";
+              bgColor = "#3C4045";
             }
 
             return (
