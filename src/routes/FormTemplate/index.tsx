@@ -69,7 +69,7 @@ function FormTemplate() {
               question={templateDto.questions[currentPage ?? 0]}
             />
 
-            {/* <div className="pagination-controls">
+            <div className="pagination-controls">
               <button
                 onClick={() =>
                   dispatch(thunkSetPage(Math.max((currentPage ?? 0) - 1, 0)))
@@ -93,7 +93,7 @@ function FormTemplate() {
               >
                 <img src={nexticon} alt="Next" className="next-icon" />
               </button>
-            </div> */}
+            </div>
           </>
         )}
       </div>

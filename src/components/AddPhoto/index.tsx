@@ -314,15 +314,15 @@ const AddPhoto = () => {
         <div className="photo-preview">
           {photoFile && (
               <img
-                className={`photo-preview-media ${
-                  hideDate && hideDescription ? "centered" : ""
-                }`}
+                className='photo-preview-media'
                 src={photoFile}
                 alt="Preview"
               />
           )}
+          <div className="photo-preview-details">
           {photoDate && !hideDate && <div className="photo-preview-date">{formattedDate}</div>}
           {photoDescription && !hideDescription && <div className="photo-preview-description">{photoDescription}</div>}
+          </div>
           <div className="preview-photo-colon">
             <p>{coverData?.bookName || "\u00A0"}</p>
             <p>95</p>
