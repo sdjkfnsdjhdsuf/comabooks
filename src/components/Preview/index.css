@@ -46,7 +46,7 @@
   }
 
   .preview-answer {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.1;
     color: black;
     font-family: "Playfair Display";
@@ -86,7 +86,7 @@
       }
     
       .preview-answer {
-        font-size: 14px;
+        font-size: 16px;
         color: black;
       }
     
