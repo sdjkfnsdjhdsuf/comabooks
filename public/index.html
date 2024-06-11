@@ -39,11 +39,12 @@
   'https://connect.facebook.net/en_US/fbevents.js');
   
   // Initialize the first Pixel for the main route
+  if (window.location.pathname === '/') {
   fbq('init', '477842931244028'); 
   fbq('track', 'PageView');
-
+  }
   // Check for the specific route and initialize the second Pixel
-  if (window.location.pathname === '/ads') {
+  else if (window.location.pathname === '/ads') {
     fbq('init', '763698079286702'); 
     fbq('track', 'PageView');
   }
