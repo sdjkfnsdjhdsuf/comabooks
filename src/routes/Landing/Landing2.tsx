@@ -208,7 +208,7 @@ const [isNavVisible, setIsNavVisible] = useState(false);
             <div className='process-2'>
                 <div className='process-step'>
                     <div className='process-label'>второй этап</div>
-                    <div className='process-step-text'>На платформе вы будете отвечать на вопросы. Можно добавлять фотографий и создать обложку. </div>
+                    <div className='process-step-text'>На платформе вы будете отвечать на вопросы. Можно добавлять фотографии и создать обложку. </div>
                 </div>
 
                 <div className='mockups'>
