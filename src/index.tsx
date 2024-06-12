@@ -17,6 +17,7 @@ import FormsWrapper from "routes/FormsWrapper";
 import Policy from "routes/Policy";
 import Landing2 from "routes/Landing/Landing2";
 import LandingNew from "routes/LandingNew";
+import FacebookPixel from "routes/FacebookPixel";
 // import AddPhoto from "components/AddPhoto";
 
 export const instance = axios.create({
@@ -31,6 +32,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <BrowserRouter>
+    <FacebookPixel />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/ads" element={<Landing2 />} />
