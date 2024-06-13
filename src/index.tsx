@@ -32,7 +32,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-    {/* <FacebookPixel /> */}
+    <FacebookPixel />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/ads" element={<Landing2 />} />
