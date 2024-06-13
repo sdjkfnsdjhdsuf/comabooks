@@ -34,9 +34,9 @@ root.render(
     <BrowserRouter>
     <FacebookPixel />
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/ads" element={<Landing2 />} />
-        <Route path="/sales" element={<LandingNew />} />
+        {/* <Route path="/" element={<Landing />} />
+        <Route path="/ads" element={<Landing2 />} /> */}
+        <Route path="/" element={<LandingNew />} />
         <Route path="/login" element={<Home />} />
         <Route path="/forms" element={<Forms />} />
         <Route path="/forms/:id" element={<FormsWrapper />} />
