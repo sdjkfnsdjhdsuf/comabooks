@@ -17,7 +17,7 @@ const FacebookPixel: React.FC = () => {
       ReactPixel.pageView(); // For tracking page view
     } else if (location.pathname === '/ads') {
       ReactPixel.init('763698079286702', {}, pixelOptions);
-      ReactPixel.pageView(); // For tracking page view
+      ReactPixel.pageView(); // For tracking page view еуые
     }
   }, [location.pathname]);
 
