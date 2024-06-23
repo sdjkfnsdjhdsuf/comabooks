@@ -18,6 +18,9 @@ import Policy from "routes/Policy";
 import Landing2 from "routes/Landing/Landing2";
 import LandingNew from "routes/LandingNew";
 import FacebookPixel from "routes/FacebookPixel";
+import Analytics from "routes/Analytics";
+import Onhold from "routes/Onhold";
+import AnalyticsChecker from "routes/AnalyticsChecker";
 // import AddPhoto from "components/AddPhoto";
 
 export const instance = axios.create({
@@ -33,6 +36,7 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
     <FacebookPixel />
+    <AnalyticsChecker />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/ads" element={<Landing2 />} />
@@ -43,10 +47,12 @@ root.render(
         <Route path="/addphoto/:templateId" element={<AddPhoto />} />
         <Route path="/addphoto/:templateId/:photoId" element={<AddPhoto />} />
         <Route path="/cover/:id" element={<CoverPage />}></Route>
+        <Route path="/analytics" element={<Analytics />}></Route>
         <Route path="*" element={<Navigate to="/" replace={true} />} />
 
         <Route path="/forms/new/:id" element={<Main />} />
         <Route path="/policies" element={<Policy />} />
+        <Route path="/onhold" element={<Onhold />} />
       </Routes>
     </BrowserRouter>
   </Provider>
