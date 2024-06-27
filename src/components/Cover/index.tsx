@@ -29,7 +29,7 @@ function Cover() {
     cover4: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/blue+front+(2).png",
     cover5: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/green+front+(2).png",
     cover6: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/light+green+front+(2).png",
-};
+  };
 
   const [authorName, setAuthorName] = useState("");
   const [bookTitle, setBookTitle] = useState("");
@@ -56,7 +56,7 @@ function Cover() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responce = await dispatch(fetchCover(templateId!));
+        const response = await dispatch(fetchCover(templateId!));
       } catch (error) {
         console.error("There was an error fetching the cover data:", error);
       }
@@ -87,7 +87,6 @@ function Cover() {
 
   type CoverKey = 'cover1' | 'cover2' | 'cover3' | 'cover4' | 'cover5' | 'cover6';
 
-
   type CoverSelectorColors = {
     [key: string]: string;
   };
@@ -105,21 +104,39 @@ function Cover() {
     const coverKey = color as CoverKey;
     const coverImage = coverColors[coverKey];
     if (coverImage) {
-        setCoverColor(coverImage);
+      setCoverColor(coverImage);
     }
-};
+  };
 
-const receiverHolder = (templateId: string | undefined) => {
-  if (templateId === '65fb40c5b63f0df17f6ce6ae') {
-    return 'Полное имя мамы';
-  } else if (templateId === '65fb7789f6d6c9118d3caead') {
-    return 'Полное имя сестры';
-  } else if (templateId === '661970fd80f5c5317e0882c3') {
-    return 'Полное имя подруги';
-  } else {
-    return 'Полное имя партнера';
-  }
-};
+  const receiverHolder = (templateId: string | undefined) => {
+    if (templateId === '65fb40c5b63f0df17f6ce6ae') {
+      return 'Полное имя мамы';
+    } else if (templateId === '65fb7789f6d6c9118d3caead') {
+      return 'Полное имя сестры';
+    } else if (templateId === '661970fd80f5c5317e0882c3') {
+      return 'Полное имя подруги';
+    } else {
+      return 'Полное имя партнера';
+    }
+  };
+
+  const validateBookTitle = (title: string) => {
+    // Emoji regex pattern
+    const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u;
+
+    // Check length and emoji presence
+    return title.length <= 30 && !emojiRegex.test(title);
+  };
+
+  const handleBookTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const title = e.target.value;
+    if (validateBookTitle(title)) {
+      setBookTitle(title);
+    } else {
+      // Optionally provide feedback to the user
+      alert("Название книги не может быть больше 30 символов и включать эмодзи");
+    }
+  };
 
   return (
     <div className="cover-page">
@@ -164,17 +181,16 @@ const receiverHolder = (templateId: string | undefined) => {
               disabled={!isEditable}
             />
             <div className="nopartner">
-            <label>
-              <input
-                type="checkbox"
-                checked={!displayPartnerName}
-                onChange={() => setDisplayPartnerName(!displayPartnerName)}
-              />
-              Не отображать на обложке
-            </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={!displayPartnerName}
+                  onChange={() => setDisplayPartnerName(!displayPartnerName)}
+                />
+                Не отображать на обложке
+              </label>
             </div>
           </div>
-          
 
           <div className="input">
             <div className="input-title">Название книги</div>
@@ -182,7 +198,7 @@ const receiverHolder = (templateId: string | undefined) => {
               type="text"
               placeholder="Напишите сюда ответ..."
               value={bookTitle}
-              onChange={(e) => setBookTitle(e.target.value)}
+              onChange={handleBookTitleChange}
               disabled={!isEditable}
             />
           </div>
