@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './index.css';
 
@@ -8,7 +8,15 @@ const Analytics: React.FC = () => {
   const [isOtherCity, setIsOtherCity] = useState<boolean>(false);
   const [isDateUnknown, setIsDateUnknown] = useState<boolean>(false);
   const [isAddressUnknown, setIsAddressUnknown] = useState<boolean>(false);
+  const [minDate, setMinDate] = useState<string>('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const today = new Date();
+    today.setDate(today.getDate() + 6); // Add 5 days to today's date
+    const minDateStr = today.toISOString().split('T')[0]; // Format the date as YYYY-MM-DD
+    setMinDate(minDateStr);
+  }, []);
 
   const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCity = e.target.value;
@@ -66,6 +74,7 @@ const Analytics: React.FC = () => {
             id="deliveryDate"
             value={deliveryDate}
             onChange={(e) => setDeliveryDate(e.target.value)}
+            min={minDate} // Set the min attribute dynamically
             disabled={isDateUnknown}
             required
           />

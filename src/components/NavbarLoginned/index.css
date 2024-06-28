@@ -22,6 +22,13 @@
   font-family: "Noto Sans";
 }
 
+.deadline {
+  margin-top: 10px;
+  color: rgb(224, 237, 255);
+  font-size: 11px;
+  font-family: "Noto Sans";
+}
+
 .forms {
   width: 100%;
   height: 100%;
@@ -53,7 +60,7 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
-  padding-top: 150px;
+  padding-top: 170px;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 200px;
@@ -63,7 +70,7 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
-  padding-top: 150px;
+  padding-top: 170px;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 150px;
@@ -199,6 +206,13 @@
   gap: 10px;
 }
 
+.sidebar-popup-buttons2 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
 .sidebar-popup-button {
   color: white;
   background: rgb(21, 47, 107);
@@ -221,6 +235,15 @@
   margin-bottom: 20px;
   font-weight: 300;
   width: 70%;
+}
+
+.sidebar-popup-text2 {
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  font-weight: 400;
+  width: 100%;
 }
 
 .sidebar-popup-input {

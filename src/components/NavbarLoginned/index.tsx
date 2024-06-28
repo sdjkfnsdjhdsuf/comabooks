@@ -11,12 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store";
 import { thunkSetPage } from "slicers/page_slicer";
 import { fetchPhotos } from "slicers/photos_slicer";
-
-type Photo = {
-  id: string;
-  title: string;
-  date: string;
-};
+import { calculateDeadline } from "./deadlineCounter";
 
 const NavbarLoginned = ({
   templateId,
@@ -37,109 +32,60 @@ const NavbarLoginned = ({
   );
   const [isViewingPhotos, setIsViewingPhotos] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [deliveryDate, setDeliveryDate] = useState<string | null>(null);
+  const [popupType, setPopupType] = useState<"finishBook" | "learnMore" | "changeDate" | null>(null);
+  const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);
   const [address, setAddress] = useState<string | null>(null);
-  const [originalDeliveryDate, setOriginalDeliveryDate] = useState<string | null>(null);
+  const [originalDeliveryDate, setOriginalDeliveryDate] = useState<Date | null>(null);
   const [originalAddress, setOriginalAddress] = useState<string | null>(null);
-
-  const navigate = useNavigate();
+  const [minDate, setMinDate] = useState<string>("");
 
   useEffect(() => {
-    if (isViewingPhotos) {
-      dispatch(fetchPhotos(templateId));
-    }
-  }, [dispatch, isViewingPhotos, templateId]);
+    const today = new Date();
+    today.setDate(today.getDate() + 7); // Add 5 days to today's date
+    const minDateStr = today.toISOString().split("T")[0]; // Format the date as YYYY-MM-DD
+    setMinDate(minDateStr);
+  }, []);
 
-  const photos = useSelector<RootState, PhotoEnityDto[]>(state =>
-    Object.values(state.photos.photos)
-  );
-
-  const handleTogglePhotos = () => {
-    setIsViewingPhotos(!isViewingPhotos);
+  const handleSupport = () => {
+    const message = `Здравствуйте! Я хотел(-а) узнать на счет успеваемости сроков моей книги.`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/77476738427?text=${encodedMessage}`;
+    window.open(whatsappUrl, '_blank');
   };
 
-  const wrappedSetCurrentPage = (pageIndex: number) => {
-    dispatch(thunkSetPage(pageIndex));
-  };
+  useEffect(() => {
+    const fetchDeliveryData = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
 
-  const showCoverPage = () => {
-    navigate(`/cover/${templateId}`);
-  };
+      try {
+        const response = await fetch("https://api.comabooks.org/user_anal", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate(`/`);
-  };
+        const { address, deliveryTime } = data;
+        const deliveryDateObj = new Date(deliveryTime);
 
-  const addNewPhoto = () => {
-    navigate(`/addphoto/${templateId}`)
-  }
-
-  const handlePhotoClick = (photoId: string) => {
-    navigate(`/addphoto/${templateId}/${photoId}`);
-  };
-
-  const handleFinishBookClick = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-
-    try {
-      const response = await fetch('https://api.comabooks.org/user_anal', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-
-      const { address, deliveryTime } = data;
-
-      // Check if the deliveryTime is equivalent to 1970-01-01T00:00:00.000Z
-      const isDefaultDate = new Date(deliveryTime).getTime() === new Date('1970-01-01T00:00:00.000Z').getTime();
-
-      setOriginalAddress(address);
-      setOriginalDeliveryDate(deliveryTime);
-      setAddress(address);
-      setDeliveryDate(isDefaultDate ? null : deliveryTime);
-
-      setShowPopup(true);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-  const handleFinishBook = async ({ token, address, deliveryTime }: { token: string, address: string, deliveryTime: string }) => {
-    try {
-      const updatedData = {
-        address: address || originalAddress,
-        deliveryTime: deliveryTime,
-        status: 'done',
-      };
-
-      if (address !== originalAddress) {
-        updatedData.address = address;
+        if (
+          deliveryDateObj.getTime() !== new Date("1970-01-01T00:00:00.000Z").getTime() &&
+          address
+        ) {
+          setOriginalAddress(address);
+          setOriginalDeliveryDate(deliveryDateObj);
+          setAddress(address);
+          setDeliveryDate(deliveryDateObj);
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
+    };
 
-      if (deliveryDate && deliveryDate !== originalDeliveryDate) {
-        updatedData.deliveryTime = deliveryDate;
-      }
-
-      await fetch('https://api.comabooks.org/user_anal', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedData),
-      });
-
-      setShowPopup(false);
-      navigate('/onhold')
-      // Additional logic if needed after finishing the book
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
+    fetchDeliveryData();
+  }, []);
 
   const calculatePagesFilled = () => {
     const charsPerPage = 250;
@@ -150,8 +96,155 @@ const NavbarLoginned = ({
     }, 0);
     return initialPages + pageCounts;
   };
-
   const pageFilled = calculatePagesFilled();
+
+  useEffect(() => {
+    if (isViewingPhotos) {
+      dispatch(fetchPhotos(templateId));
+    }
+  }, [dispatch, isViewingPhotos, templateId]);
+
+  const photos = useSelector<RootState, PhotoEnityDto[]>((state) =>
+    Object.values(state.photos.photos)
+  );
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate(`/`);
+  };
+
+  const showCoverPage = () => {
+    navigate(`/cover/${templateId}`);
+  };
+
+  const wrappedSetCurrentPage = (pageIndex: number) => {
+    dispatch(thunkSetPage(pageIndex));
+  };
+
+  const handleTogglePhotos = () => {
+    setIsViewingPhotos(!isViewingPhotos);
+  };
+
+  const addNewPhoto = () => {
+    navigate(`/addphoto/${templateId}`);
+  };
+
+  const handlePhotoClick = (photoId: string) => {
+    navigate(`/addphoto/${templateId}/${photoId}`);
+  };
+
+  const handleFinishBookClick = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const response = await fetch("https://api.comabooks.org/user_anal", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+
+      const { address, deliveryTime } = data;
+
+      const isDefaultDate = new Date(deliveryTime).getTime() === new Date("1970-01-01T00:00:00.000Z").getTime();
+
+      setOriginalAddress(address);
+      setOriginalDeliveryDate(new Date(deliveryTime));
+      setAddress(address);
+      setDeliveryDate(isDefaultDate ? null : new Date(deliveryTime));
+
+      setPopupType("finishBook");
+      setShowPopup(true);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleFinishBook = async ({
+    token,
+    address,
+    deliveryTime,
+  }: {
+    token: string;
+    address: string;
+    deliveryTime: string;
+  }) => {
+    try {
+      const updatedData = {
+        address: address || originalAddress,
+        deliveryTime: deliveryTime,
+        status: "done",
+      };
+
+      if (address !== originalAddress) {
+        updatedData.address = address;
+      }
+
+      if (deliveryDate && deliveryDate !== originalDeliveryDate) {
+        updatedData.deliveryTime = deliveryDate.toISOString();
+      }
+
+      await fetch("https://api.comabooks.org/user_anal", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      setShowPopup(false);
+      navigate("/onhold");
+      // Additional logic if needed after finishing the book
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleLearnMoreClick = () => {
+    setPopupType("learnMore");
+    setShowPopup(true);
+  };
+
+  const handleChangeDateClick = () => {
+    const today = new Date();
+    today.setDate(today.getDate() + 3);
+    const minChangeDate = today.toISOString().split("T")[0];
+    setMinDate(minChangeDate);
+    setPopupType("changeDate");
+    setShowPopup(true);
+  };
+
+  const handleChangeDate = async () => {
+    const token = localStorage.getItem("token");
+    if (!token || !deliveryDate) return;
+
+    try {
+      await fetch("https://api.comabooks.org/user_anal", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          deliveryTime: deliveryDate.toISOString(),
+          address: originalAddress,
+          status: 'inProccess'
+        }),
+      });
+
+      setShowPopup(false);
+      setOriginalDeliveryDate(deliveryDate);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const isFinishBookSaveDisabled = !address || !deliveryDate;
 
   if (templateDto == null) return <></>;
 
@@ -168,6 +261,11 @@ const NavbarLoginned = ({
             <div className="page-numbers">
               {pageFilled} страниц заполнено
             </div>
+            {deliveryDate && address && (
+              <div className="deadline">
+                {calculateDeadline(deliveryDate, address, handleLearnMoreClick)}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -189,8 +287,7 @@ const NavbarLoginned = ({
           {templateDto.questions.map((templateQuestion, index) => {
             const isCurrent = index === currentPage;
             const isAnswered =
-              answerMap[templateQuestion._id]?.answer?.replaceAll(" ", "") ??
-              "";
+              answerMap[templateQuestion._id]?.answer?.replaceAll(" ", "") ?? "";
 
             let bgColor = "transparent";
             if (isCurrent) {
@@ -245,49 +342,96 @@ const NavbarLoginned = ({
           Выйти из аккаунта
         </button>
       </div>
-      {showPopup && (
+      {showPopup && popupType === "finishBook" && (
         <div className="sidebar-popup">
           <div className="sidebar-popup-content">
-            {!originalAddress || originalDeliveryDate === '1970-01-01T00:00:00.000Z' ? 
-              <div className="sidebar-popup-title">Заполните данные заказа</div> :
+            {!originalAddress || originalDeliveryDate?.getTime() === new Date("1970-01-01T00:00:00.000Z").getTime() ? (
+              <div className="sidebar-popup-title">Заполните данные заказа</div>
+            ) : (
               <div className="sidebar-popup-title">Отправляем книгу на редактуру?</div>
-            }
+            )}
             <div className="sidebar-popup-text">Перепроверьте содержание, это действие нельзя вернуть!</div>
             {!originalAddress && (
               <div className="sidebar-popup-input">
                 <label>Город доставки</label>
                 <input
                   type="text"
-                  value={address || ''}
+                  value={address || ""}
                   onChange={(e) => setAddress(e.target.value)}
                 />
               </div>
             )}
-            {originalDeliveryDate === '1970-01-01T00:00:00.000Z' && (
+            {originalDeliveryDate?.getTime() === new Date("1970-01-01T00:00:00.000Z").getTime() && (
               <div className="sidebar-popup-input">
                 <label>Дата доставки</label>
                 <input
                   type="date"
-                  value={deliveryDate || ''}
-                  onChange={(e) => setDeliveryDate(e.target.value)}
+                  value={deliveryDate ? deliveryDate.toISOString().split("T")[0] : ""}
+                  min={minDate}
+                  onChange={(e) => setDeliveryDate(new Date(e.target.value))}
                 />
               </div>
             )}
             <div className="sidebar-popup-buttons">
-            <button className="sidebar-popup-button"
-              onClick={() => handleFinishBook({
-                token: localStorage.getItem('token')!,
-                address: address || '',
-                deliveryTime: originalDeliveryDate as string,
-              })}
-            >
-              Завершить
-            </button>
-            <button className="sidebar-popup-button"
-              onClick={() => setShowPopup(false)}
-            >
-              Отменить
-            </button>
+              <button
+                className="sidebar-popup-button"
+                disabled={isFinishBookSaveDisabled}
+                onClick={() =>
+                  handleFinishBook({
+                    token: localStorage.getItem("token")!,
+                    address: address || "",
+                    deliveryTime: (deliveryDate || originalDeliveryDate)?.toISOString() as string,
+                  })
+                }
+              >
+                Завершить
+              </button>
+              <button className="sidebar-popup-button" onClick={() => setShowPopup(false)}>
+                Отменить
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showPopup && popupType === "learnMore" && (
+        <div className="sidebar-popup">
+          <div className="sidebar-popup-content">
+            <div className="sidebar-popup-title">Вы чуть-чуть не успеваете</div>
+            <div className="sidebar-popup-text2">Могут возникнуть трудности с редактурой или печатью. Вы можете перенести дату доставки или связаться с нашим менеджером для уточнения сроков.</div>
+            <div className="sidebar-popup-buttons2">
+              <button className="sidebar-popup-button" onClick={handleSupport}>
+                Связаться с менеджером
+              </button>
+              <button className="sidebar-popup-button" onClick={handleChangeDateClick}>
+                Cдвинуть дату доставки
+              </button>
+              <button className="sidebar-popup-button" onClick={() => setShowPopup(false)}>
+                Закрыть
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showPopup && popupType === "changeDate" && (
+        <div className="sidebar-popup">
+          <div className="sidebar-popup-content">
+            <div className="sidebar-popup-title">Изменить дату доставки</div>
+            <div className="sidebar-popup-input">
+              <label>Новая дата доставки</label>
+              <input
+                type="date"
+                value={deliveryDate ? deliveryDate.toISOString().split("T")[0] : ""}
+                min={minDate}
+                onChange={(e) => setDeliveryDate(new Date(e.target.value))}
+              />
+            </div>
+            <div className="sidebar-popup-buttons">
+              <button className="sidebar-popup-button" onClick={handleChangeDate}>
+                Сохранить
+              </button>
+              <button className="sidebar-popup-button" onClick={() => setShowPopup(false)}>
+                Отменить
+              </button>
             </div>
           </div>
         </div>
