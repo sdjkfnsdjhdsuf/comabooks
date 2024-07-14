@@ -15,7 +15,7 @@ function index() {
     <div className='onhold'>
         <img className='onhold-img' src={success} />
         <div className='onhold-title'>Ваша книга отправлена на редактуру!</div>
-        <div className='onhold-text'>Наши редакторы усердно трудятся и проверяют содержание на грамматику и пунктуацию. Мы отправим вам предварительный вариант.</div>
+        <div className='onhold-text'>Наши редакторы усердно трудятся и проверяют содержание на грамматику и пунктуацию.</div>
         <div className='onhold-bold'>ОБЯЗАТЕЛЬНО СООБЩИТЕ РЕДАКТОРАМ О ЗАВЕРШЕНИИ КНИГИ</div>
         <button onClick={handleSupport} className='onhold-button'>Сообщить о завершении</button>
     </div>
