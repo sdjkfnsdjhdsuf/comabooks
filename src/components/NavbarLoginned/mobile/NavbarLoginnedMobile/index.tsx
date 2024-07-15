@@ -34,34 +34,6 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const [originalDeliveryDate, setOriginalDeliveryDate] = useState<Date | null>(null);
   const [originalAddress, setOriginalAddress] = useState<string | null>(null);
   const [minDate, setMinDate] = useState<string>("");
-  const [coverExists, setCoverExists] = useState(false);
-
-  useEffect(() => {
-    const fetchCover = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) return;
-
-      try {
-        const response = await fetch(`https://api.comabooks.org/cover/${templateId}`, {
-          method: 'GET',
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          // Check if cover data exists
-          setCoverExists(data && data.coverImageUrl);
-        } else {
-          setCoverExists(false);
-        }
-      } catch (error) {
-        console.error('Error fetching cover data:', error);
-        setCoverExists(false);
-      }
-    };
-
-    fetchCover();
-  }, [templateId]);
 
   useEffect(() => {
     const today = new Date();
@@ -164,6 +136,21 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     if (!token) return;
 
     try {
+      const response2 = await fetch(`https://api.comabooks.org/cover/${templateId}`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data2 = await response2.json();
+      console.log(data2)
+      if (data2.value) {
+        console.log('it true')
+      } else {
+        console.log('it false')
+        alert('У вас не заполнена обложка книги!')
+        return;
+      }
+      console.log('check')
+
       const response = await fetch("https://api.comabooks.org/user_anal", {
         method: "GET",
         headers: {
@@ -197,10 +184,6 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     address: string;
     deliveryTime: string;
   }) => {
-    if (!coverExists) {
-      alert('У вас не заполнена обложка книги!');
-      return;
-    }
     try {
       const updatedData = {
         address: address || originalAddress,
