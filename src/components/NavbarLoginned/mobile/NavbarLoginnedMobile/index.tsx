@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "assets/comabooks-white.svg";
@@ -131,26 +131,23 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     navigate(`/addphoto/${templateId}/${photoId}`);
   };
 
+  const deadlineRef = useRef<HTMLDivElement | null>(null);
+
   const handleFinishBookClick = async () => {
     const token = localStorage.getItem("token");
     if (!token) return;
-
+  
     try {
       const response2 = await fetch(`https://api.comabooks.org/cover/${templateId}`, {
         method: 'GET',
         headers: { Authorization: `Bearer ${token}` },
       });
       const data2 = await response2.json();
-      console.log(data2)
-      if (data2.value) {
-        console.log('it true')
-      } else {
-        console.log('it false')
-        alert('У вас не заполнена обложка книги!')
+      if (!data2.value) {
+        alert('У вас не заполнена обложка книги!');
         return;
       }
-      console.log('check')
-
+  
       const response = await fetch("https://api.comabooks.org/user_anal", {
         method: "GET",
         headers: {
@@ -158,17 +155,21 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         },
       });
       const data = await response.json();
-
+  
       const { address, deliveryTime } = data;
-
+  
       const isDefaultDate = new Date(deliveryTime).getTime() === new Date("1970-01-01T00:00:00.000Z").getTime();
-
+  
       setOriginalAddress(address);
       setOriginalDeliveryDate(new Date(deliveryTime));
       setAddress(address);
       setDeliveryDate(isDefaultDate ? null : new Date(deliveryTime));
-
-      setPopupType("finishBook");
+  
+      if (deadlineRef.current && deadlineRef.current.innerHTML.includes("Узнать больше")) {
+        setPopupType("changeDate");
+      } else {
+        setPopupType("finishBook");
+      }
       setShowPopup(true);
     } catch (error) {
       console.error("Error:", error);
@@ -223,7 +224,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
 
   const handleChangeDateClick = () => {
     const today = new Date();
-    today.setDate(today.getDate() + 3);
+    today.setDate(today.getDate() + 7);
     const minChangeDate = today.toISOString().split("T")[0];
     setMinDate(minChangeDate);
     setPopupType("changeDate");
@@ -275,7 +276,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                 <progress value={pageFilled} max={templateDto.questions.length} />
                 <div className="page-numbers">{pageFilled} страниц заполнено</div>
                 {deliveryDate && address && (
-                  <div className="deadline">
+                  <div className="deadline" ref={deadlineRef}>
                     {calculateDeadline(deliveryDate, address, handleLearnMoreClick)}
                   </div>
                 )}

@@ -12,6 +12,8 @@ import { AppDispatch, RootState } from "store";
 import { thunkSetPage } from "slicers/page_slicer";
 import { fetchPhotos } from "slicers/photos_slicer";
 import { calculateDeadline } from "./deadlineCounter";
+import { useRef } from "react";
+
 
 const NavbarLoginned = ({
   templateId,
@@ -136,25 +138,23 @@ const NavbarLoginned = ({
     navigate(`/addphoto/${templateId}/${photoId}`);
   };
 
+  const deadlineRef = useRef<HTMLDivElement | null>(null);
+
   const handleFinishBookClick = async () => {
     const token = localStorage.getItem("token");
     if (!token) return;
   
     try {
-        const response2 = await fetch(`https://api.comabooks.org/cover/${templateId}`, {
-          method: 'GET',
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data2 = await response2.json();
-        console.log(data2)
-        if (data2.value) {
-          console.log(' it true')
-        } else {
-          console.log('it false')
-          alert('У вас не заполнена обложка книги!')
-          return;
-        }
-        console.log('check')
+      const response2 = await fetch(`https://api.comabooks.org/cover/${templateId}`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data2 = await response2.json();
+      if (!data2.value) {
+        alert('У вас не заполнена обложка книги!');
+        return;
+      }
+  
       const response = await fetch("https://api.comabooks.org/user_anal", {
         method: "GET",
         headers: {
@@ -166,18 +166,23 @@ const NavbarLoginned = ({
       const { address, deliveryTime } = data;
   
       const isDefaultDate = new Date(deliveryTime).getTime() === new Date("1970-01-01T00:00:00.000Z").getTime();
-    
-        setOriginalAddress(address);
-        setOriginalDeliveryDate(new Date(deliveryTime));
-        setAddress(address);
-        setDeliveryDate(isDefaultDate ? null : new Date(deliveryTime));
-        
+  
+      setOriginalAddress(address);
+      setOriginalDeliveryDate(new Date(deliveryTime));
+      setAddress(address);
+      setDeliveryDate(isDefaultDate ? null : new Date(deliveryTime));
+  
+      if (deadlineRef.current && deadlineRef.current.innerHTML.includes("Узнать больше")) {
+        setPopupType("changeDate");
+      } else {
         setPopupType("finishBook");
-        setShowPopup(true);
+      }
+      setShowPopup(true);
     } catch (error) {
       console.error("Error:", error);
     }
   };
+  
   
   const handleFinishBook = async ({
     token,
@@ -229,7 +234,7 @@ const NavbarLoginned = ({
 
   const handleChangeDateClick = () => {
     const today = new Date();
-    today.setDate(today.getDate() + 3);
+    today.setDate(today.getDate() + 7);
     const minChangeDate = today.toISOString().split("T")[0];
     setMinDate(minChangeDate);
     setPopupType("changeDate");
@@ -279,7 +284,7 @@ const NavbarLoginned = ({
               {pageFilled} страниц заполнено
             </div>
             {deliveryDate && address && (
-              <div className="deadline">
+              <div className="deadline" ref={deadlineRef}>
                 {calculateDeadline(deliveryDate, address, handleLearnMoreClick)}
               </div>
             )}
@@ -432,7 +437,7 @@ const NavbarLoginned = ({
       {showPopup && popupType === "changeDate" && (
         <div className="sidebar-popup">
           <div className="sidebar-popup-content">
-            <div className="sidebar-popup-title">Изменить дату доставки</div>
+            <div className="sidebar-popup-title">Вы на просрочке, поменяйте дату доставки</div>
             <div className="sidebar-popup-input">
               <label>Новая дата доставки</label>
               <input
