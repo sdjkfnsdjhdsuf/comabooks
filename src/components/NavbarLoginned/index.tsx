@@ -1,6 +1,6 @@
 import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import logo from "assets/comabooks-white.svg";
 import {
   AnswerEntityDto,
@@ -12,8 +12,6 @@ import { AppDispatch, RootState } from "store";
 import { thunkSetPage } from "slicers/page_slicer";
 import { fetchPhotos } from "slicers/photos_slicer";
 import { calculateDeadline } from "./deadlineCounter";
-import { useRef } from "react";
-
 
 const NavbarLoginned = ({
   templateId,
@@ -37,10 +35,11 @@ const NavbarLoginned = ({
   const [popupType, setPopupType] = useState<"finishBook" | "learnMore" | "changeDate" | null>(null);
   const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);
   const [address, setAddress] = useState<string | null>(null);
+  const [street, setStreet] = useState<string | null>(null);
+  const [phone, setPhone] = useState<string | null>(null);
   const [originalDeliveryDate, setOriginalDeliveryDate] = useState<Date | null>(null);
   const [originalAddress, setOriginalAddress] = useState<string | null>(null);
   const [minDate, setMinDate] = useState<string>("");
-
 
   useEffect(() => {
     const today = new Date();
@@ -70,7 +69,7 @@ const NavbarLoginned = ({
         });
         const data = await response.json();
 
-        const { address, deliveryTime } = data;
+        const { address, deliveryTime, street, phone } = data;
         const deliveryDateObj = new Date(deliveryTime);
 
         if (
@@ -81,6 +80,8 @@ const NavbarLoginned = ({
           setOriginalDeliveryDate(deliveryDateObj);
           setAddress(address);
           setDeliveryDate(deliveryDateObj);
+          setStreet(street);
+          setPhone(phone);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -163,7 +164,7 @@ const NavbarLoginned = ({
       });
       const data = await response.json();
   
-      const { address, deliveryTime } = data;
+      const { address, deliveryTime, street, phone } = data;
   
       const isDefaultDate = new Date(deliveryTime).getTime() === new Date("1970-01-01T00:00:00.000Z").getTime();
   
@@ -171,6 +172,8 @@ const NavbarLoginned = ({
       setOriginalDeliveryDate(new Date(deliveryTime));
       setAddress(address);
       setDeliveryDate(isDefaultDate ? null : new Date(deliveryTime));
+      setStreet(street);
+      setPhone(phone);
   
       if (deadlineRef.current && deadlineRef.current.innerHTML.includes("Узнать больше")) {
         setPopupType("changeDate");
@@ -183,21 +186,26 @@ const NavbarLoginned = ({
     }
   };
   
-  
   const handleFinishBook = async ({
     token,
     address,
     deliveryTime,
+    street,
+    phone
   }: {
     token: string;
     address: string;
     deliveryTime: string;
+    street: string;
+    phone: string;
   }) => {
   
     try {
       const updatedData = {
         address: address || originalAddress,
         deliveryTime: deliveryTime,
+        street: street || originalAddress,
+        phone: phone,
         status: "done",
       };
   
@@ -226,7 +234,6 @@ const NavbarLoginned = ({
     }
   };
   
-
   const handleLearnMoreClick = () => {
     setPopupType("learnMore");
     setShowPopup(true);
@@ -255,6 +262,8 @@ const NavbarLoginned = ({
         body: JSON.stringify({
           deliveryTime: deliveryDate.toISOString(),
           address: originalAddress,
+          street: street || "",
+          phone: phone || "",
           status: 'inProccess'
         }),
       });
@@ -266,7 +275,7 @@ const NavbarLoginned = ({
     }
   };
 
-  const isFinishBookSaveDisabled = !address || !deliveryDate;
+  const isFinishBookSaveDisabled = !address || !deliveryDate || !street || !phone;
 
   if (templateDto == null) return <></>;
 
@@ -394,6 +403,22 @@ const NavbarLoginned = ({
                 />
               </div>
             )}
+              <div className="sidebar-popup-input">
+                <label>Улица доставки</label>
+                <input
+                  type="text"
+                  value={street || ""}
+                  onChange={(e) => setStreet(e.target.value)}
+                />
+              </div>
+            <div className="sidebar-popup-input">
+              <label>Телефон</label>
+              <input
+                type="text"
+                value={phone || ""}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
             <div className="sidebar-popup-buttons">
               <button
                 className="sidebar-popup-button"
@@ -403,6 +428,8 @@ const NavbarLoginned = ({
                     token: localStorage.getItem("token")!,
                     address: address || "",
                     deliveryTime: (deliveryDate || originalDeliveryDate)?.toISOString() as string,
+                    street: street || "",
+                    phone: phone || ""
                   })
                 }
               >

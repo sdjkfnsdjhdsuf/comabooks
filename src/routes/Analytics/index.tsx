@@ -5,6 +5,8 @@ import './index.css';
 const Analytics: React.FC = () => {
   const [deliveryDate, setDeliveryDate] = useState<string>('');
   const [address, setAddress] = useState<string>('');
+  const [street, setStreet] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
   const [isOtherCity, setIsOtherCity] = useState<boolean>(false);
   const [isDateUnknown, setIsDateUnknown] = useState<boolean>(false);
   const [isAddressUnknown, setIsAddressUnknown] = useState<boolean>(false);
@@ -23,6 +25,7 @@ const Analytics: React.FC = () => {
     if (selectedCity === 'Другое') {
       setIsOtherCity(true);
       setAddress('');
+      setStreet('');
     } else {
       setIsOtherCity(false);
       setAddress(selectedCity);
@@ -37,6 +40,8 @@ const Analytics: React.FC = () => {
     const postData = {
       deliveryTime,
       address: isAddressUnknown ? '' : address,
+      street: isAddressUnknown ? '' : street,
+      phone,
       status: 'inProccess',
     };
 
@@ -98,15 +103,26 @@ const Analytics: React.FC = () => {
             <option value="Другое">Другое</option>
           </select>
           {isOtherCity && !isAddressUnknown && (
-            <input
-              type="text"
-              id="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="Введите город"
-              required
-            />
+            <>
+              <input
+                type="text"
+                id="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="Введите город"
+                required
+              />
+            </>
           )}
+              <input
+                type="text"
+                id="street"
+                value={street}
+                onChange={(e) => setStreet(e.target.value)}
+                placeholder="Введите точный адрес"
+                required={!isAddressUnknown}
+                disabled={isAddressUnknown}
+              />
           <label className='not-sure-checker'>
             <input
               type="checkbox"
@@ -115,6 +131,17 @@ const Analytics: React.FC = () => {
             />
             Не могу сказать точно
           </label>
+        </div>
+        <div className='analytics-input'>
+          <label htmlFor="phone">Телефон</label>
+          <input
+            type="text"
+            id="phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Введите телефон"
+            required
+          />
         </div>
         <button className='analytics-button' type="submit">Сохранить</button>
       </form>

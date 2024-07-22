@@ -31,13 +31,15 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const [popupType, setPopupType] = useState<"finishBook" | "learnMore" | "changeDate" | null>(null);
   const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);
   const [address, setAddress] = useState<string | null>(null);
+  const [street, setStreet] = useState<string | null>(null);
+  const [phone, setPhone] = useState<string | null>(null);
   const [originalDeliveryDate, setOriginalDeliveryDate] = useState<Date | null>(null);
   const [originalAddress, setOriginalAddress] = useState<string | null>(null);
   const [minDate, setMinDate] = useState<string>("");
 
   useEffect(() => {
     const today = new Date();
-    today.setDate(today.getDate() + 7); // Add 5 days to today's date
+    today.setDate(today.getDate() + 7); // Add 7 days to today's date
     const minDateStr = today.toISOString().split("T")[0]; // Format the date as YYYY-MM-DD
     setMinDate(minDateStr);
   }, []);
@@ -63,7 +65,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         });
         const data = await response.json();
 
-        const { address, deliveryTime } = data;
+        const { address, deliveryTime, street, phone } = data;
         const deliveryDateObj = new Date(deliveryTime);
 
         if (
@@ -74,6 +76,8 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
           setOriginalDeliveryDate(deliveryDateObj);
           setAddress(address);
           setDeliveryDate(deliveryDateObj);
+          setStreet(street);
+          setPhone(phone);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -156,7 +160,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
       });
       const data = await response.json();
   
-      const { address, deliveryTime } = data;
+      const { address, deliveryTime, street, phone } = data;
   
       const isDefaultDate = new Date(deliveryTime).getTime() === new Date("1970-01-01T00:00:00.000Z").getTime();
   
@@ -164,6 +168,8 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
       setOriginalDeliveryDate(new Date(deliveryTime));
       setAddress(address);
       setDeliveryDate(isDefaultDate ? null : new Date(deliveryTime));
+      setStreet(street);
+      setPhone(phone);
   
       if (deadlineRef.current && deadlineRef.current.innerHTML.includes("Узнать больше")) {
         setPopupType("changeDate");
@@ -175,31 +181,38 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
       console.error("Error:", error);
     }
   };
-
+  
   const handleFinishBook = async ({
     token,
     address,
     deliveryTime,
+    street,
+    phone
   }: {
     token: string;
     address: string;
     deliveryTime: string;
+    street: string;
+    phone: string;
   }) => {
+  
     try {
       const updatedData = {
         address: address || originalAddress,
         deliveryTime: deliveryTime,
+        street: street || originalAddress,
+        phone: phone,
         status: "done",
       };
-
+  
       if (address !== originalAddress) {
         updatedData.address = address;
       }
-
+  
       if (deliveryDate && deliveryDate !== originalDeliveryDate) {
         updatedData.deliveryTime = deliveryDate.toISOString();
       }
-
+  
       await fetch("https://api.comabooks.org/user_anal", {
         method: "POST",
         headers: {
@@ -208,7 +221,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         },
         body: JSON.stringify(updatedData),
       });
-
+  
       setShowPopup(false);
       navigate("/onhold");
       // Additional logic if needed after finishing the book
@@ -245,6 +258,8 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         body: JSON.stringify({
           deliveryTime: deliveryDate.toISOString(),
           address: originalAddress,
+          street: street || "",
+          phone: phone || "",
           status: 'inProccess'
         }),
       });
@@ -256,7 +271,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     }
   };
 
-  const isFinishBookSaveDisabled = !address || !deliveryDate;
+  const isFinishBookSaveDisabled = !address || !deliveryDate || !street || !phone;
 
   if (templateDto == null) return <></>;
 
@@ -377,6 +392,22 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                 />
               </div>
             )}
+              <div className="sidebar-popup-input">
+                <label>Улица доставки</label>
+                <input
+                  type="text"
+                  value={street || ""}
+                  onChange={(e) => setStreet(e.target.value)}
+                />
+              </div>
+            <div className="sidebar-popup-input">
+              <label>Телефон</label>
+              <input
+                type="text"
+                value={phone || ""}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
             <div className="sidebar-popup-buttons">
               <button
                 className="sidebar-popup-button"
@@ -386,6 +417,8 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                     token: localStorage.getItem("token")!,
                     address: address || "",
                     deliveryTime: (deliveryDate || originalDeliveryDate)?.toISOString() as string,
+                    street: street || "",
+                    phone: phone || ""
                   })
                 }
               >
