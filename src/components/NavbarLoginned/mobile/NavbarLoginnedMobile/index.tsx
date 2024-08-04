@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "assets/comabooks-white.svg";
-import hamburger from "assets/hamburger-icon.png";
 import { calculateDeadline } from "../../deadlineCounter"; // Import the function
 import {
   AnswerEntityDto,
@@ -13,6 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store";
 import { thunkSetPage } from "slicers/page_slicer";
 import { fetchPhotos } from "slicers/photos_slicer";
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 
 const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,13 +36,15 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const [phone, setPhone] = useState<string | null>(null);
   const [originalDeliveryDate, setOriginalDeliveryDate] = useState<Date | null>(null);
   const [originalAddress, setOriginalAddress] = useState<string | null>(null);
-  const [minDate, setMinDate] = useState<string>("");
+  const [minDate, setMinDate] = useState<Date>(new Date());
+  const [day, setDay] = useState<string>("");
+  const [month, setMonth] = useState<string>("");
+  const [year, setYear] = useState<string>("");
 
   useEffect(() => {
     const today = new Date();
     today.setDate(today.getDate() + 7); // Add 7 days to today's date
-    const minDateStr = today.toISOString().split("T")[0]; // Format the date as YYYY-MM-DD
-    setMinDate(minDateStr);
+    setMinDate(today);
   }, []);
 
   const handleSupport = () => {
@@ -121,6 +124,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
 
   const wrappedSetCurrentPage = (pageIndex: number) => {
     dispatch(thunkSetPage(pageIndex));
+    setIsOpen(!isOpen);
   };
 
   const handleTogglePhotos = () => {
@@ -140,7 +144,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const handleFinishBookClick = async () => {
     const token = localStorage.getItem("token");
     if (!token) return;
-  
+
     try {
       const response2 = await fetch(`https://api.comabooks.org/cover/${templateId}`, {
         method: 'GET',
@@ -151,7 +155,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         alert('У вас не заполнена обложка книги!');
         return;
       }
-  
+
       const response = await fetch("https://api.comabooks.org/user_anal", {
         method: "GET",
         headers: {
@@ -159,19 +163,19 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         },
       });
       const data = await response.json();
-  
+
       const { address, deliveryTime, street, phone } = data;
-  
+
       const isDefaultDate = new Date(deliveryTime).getTime() === new Date("1970-01-01T00:00:00.000Z").getTime();
-  
+
       setOriginalAddress(address);
       setOriginalDeliveryDate(new Date(deliveryTime));
       setAddress(address);
       setDeliveryDate(isDefaultDate ? null : new Date(deliveryTime));
       setStreet(street);
       setPhone(phone);
-  
-      if (deadlineRef.current && deadlineRef.current.innerHTML.includes("Узнать больше")) {
+
+      if ((deadlineRef.current && deadlineRef.current.innerHTML.includes("Узнать больше") || isDefaultDate)) {
         setPopupType("changeDate");
       } else {
         setPopupType("finishBook");
@@ -181,7 +185,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
       console.error("Error:", error);
     }
   };
-  
+
   const handleFinishBook = async ({
     token,
     address,
@@ -195,7 +199,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     street: string;
     phone: string;
   }) => {
-  
+
     try {
       const updatedData = {
         address: address || originalAddress,
@@ -204,15 +208,15 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         phone: phone,
         status: "done",
       };
-  
+
       if (address !== originalAddress) {
         updatedData.address = address;
       }
-  
+
       if (deliveryDate && deliveryDate !== originalDeliveryDate) {
         updatedData.deliveryTime = deliveryDate.toISOString();
       }
-  
+
       await fetch("https://api.comabooks.org/user_anal", {
         method: "POST",
         headers: {
@@ -221,7 +225,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         },
         body: JSON.stringify(updatedData),
       });
-  
+
       setShowPopup(false);
       navigate("/onhold");
       // Additional logic if needed after finishing the book
@@ -238,15 +242,24 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const handleChangeDateClick = () => {
     const today = new Date();
     today.setDate(today.getDate() + 7);
-    const minChangeDate = today.toISOString().split("T")[0];
-    setMinDate(minChangeDate);
+    setMinDate(today);
     setPopupType("changeDate");
     setShowPopup(true);
   };
 
   const handleChangeDate = async () => {
+
+    const newDateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    const newDate = new Date(newDateStr);
+    if (isNaN(newDate.getTime())) {
+       
+      return;
+    }
+
+    setDeliveryDate(newDate);
+
     const token = localStorage.getItem("token");
-    if (!token || !deliveryDate) return;
+    if (!token) return;
 
     try {
       await fetch("https://api.comabooks.org/user_anal", {
@@ -256,7 +269,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          deliveryTime: deliveryDate.toISOString(),
+          deliveryTime: newDate.toISOString(),
           address: originalAddress,
           street: street || "",
           phone: phone || "",
@@ -272,209 +285,262 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   };
 
   const isFinishBookSaveDisabled = !address || !deliveryDate || !street || !phone;
+  const isChangeDateDisabled = !day || !month || !year;
+
+  const renderDayOptions = (startDay: number) => {
+    const daysInMonth = new Date(
+      deliveryDate ? deliveryDate.getFullYear() : minDate.getFullYear(),
+      deliveryDate ? deliveryDate.getMonth() + 1 : minDate.getMonth() + 1,
+      0
+    ).getDate();
+    const days = [<option key="" value="">Day</option>];
+    for (let i = startDay; i <= daysInMonth; i++) {
+      days.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+    return days;
+  };
+
+  const renderMonthOptions = (startMonth: number) => {
+    const months = [<option key="" value="">Month</option>];
+    for (let i = startMonth; i < 12; i++) {
+      months.push(
+        <option key={i} value={i + 1}>
+          {new Date(0, i).toLocaleString("en", { month: "long" })}
+        </option>
+      );
+    }
+    return months;
+  };
+
+  const renderYearOptions = (startYear: number) => {
+    const currentYear = new Date().getFullYear();
+    const years = [<option key="" value="">Year</option>];
+    for (let i = startYear; i <= currentYear + 5; i++) {
+      years.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+    return years;
+  };
+
+  const handleDayChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDay(e.target.value);
+  };
+
+  const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setMonth(e.target.value);
+  };
+
+  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setYear(e.target.value);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+    setDeliveryDate(originalDeliveryDate);
+    setDay("");
+    setMonth("");
+    setYear("");
+  };
 
   if (templateDto == null) return <></>;
 
   return (
-    <aside className={`sidebar-mobile ${isOpen ? "open" : ""}`}>
+    <>
       <button className="hamburger-icon" onClick={() => setIsOpen(!isOpen)}>
-        <img src={hamburger} style={{ width: "20px", height: "20px", objectFit: "cover" }} />
+        {!isOpen ? <MenuIcon /> : <CloseIcon style={{ color: 'white' }} />}
       </button>
-      {isOpen && (
-        <>
-          <div className="forms-info-container-mobile">
-            <div className="forms-mobile">
-              <Link to="/">
-                <img src={logo} alt="Logo" className="logo" />
-              </Link>
-              <div className="forms-info">
-                <progress value={pageFilled} max={templateDto.questions.length} />
-                <div className="page-numbers">{pageFilled} страниц заполнено</div>
-                {deliveryDate && address && (
-                  <div className="deadline" ref={deadlineRef}>
-                    {calculateDeadline(deliveryDate, address, handleLearnMoreClick)}
-                  </div>
-                )}
+      <aside className={`sidebar-mobile ${isOpen ? "open" : ""}`}>
+        {isOpen && (
+          <>
+            <div className="forms-info-container-mobile">
+              <div className="forms-mobile">
+                <Link className="forms-mobile-top" to="/">
+                  <img src={logo} alt="Logo" className="logo" />
+                  <div className="page-numberss">{pageFilled} страниц заполнено</div>
+                </Link>
+                <div className="forms-info">
+                  <progress value={pageFilled} max={templateDto.questions.length} />
+                  {(originalDeliveryDate?.getTime() !== new Date("1970-01-01T00:00:00.000Z").getTime()) && address && deliveryDate && (
+                    <div className="deadline" ref={deadlineRef}>
+                      {calculateDeadline(deliveryDate, address, handleLearnMoreClick)}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-          {isViewingPhotos ? (
-            <>
-              <ul className="photo-list-mobile">
-                {photos.map((photo) => (
-                  <li key={photo._id} onClick={() => handlePhotoClick(photo._id)}>
-                    <div className="photo-list-one">{photo.description}</div>
-                  </li>
-                ))}
-                <div className="sidebar-bottom-add-photo-mobile">
-                  <button onClick={addNewPhoto}>+ Добавить фото </button>
-                </div>
-              </ul>
-            </>
-          ) : (
-            <ul className="questions-list-mobile">
-              {templateDto.questions.map((templateQuestion, index) => {
-                const isCurrent = index === currentPage;
-                const isAnswered =
-                  answerMap[templateQuestion._id]?.answer?.replaceAll(" ", "") ?? "";
-
-                let bgColor = "transparent";
-                if (isCurrent) {
-                  bgColor = "#4F545B";
-                }
-                if (isAnswered && !isCurrent) {
-                  bgColor = "#4F545B";
-                }
-                if (isAnswered && isCurrent) {
-                  bgColor = "#3C4045";
-                }
-
-                return (
-                  <li key={index}>
-                    <button
-                      onClick={() => wrappedSetCurrentPage(index)}
-                      style={{
-                        backgroundColor: bgColor,
-                        borderRadius: "4px",
-                      }}
-                    >
-                      {index + 1}. {templateQuestion.question}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-
-          <div className="sidebar-bottom-fixed-mobile">
-            <button className="sidebar-bottom-fixed-cover" onClick={handleTogglePhotos}>
-              {isViewingPhotos ? "Перейти к вопросам" : "Перейти к фото"}
-            </button>
-            <button className="sidebar-bottom-fixed-cover" onClick={showCoverPage}>
-              Изменить обложку
-            </button>
-            <button className="sidebar-bottom-fixed-cover" onClick={handleFinishBookClick}>
-              Завершить книгу
-            </button>
-            <button className="sidebar-bottom-fixed-cover" onClick={handleLogout}>
-              Выйти из аккаунта
-            </button>
-          </div>
-        </>
-      )}
-      {showPopup && popupType === "finishBook" && (
-        <div className="sidebar-popup">
-          <div className="sidebar-popup-content">
-            {!originalAddress || originalDeliveryDate?.getTime() === new Date("1970-01-01T00:00:00.000Z").getTime() ? (
-              <div className="sidebar-popup-title">Заполните данные заказа</div>
+            {isViewingPhotos ? (
+              <>
+                <ul className="photo-list-mobile">
+                  {photos.map((photo) => (
+                    <li key={photo._id} onClick={() => handlePhotoClick(photo._id)}>
+                      <div className="photo-list-one">{photo.description}</div>
+                    </li>
+                  ))}
+                  <div className="sidebar-bottom-add-photo-mobile">
+                    <button onClick={addNewPhoto}>+ Добавить фото </button>
+                  </div>
+                </ul>
+              </>
             ) : (
-              <div className="sidebar-popup-title">Отправляем книгу на редактуру?</div>
+              <ul className="questions-list-mobile">
+                {templateDto.questions.map((templateQuestion, index) => {
+                  const isCurrent = index === currentPage;
+                  const isAnswered = answerMap[templateQuestion._id]?.answer?.replaceAll(" ", "") ?? "";
+
+                  let bgColor = "transparent";
+                  if (isCurrent) {
+                    bgColor = "#4F545B";
+                  }
+                  if (isAnswered && !isCurrent) {
+                    bgColor = "#4F545B";
+                  }
+                  if (isAnswered && isCurrent) {
+                    bgColor = "#3C4045";
+                  }
+
+                  return (
+                    <li key={index}>
+                      <button
+                        onClick={() => wrappedSetCurrentPage(index)}
+                        style={{
+                          backgroundColor: bgColor,
+                          borderRadius: "4px",
+                        }}
+                      >
+                        {index + 1}. {templateQuestion.question}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
             )}
-            <div className="sidebar-popup-text">Перепроверьте содержание, это действие нельзя вернуть!</div>
-            {!originalAddress && (
-              <div className="sidebar-popup-input">
-                <label>Город доставки</label>
-                <input
-                  type="text"
-                  value={address || ""}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
-              </div>
-            )}
-            {originalDeliveryDate?.getTime() === new Date("1970-01-01T00:00:00.000Z").getTime() && (
-              <div className="sidebar-popup-input">
-                <label>Дата доставки</label>
-                <input
-                  type="date"
-                  value={deliveryDate ? deliveryDate.toISOString().split("T")[0] : ""}
-                  min={minDate}
-                  onChange={(e) => setDeliveryDate(new Date(e.target.value))}
-                />
-              </div>
-            )}
+
+            <div className="sidebar-bottom-fixed-mobile">
+              <button className="sidebar-bottom-fixed-cover" onClick={handleTogglePhotos}>
+                {isViewingPhotos ? "Перейти к вопросам" : "Перейти к фото"}
+              </button>
+              <button className="sidebar-bottom-fixed-cover" onClick={showCoverPage}>
+                Изменить обложку
+              </button>
+              <button className="sidebar-bottom-fixed-cover" onClick={handleFinishBookClick}>
+                Завершить книгу
+              </button>
+              <button className="sidebar-bottom-fixed-cover" onClick={handleLogout}>
+                Выйти из аккаунта
+              </button>
+            </div>
+          </>
+        )}
+        {showPopup && popupType === "finishBook" && (
+          <div className="sidebar-popup">
+            <div className="sidebar-popup-content">
+              {!originalAddress || originalDeliveryDate?.getTime() === new Date("1970-01-01T00:00:00.000Z").getTime() ? (
+                <div className="sidebar-popup-title">Заполните данные заказа</div>
+              ) : (
+                <div className="sidebar-popup-title">Отправляем книгу на редактуру?</div>
+              )}
+              <div className="sidebar-popup-text">Перепроверьте содержание, это действие нельзя вернуть!</div>
+              {!originalAddress && (
+                <div className="sidebar-popup-input">
+                  <label>Город доставки</label>
+                  <input
+                    type="text"
+                    value={address || ""}
+                    onChange={(e) => setAddress(e.target.value)} />
+                </div>
+              )}
               <div className="sidebar-popup-input">
                 <label>Улица доставки</label>
                 <input
                   type="text"
                   value={street || ""}
-                  onChange={(e) => setStreet(e.target.value)}
-                />
+                  onChange={(e) => setStreet(e.target.value)} />
               </div>
-            <div className="sidebar-popup-input">
-              <label>Телефон</label>
-              <input
-                type="text"
-                value={phone || ""}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            </div>
-            <div className="sidebar-popup-buttons">
-              <button
-                className="sidebar-popup-button"
-                disabled={isFinishBookSaveDisabled}
-                onClick={() =>
-                  handleFinishBook({
+              <div className="sidebar-popup-input">
+                <label>Телефон</label>
+                <input
+                  type="text"
+                  value={phone || ""}
+                  onChange={(e) => setPhone(e.target.value)} />
+              </div>
+              <div className="sidebar-popup-buttons">
+                <button
+                  className="sidebar-popup-button"
+                  disabled={isFinishBookSaveDisabled}
+                  onClick={() => handleFinishBook({
                     token: localStorage.getItem("token")!,
                     address: address || "",
                     deliveryTime: (deliveryDate || originalDeliveryDate)?.toISOString() as string,
                     street: street || "",
                     phone: phone || ""
-                  })
-                }
-              >
-                Завершить
-              </button>
-              <button className="sidebar-popup-button" onClick={() => setShowPopup(false)}>
-                Отменить
-              </button>
+                  })}
+                >
+                  Завершить
+                </button>
+                <button className="sidebar-popup-button" onClick={closePopup}>
+                  Отменить
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-      {showPopup && popupType === "learnMore" && (
-        <div className="sidebar-popup">
-          <div className="sidebar-popup-content">
-            <div className="sidebar-popup-title">Вы чуть-чуть не успеваете</div>
-            <div className="sidebar-popup-text2">Могут возникнуть трудности с редактурой или печатью. Вы можете перенести дату доставки или связаться с нашим менеджером для уточнения сроков.</div>
-            <div className="sidebar-popup-buttons2">
-              <button className="sidebar-popup-button" onClick={handleSupport}>
-                Связаться с менеджером
-              </button>
-              <button className="sidebar-popup-button" onClick={handleChangeDateClick}>
-                Cдвинуть дату доставки
-              </button>
-              <button className="sidebar-popup-button" onClick={() => setShowPopup(false)}>
-                Закрыть
-              </button>
+        )}
+        {showPopup && popupType === "learnMore" && (
+          <div className="sidebar-popup">
+            <div className="sidebar-popup-content">
+              <div className="sidebar-popup-title">Вы чуть-чуть не успеваете</div>
+              <div className="sidebar-popup-text2">Могут возникнуть трудности с редактурой или печатью. Вы можете перенести дату доставки или связаться с нашим менеджером для уточнения сроков.</div>
+              <div className="sidebar-popup-buttons2">
+                <button className="sidebar-popup-button" onClick={handleSupport}>
+                  Связаться с менеджером
+                </button>
+                <button className="sidebar-popup-button" onClick={handleChangeDateClick}>
+                  Cдвинуть дату доставки
+                </button>
+                <button className="sidebar-popup-button" onClick={closePopup}>
+                  Закрыть
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-      {showPopup && popupType === "changeDate" && (
-        <div className="sidebar-popup">
-          <div className="sidebar-popup-content">
-            <div className="sidebar-popup-title">Изменить дату доставки</div>
-            <div className="sidebar-popup-input">
-              <label>Новая дата доставки</label>
-              <input
-                type="date"
-                value={deliveryDate ? deliveryDate.toISOString().split("T")[0] : ""}
-                min={minDate}
-                onChange={(e) => setDeliveryDate(new Date(e.target.value))}
-              />
-            </div>
-            <div className="sidebar-popup-buttons">
-              <button className="sidebar-popup-button" onClick={handleChangeDate}>
-                Сохранить
-              </button>
-              <button className="sidebar-popup-button" onClick={() => setShowPopup(false)}>
-                Отменить
-              </button>
+        )}
+        {showPopup && popupType === "changeDate" && (
+          <div className="sidebar-popup">
+            <div className="sidebar-popup-content">
+              <div className="sidebar-popup-title">Изменить дату доставки</div>
+              <div className="sidebar-popup-input">
+                <label>Новая дата доставки</label>
+                <div className="date-selects">
+                  <select value={day} onChange={handleDayChange}>
+                    {renderDayOptions(minDate.getDate())}
+                  </select>
+                  <select value={month} onChange={handleMonthChange}>
+                    {renderMonthOptions(minDate.getMonth())}
+                  </select>
+                  <select value={year} onChange={handleYearChange}>
+                    {renderYearOptions(minDate.getFullYear())}
+                  </select>
+                </div>
+              </div>
+              <div className="sidebar-popup-buttons">
+                <button className="sidebar-popup-button" onClick={handleChangeDate} disabled={isChangeDateDisabled}>
+                  Изменить
+                </button>
+                <button className="sidebar-popup-button" onClick={closePopup}>
+                  Отменить
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </aside>
+        )}
+      </aside>
+    </>
   );
 };
 

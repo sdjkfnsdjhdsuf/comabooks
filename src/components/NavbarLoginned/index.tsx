@@ -39,13 +39,15 @@ const NavbarLoginned = ({
   const [phone, setPhone] = useState<string | null>(null);
   const [originalDeliveryDate, setOriginalDeliveryDate] = useState<Date | null>(null);
   const [originalAddress, setOriginalAddress] = useState<string | null>(null);
-  const [minDate, setMinDate] = useState<string>("");
+  const [minDate, setMinDate] = useState<Date>(new Date());
+  const [day, setDay] = useState<string>("");
+  const [month, setMonth] = useState<string>("");
+  const [year, setYear] = useState<string>("");
 
   useEffect(() => {
     const today = new Date();
-    today.setDate(today.getDate() + 7); // Add 5 days to today's date
-    const minDateStr = today.toISOString().split("T")[0]; // Format the date as YYYY-MM-DD
-    setMinDate(minDateStr);
+    today.setDate(today.getDate() + 7); // Add 7 days to today's date
+    setMinDate(today);
   }, []);
 
   const handleSupport = () => {
@@ -175,7 +177,7 @@ const NavbarLoginned = ({
       setStreet(street);
       setPhone(phone);
   
-      if (deadlineRef.current && deadlineRef.current.innerHTML.includes("Узнать больше")) {
+      if ((deadlineRef.current && deadlineRef.current.innerHTML.includes("Узнать больше")) || isDefaultDate) {
         setPopupType("changeDate");
       } else {
         setPopupType("finishBook");
@@ -242,15 +244,28 @@ const NavbarLoginned = ({
   const handleChangeDateClick = () => {
     const today = new Date();
     today.setDate(today.getDate() + 7);
-    const minChangeDate = today.toISOString().split("T")[0];
-    setMinDate(minChangeDate);
+    setMinDate(today);
     setPopupType("changeDate");
     setShowPopup(true);
   };
+  
 
   const handleChangeDate = async () => {
+    if (!day || !month || !year) return;
+
+    const newDateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    const newDate = new Date(newDateStr);
+    console.log(newDate)
+    if (isNaN(newDate.getTime())) return;
+    console.log('2')
+
+    setDeliveryDate(newDate);
+    console.log('3')
+
     const token = localStorage.getItem("token");
-    if (!token || !deliveryDate) return;
+    console.log('4')
+    if (!token) return;
+    console.log('5')
 
     try {
       await fetch("https://api.comabooks.org/user_anal", {
@@ -260,22 +275,87 @@ const NavbarLoginned = ({
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          deliveryTime: deliveryDate.toISOString(),
+          deliveryTime: newDate.toISOString(),
           address: originalAddress,
           street: street || "",
           phone: phone || "",
           status: 'inProccess'
         }),
       });
+      console.log('6')
 
       setShowPopup(false);
       setOriginalDeliveryDate(deliveryDate);
+      alert('Дата доставки обновилась, теперь можете завершать книгу')
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   const isFinishBookSaveDisabled = !address || !deliveryDate || !street || !phone;
+  const isChangeDateDisabled = !day || !month || !year;
+
+  const renderDayOptions = (startDay: number) => {
+    const daysInMonth = new Date(
+      deliveryDate ? deliveryDate.getFullYear() : minDate.getFullYear(),
+      deliveryDate ? deliveryDate.getMonth() + 1 : minDate.getMonth() + 1,
+      0
+    ).getDate();
+    const days = [<option key="" value="">Day</option>];
+    for (let i = startDay; i <= daysInMonth; i++) {
+      days.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+    return days;
+  };
+
+  const renderMonthOptions = (startMonth: number) => {
+    const months = [<option key="" value="">Month</option>];
+    for (let i = startMonth; i < 12; i++) {
+      months.push(
+        <option key={i} value={i + 1}>
+          {new Date(0, i).toLocaleString("en", { month: "long" })}
+        </option>
+      );
+    }
+    return months;
+  };
+
+  const renderYearOptions = (startYear: number) => {
+    const currentYear = new Date().getFullYear();
+    const years = [<option key="" value="">Year</option>];
+    for (let i = startYear; i <= currentYear + 5; i++) {
+      years.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+    return years;
+  };
+
+  const handleDayChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDay(e.target.value);
+  };
+
+  const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setMonth(e.target.value);
+  };
+
+  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setYear(e.target.value);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+    setDeliveryDate(originalDeliveryDate);
+    setDay("");
+    setMonth("");
+    setYear("");
+  }
 
   if (templateDto == null) return <></>;
 
@@ -292,7 +372,7 @@ const NavbarLoginned = ({
             <div className="page-numbers">
               {pageFilled} страниц заполнено
             </div>
-            {deliveryDate && address && (
+            {deliveryDate && address && (originalDeliveryDate?.getTime() !== new Date("1970-01-01T00:00:00.000Z").getTime()) && (
               <div className="deadline" ref={deadlineRef}>
                 {calculateDeadline(deliveryDate, address, handleLearnMoreClick)}
               </div>
@@ -395,22 +475,27 @@ const NavbarLoginned = ({
             {originalDeliveryDate?.getTime() === new Date("1970-01-01T00:00:00.000Z").getTime() && (
               <div className="sidebar-popup-input">
                 <label>Дата доставки</label>
-                <input
-                  type="date"
-                  value={deliveryDate ? deliveryDate.toISOString().split("T")[0] : ""}
-                  min={minDate}
-                  onChange={(e) => setDeliveryDate(new Date(e.target.value))}
-                />
+                <div className="date-selects">
+                  <select value={day} onChange={handleDayChange}>
+                    {renderDayOptions(minDate.getDate())}
+                  </select>
+                  <select value={month} onChange={handleMonthChange}>
+                    {renderMonthOptions(minDate.getMonth())}
+                  </select>
+                  <select value={year} onChange={handleYearChange}>
+                    {renderYearOptions(minDate.getFullYear())}
+                  </select>
+                </div>
               </div>
             )}
-              <div className="sidebar-popup-input">
-                <label>Улица доставки</label>
-                <input
-                  type="text"
-                  value={street || ""}
-                  onChange={(e) => setStreet(e.target.value)}
-                />
-              </div>
+            <div className="sidebar-popup-input">
+              <label>Улица доставки</label>
+              <input
+                type="text"
+                value={street || ""}
+                onChange={(e) => setStreet(e.target.value)}
+              />
+            </div>
             <div className="sidebar-popup-input">
               <label>Телефон</label>
               <input
@@ -435,7 +520,7 @@ const NavbarLoginned = ({
               >
                 Завершить
               </button>
-              <button className="sidebar-popup-button" onClick={() => setShowPopup(false)}>
+              <button className="sidebar-popup-button" onClick={closePopup}>
                 Отменить
               </button>
             </div>
@@ -454,7 +539,7 @@ const NavbarLoginned = ({
               <button className="sidebar-popup-button" onClick={handleChangeDateClick}>
                 Cдвинуть дату доставки
               </button>
-              <button className="sidebar-popup-button" onClick={() => setShowPopup(false)}>
+              <button className="sidebar-popup-button" onClick={closePopup}>
                 Закрыть
               </button>
             </div>
@@ -464,21 +549,26 @@ const NavbarLoginned = ({
       {showPopup && popupType === "changeDate" && (
         <div className="sidebar-popup">
           <div className="sidebar-popup-content">
-            <div className="sidebar-popup-title">Вы на просрочке, поменяйте дату доставки</div>
+            <div className="sidebar-popup-title">Изменить дату доставки</div>
             <div className="sidebar-popup-input">
               <label>Новая дата доставки</label>
-              <input
-                type="date"
-                value={deliveryDate ? deliveryDate.toISOString().split("T")[0] : ""}
-                min={minDate}
-                onChange={(e) => setDeliveryDate(new Date(e.target.value))}
-              />
+              <div className="date-selects">
+                <select value={day} onChange={handleDayChange}>
+                  {renderDayOptions(minDate.getDate())}
+                </select>
+                <select value={month} onChange={handleMonthChange}>
+                  {renderMonthOptions(minDate.getMonth())}
+                </select>
+                <select value={year} onChange={handleYearChange}>
+                  {renderYearOptions(minDate.getFullYear())}
+                </select>
+              </div>
             </div>
             <div className="sidebar-popup-buttons">
-              <button className="sidebar-popup-button" onClick={handleChangeDate}>
-                Сохранить
+              <button className="sidebar-popup-button" onClick={handleChangeDate} disabled={isChangeDateDisabled}>
+                Изменить
               </button>
-              <button className="sidebar-popup-button" onClick={() => setShowPopup(false)}>
+              <button className="sidebar-popup-button" onClick={closePopup}>
                 Отменить
               </button>
             </div>
