@@ -14,6 +14,7 @@ import { thunkSetPage } from "slicers/page_slicer";
 import { fetchPhotos } from "slicers/photos_slicer";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import { calculateNewDeadline } from "components/NavbarLoginned/calculateNewDeadline";
 
 const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -29,7 +30,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isViewingPhotos, setIsViewingPhotos] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [popupType, setPopupType] = useState<"finishBook" | "learnMore" | "changeDate" | null>(null);
+  const [popupType, setPopupType] = useState<"finishBook" | "learnMore" | "changeDate" | "changeDateAndFinish" | null>(null);
   const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);
   const [address, setAddress] = useState<string | null>(null);
   const [street, setStreet] = useState<string | null>(null);
@@ -40,12 +41,6 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const [day, setDay] = useState<string>("");
   const [month, setMonth] = useState<string>("");
   const [year, setYear] = useState<string>("");
-
-  useEffect(() => {
-    const today = new Date();
-    today.setDate(today.getDate() + 7); // Add 7 days to today's date
-    setMinDate(today);
-  }, []);
 
   const handleSupport = () => {
     const message = `Здравствуйте! Я хотел(-а) узнать на счет успеваемости сроков моей книги.`;
@@ -176,7 +171,23 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
       setPhone(phone);
 
       if ((deadlineRef.current && deadlineRef.current.innerHTML.includes("Узнать больше") || isDefaultDate)) {
-        setPopupType("changeDate");
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+        let validDateFound = false;
+        
+        while (!validDateFound) {
+          if(originalAddress) {
+            console.log(originalAddress)
+            today.setDate(today.getDate() + 1);
+            validDateFound = calculateNewDeadline(today, originalAddress);
+          } else {
+            today.setDate(today.getDate() + 8);
+            validDateFound = true;
+          }
+        }
+      
+        setMinDate(today);
+        setPopupType("changeDateAndFinish");
       } else {
         setPopupType("finishBook");
       }
@@ -240,12 +251,26 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   };
 
   const handleChangeDateClick = () => {
-    const today = new Date();
-    today.setDate(today.getDate() + 7);
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let validDateFound = false;
+    
+    while (!validDateFound) {
+      if(originalAddress) {
+        console.log(originalAddress)
+        today.setDate(today.getDate() + 1);
+        validDateFound = calculateNewDeadline(today, originalAddress);
+      } else {
+        today.setDate(today.getDate() + 8);
+        validDateFound = true;
+      }
+    }
+  
     setMinDate(today);
     setPopupType("changeDate");
     setShowPopup(true);
   };
+
 
   const handleChangeDate = async () => {
 
@@ -279,6 +304,46 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
 
       setShowPopup(false);
       setOriginalDeliveryDate(deliveryDate);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  
+
+  const handleChangeDateAndFinish = async () => {
+
+    const newDateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    const newDate = new Date(newDateStr);
+    if (isNaN(newDate.getTime())) {
+       
+      return;
+    }
+
+    setDeliveryDate(newDate);
+
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      await fetch("https://api.comabooks.org/user_anal", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          deliveryTime: newDate.toISOString(),
+          address: originalAddress,
+          street: street || "",
+          phone: phone || "",
+          status: 'inProccess'
+        }),
+      });
+
+      setShowPopup(false);
+      setOriginalDeliveryDate(deliveryDate);
+      setPopupType("finishBook");
+      setShowPopup(true);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -343,7 +408,6 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
 
   const closePopup = () => {
     setShowPopup(false);
-    setDeliveryDate(originalDeliveryDate);
     setDay("");
     setMonth("");
     setYear("");
@@ -530,6 +594,35 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
               </div>
               <div className="sidebar-popup-buttons">
                 <button className="sidebar-popup-button" onClick={handleChangeDate} disabled={isChangeDateDisabled}>
+                  Изменить
+                </button>
+                <button className="sidebar-popup-button" onClick={closePopup}>
+                  Отменить
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        {showPopup && popupType === "changeDateAndFinish" && (
+          <div className="sidebar-popup">
+            <div className="sidebar-popup-content">
+              <div className="sidebar-popup-title">Изменить дату доставки</div>
+              <div className="sidebar-popup-input">
+                <label>Новая дата доставки</label>
+                <div className="date-selects">
+                  <select value={day} onChange={handleDayChange}>
+                    {renderDayOptions(minDate.getDate())}
+                  </select>
+                  <select value={month} onChange={handleMonthChange}>
+                    {renderMonthOptions(minDate.getMonth())}
+                  </select>
+                  <select value={year} onChange={handleYearChange}>
+                    {renderYearOptions(minDate.getFullYear())}
+                  </select>
+                </div>
+              </div>
+              <div className="sidebar-popup-buttons">
+                <button className="sidebar-popup-button" onClick={handleChangeDateAndFinish} disabled={isChangeDateDisabled}>
                   Изменить
                 </button>
                 <button className="sidebar-popup-button" onClick={closePopup}>
