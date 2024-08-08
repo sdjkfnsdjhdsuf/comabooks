@@ -7,7 +7,7 @@ function index() {
     const handleSupport = () => {
         const message = `Здравствуйте! Я закончил(-а) содержание своей книги!`;
         const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/77476738427?text=${encodedMessage}`;
+        const whatsappUrl = `https://wa.me/77066322605?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
     };
 
