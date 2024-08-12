@@ -67,6 +67,7 @@ function FormTemplate() {
             <QuestionForm
               key={templateDto.questions[currentPage ?? 0]?._id ?? ""}
               question={templateDto.questions[currentPage ?? 0]}
+              templateId={templateId!}
             />
 
             <div className="pagination-controls">

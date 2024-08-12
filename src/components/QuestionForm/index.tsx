@@ -18,7 +18,7 @@ import { setAnswers } from "slicers/answers_slice";
 import { setEditing } from "slicers/editing_slicer";
 // import { AppDispatchType, answerSlice } from "routes/Forms";
 
-const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
+const QuestionForm = ({ question, templateId }: { question: QuestionTemplateDto; templateId: string }) => {
   const dispatch: AppDispatch = useDispatch();
   const previewShow = useSelector<RootState, boolean>(
     (state) => state.preview.value
@@ -94,7 +94,7 @@ const QuestionForm = ({ question }: { question: QuestionTemplateDto }) => {
         </div>
       </div>
 
-      <Preview question={question.question} answer={newAnswer ? newAnswer : 'Ваш ответ будет здесь'} />
+      <Preview question={question.question} answer={newAnswer ? newAnswer : 'Ваш ответ будет здесь'} templateId={templateId} />
 
     </div>
   );

@@ -36,6 +36,56 @@
     height: 362px;
     z-index: 11;
     text-align: left;
+    position: relative;
+  }
+
+  .book-preview-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 222px;
+    height: 362px;
+    object-fit: cover;
+    z-index: 12;
+  }
+
+  .book-preview-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 222px;
+    height: 362px;
+    z-index: 13;
+    background: rgba(0,0,0,0.35);
+  }
+
+  .book-preview-photo-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 222px;
+    height: 362px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    text-align: center;
+    color: white;
+    font-size: 8px;
+    font-family: "Playfair Display";
+    z-index: 20;
+  }
+
+  .book-preview-photo-description {
+    font-style: italic;
+  }
+
+
+
+  .preview-colon.white {
+    z-index: 20;
+    color: white;
   }
   
   .preview-question {
@@ -77,6 +127,43 @@
         text-align: left;
       }
 
+      .book-preview-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 400px;
+        object-fit: cover;
+        z-index: 12;
+      }
+    
+      .book-preview-shadow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 400px;
+        z-index: 13;
+        background: rgba(0,0,0,0.35);
+      }
+
+      .book-preview-photo-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 400px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        color: white;
+        font-size: 8px;
+        font-family: "Playfair Display";
+        z-index: 20;
+      }
 
       .preview-question {
         font-size: 8px;
