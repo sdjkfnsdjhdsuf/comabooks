@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './index.css'
-import footerbook from '../../assets/book7.png'
 import examplevideo from '../../assets/example1.mp4'
 import previewbook1 from '../../assets/previewbook1.png'
 import previewbook2 from '../../assets/previewbook2.png'
@@ -8,8 +7,6 @@ import previewbook3 from '../../assets/previewbook3.png'
 import previewbook4 from '../../assets/previewbook4.png'
 import previewbook5 from '../../assets/previewbook5.png'
 import previewbook6 from '../../assets/previewbook6.png'
-import previewbook7 from '../../assets/previewbook7.png'
-import example3 from '../../assets/example3.png'
 import tiktok1 from '../../assets/madina.png'
 import tiktok2 from '../../assets/chakieva.png'
 import tiktok3 from '../../assets/malika.png'
@@ -18,6 +15,7 @@ import tiktok5 from '../../assets/bsima.png'
 import tiktok6 from '../../assets/aidanki.png'
 import previewbg from '../../assets/newlandingmobilebg.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
+import MenuIcon from '@mui/icons-material/Menu';
 
 function Landing() {
     const navigate = useNavigate()
@@ -208,7 +206,10 @@ function Landing() {
         <div className={`landing-new-header ${isScrolled ? 'scrolled' : ''}`}>
             <div className='landing-new-menu'>
                 <div className={`landing-new-menu-logo ${isScrolled ? 'scrolled' : ''}`}>comabooks</div>
-                <button className='landing-new-menu-order' onClick={handleOrder}>Заказать</button>
+                <div className='landing-new-menu-right'>
+                    <button className='landing-new-menu-ham'><MenuIcon/></button>
+                    <button className='landing-new-menu-order' onClick={handleOrder}>Заказать</button>
+                </div>
             </div>
         </div>
 
@@ -222,10 +223,6 @@ function Landing() {
             <video className='video-book' src={examplevideo} loop autoPlay muted playsInline/>
             <div className='landing-new-video-title'>Персональная книга</div>
             <div className='landing-new-video-text'>Почувствуй себя в роли автора и порадуй близких!</div>
-            {/* <div className='landing-new-video-prices'>
-                <div className='landing-new-video-current'>39.000 тг</div>
-                <div className='landing-new-video-old'>50.000 тг</div>
-            </div> */}
             <button className='landing-new-video-order' onClick={handleOrder}>Заказать</button>
         </div>
 
@@ -355,12 +352,6 @@ function Landing() {
         </div>
     </div>
         </div>
-
-        {/* <div className='landing-new-show'>
-            <div className='ui-title'>После заполнения, книга идет на печать</div>
-            <div className='ui-text'>После того, как вы заполните содержание, мы приступим к редактировнию и верстке, а затем отправим книгу на печать.</div>
-            <img className='resultimg' src={example3}/>
-        </div> */}
 
         <div className='landing-new-show'>
             <div className='r-title'>Отзывы наших клиентов</div>
