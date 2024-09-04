@@ -217,9 +217,9 @@ function Landing() {
             </div>
 
             <div className={`navigation ${isNavVisible ? 'show' : 'hide'}`}>
-                    <Link to="/login">Войти</Link>
+                    <Link to="https://www.comabooks.org/login">Войти</Link>
                     <Link to="https://www.instagram.com/comabooks/">Отзывы в Instagram</Link>
-                    <Link to="/policies">Условия использования</Link>
+                    <Link to="https://www.comabooks.org/policies">Условия использования</Link>
                     <button onClick={handleOrder}>Заказать</button>
             </div>
         </div>
