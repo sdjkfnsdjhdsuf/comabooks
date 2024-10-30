@@ -17,7 +17,6 @@ import FormsWrapper from "routes/FormsWrapper";
 import Policy from "routes/Policy";
 import Landing2 from "routes/Landing/Landing2";
 import LandingNew from "routes/LandingNew";
-import FacebookPixel from "routes/FacebookPixel";
 import Analytics from "routes/Analytics";
 import Onhold from "routes/Onhold";
 import AnalyticsChecker from "routes/AnalyticsChecker";
@@ -35,7 +34,6 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-    <FacebookPixel />
     <AnalyticsChecker />
       <Routes>
         <Route path="/" element={<Landing />} />
