@@ -57,11 +57,16 @@ const [isNavVisible, setIsNavVisible] = useState(false);
   'Представьте, как вы посвящаете книгу подруге. Такого подарка она еще точно не получала!',
   'Представьте, как вы посвящаете книгу коллеге. Такого подарка он еще точно не получал!'];
   const handleOrder = () => {
-    const message = `Здравствуйте, пишу с сайта по поводу книги. Можете проконсультировать?`;
+    (window as any)._tmr.push({ type: 'reachGoal', id: 3572395, value: 1000, goal: 'заказать' });
+
+    // Open WhatsApp link
+    const message = `Здравствуйте! Интересуюсь книгой, подскажите пожалуйста подробности`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/77476738427?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
-  };
+};
+
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentRecipient(prevRecipient => {
