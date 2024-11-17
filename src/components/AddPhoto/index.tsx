@@ -127,22 +127,33 @@ const AddPhoto = () => {
   const handlePhotoChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-
+      const allowedFormats = ["image/png", "image/jpeg", "image/jpg", "image/heic"];
+  
+      if (!allowedFormats.includes(file.type)) {
+        alert("Допустимый формат для фото: PNG, JPEG, JPG, HEIC");
+        return;
+      }
+  
       const formData = new FormData();
       formData.append("file", file);
-      const uploadedFile = await axios.post(
-        "https://api.comabooks.org/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      setPhotoFile(uploadedFile.data);
+  
+      try {
+        const uploadedFile = await axios.post(
+          "https://api.comabooks.org/upload",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        setPhotoFile(uploadedFile.data);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
     }
   };
+  
 
   const handleSave = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
