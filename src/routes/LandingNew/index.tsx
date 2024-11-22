@@ -196,7 +196,7 @@ function Landing() {
     };
 
     const handleOrder = () => {
-        (window as any)._tmr.push({ type: 'reachGoal', id: 3578061, value: 1000, goal: 'заказать' });
+        (window as any)._tmr.push({ type: 'reachGoal', id: 3578061, value: 100, goal: 'лид' });
         const message = `Здравствуйте! Интересуюсь книгой, подскажите пожалуйста подробности`;
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/77476738427?text=${encodedMessage}`;
