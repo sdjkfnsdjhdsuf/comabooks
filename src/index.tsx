@@ -20,6 +20,7 @@ import LandingNew from "routes/LandingNew";
 import Analytics from "routes/Analytics";
 import Onhold from "routes/Onhold";
 import AnalyticsChecker from "routes/AnalyticsChecker";
+import SalePage from "routes/SalePage";
 // import AddPhoto from "components/AddPhoto";
 
 export const instance = axios.create({
@@ -39,6 +40,7 @@ root.render(
         <Route path="/" element={<Landing />} />
         <Route path="/ads" element={<Landing2 />} />
         <Route path="/sales" element={<LandingNew />} />
+        <Route path="/order" element={<SalePage />} />
         <Route path="/login" element={<Home />} />
         <Route path="/forms" element={<Forms />} />
         <Route path="/forms/:id" element={<FormsWrapper />} />

@@ -1,0 +1,208 @@
+.order-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    font-family: 'Inter';
+    padding: 100px;
+    gap: 50px;
+    width: 100%;
+    justify-content: center;
+}
+
+.order-img {
+    width: 45vw;
+    height: 80vh;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.order-content {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 100px 20px
+}
+
+.order-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 120px;
+}
+
+.order-prices {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 30px;
+}
+
+.order-main-price {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.order-prices-row {
+    display: flex;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.order-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.order-button {
+    border-radius: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    height: 46px;
+
+    color: black;
+    background-color: transparent;
+    border: 1px solid rgb(125, 125, 125);
+}
+
+.order-button.active {
+    color: white;
+    background-color: black;
+    border: none;
+}
+
+.order-button img {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+}
+
+.faq-item { 
+    padding: 10px;
+    border: 1px solid rgb(214, 214, 214);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.faq-question {
+    font-weight: 600;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.faq-answer {
+    margin-top: 10px;
+}
+
+
+@media (max-width: 900px) {
+    .order-container {
+        max-width: inherit;
+        margin: unset;
+        gap: unset;
+        padding: unset;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Inter';
+    }
+
+    .order-img {
+        width: 100%;
+        height: 60vh;
+        object-fit: cover;
+        border-radius: 0px;
+    }
+
+    .order-content {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 20px 100px 20px
+    }
+
+    .order-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 120px;
+    }
+
+    .order-prices {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 30px;
+    }
+
+    .order-main-price {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .order-prices-row {
+        display: flex;
+        gap: 10px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .order-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+
+    .order-button {
+        border-radius: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        font-weight: 600;
+        height: 46px;
+
+        color: black;
+        background-color: transparent;
+        border: 1px solid rgb(125, 125, 125);
+    }
+
+    .order-button.active {
+        color: white;
+        background-color: black;
+        border: none;
+    }
+
+    .order-button img {
+        width: 24px;
+        height: 24px;
+        object-fit: cover;
+    }
+
+    .faq-item { 
+        padding: 10px;
+        border: 1px solid rgb(214, 214, 214);
+        border-radius: 12px;
+        margin-bottom: 10px;
+    }
+
+    .faq-question {
+        font-weight: 600;
+        font-size: 18px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .faq-answer {
+        margin-top: 10px;
+    }
+}

@@ -1,7 +1,12 @@
 .policy-container {
-    padding: 60px 50px;
+    padding: 60px 450px;
     display: flex;
     flex-direction: column;
+    background-color: #11192d;
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .policy-title {
@@ -14,7 +19,7 @@
 
 .policy-term {
     margin-bottom: 30px;
-    gap: 10px;
+    gap: 5px;
     display: flex;
     flex-direction: column;
 }
@@ -23,6 +28,7 @@
     font-family: 'Inter';
     font-size: 16px;
     font-weight: 600;
+    margin-bottom: 10px;
 }
 
 .policy-term-text {
@@ -32,6 +38,6 @@
 
 @media (max-width: 900px) {
     .policy-container {
-        padding: 60px 0px;
+        padding: 60px 20px;
     }
 }

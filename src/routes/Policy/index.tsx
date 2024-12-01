@@ -1,9 +1,58 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.css'
+import HeaderNew from 'New/components/Header'
+import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from 'react-router-dom';
+
 
 function Policy() {
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    const [isNavVisible, setIsNavVisible] = useState(false);
+    const toggleNav = () => setIsNavVisible(!isNavVisible);
+
+    useEffect(() => {
+        const handleScroll = () => {
+          if (window.scrollY > 50) {
+            setIsScrolled(true);
+          } else {
+            setIsScrolled(false);
+          }
+        };
+    
+        window.addEventListener('scroll', handleScroll);
+    
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+    
+    const handleOrder = () => {
+        const message = `Здравствуйте! Я по поводу книги, можете проконсультировать?`;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/77751716068?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+    };
+
   return (
     <div className='policy-container'>
+        <div className={`landing-new-header ${isScrolled ? 'scrolled' : ''}`}>
+            <div className={`landing-new-menu ${isNavVisible ? 'show' : ''}`}>
+                <div className={`landing-new-menu-logo ${isScrolled ? 'scrolled' : ''}`}>comabooks</div>
+                <div className='landing-new-menu-right'>
+                    <button onClick={toggleNav} className='landing-new-menu-ham'><MenuIcon/></button>
+                    <button className='landing-new-menu-order' onClick={handleOrder}>Заказать</button>
+                </div>
+            </div>
+
+            <div className={`navigation ${isNavVisible ? 'show' : 'hide'}`}>
+                    <Link to="https://www.comabooks.org/login">Войти</Link>
+                    <Link to="https://www.instagram.com/comabooks/">Отзывы в Instagram</Link>
+                    <Link to="https://www.comabooks.org/policies">Условия использования</Link>
+                    <Link to="/order">Цены и частые вопросы</Link>
+                    <button onClick={handleOrder}>Заказать</button>
+            </div>
+        </div>
         <div className='policy-title'>Политика конфиденциальности</div>
 
         <div className='policy-term'>

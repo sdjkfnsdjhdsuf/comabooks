@@ -220,6 +220,7 @@ function Landing() {
                     <Link to="/login">Войти</Link>
                     <Link to="https://www.instagram.com/comabooks/">Отзывы в Instagram</Link>
                     <Link to="/policies">Условия использования</Link>
+                    <Link to="/order">Цены и частые вопросы</Link>
                     <button onClick={handleOrder}>Заказать</button>
             </div>
         </div>
