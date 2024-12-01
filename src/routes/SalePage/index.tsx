@@ -74,7 +74,7 @@ function SalePage() {
         <div className='order-prices'>
           <div className='order-main-price'>42,000.00 ₸</div>
           <div className='order-prices-row'>
-            <div>8,000.00₽</div>
+            <div>9,000.00₽</div>
             <div>7,000.00лв</div>
             <div>$90.00</div>
             <div>€80.00</div>

@@ -100,6 +100,27 @@ const Analytics: React.FC = () => {
             <option value="Астана">Астана</option>
             <option value="Шымкент">Шымкент</option>
             <option value="Бишкек">Бишкек</option>
+            <option value="Караганда">Караганда</option>
+            <option value="Павлодар">Павлодар</option>
+            <option value="Кокшетау">Кокшетау</option>
+            <option value="Костанай">Костанай</option>
+            <option value="Петропавловск">Петропавловск</option>
+            <option value="Тараз">Тараз</option>
+            <option value="Атырау">Атырау</option>
+            <option value="Актау">Актау</option>
+            <option value="Уральск">Уральск</option>
+            <option value="Актобе">Актобе</option>
+            <option value="Кызылорда">Кызылорда</option>
+            <option value="Семей">Семей</option>
+            <option value="Усть-каменогорск">Усть-каменогорск</option>
+            <option value="Экибастуз">Экибастуз</option>
+            <option value="Жаркент">Жаркент</option>
+            <option value="Конаев">Конаев</option>
+            <option value="Талгар">Талгар</option>
+            <option value="Жезказган">Жезказган</option>
+            <option value="Талдыкорган">Талдыкорган</option>
+            <option value="Ташкент">Ташкент</option>
+            <option value="Москва">Москва</option>
             <option value="Другое">Другое</option>
           </select>
           {isOtherCity && !isAddressUnknown && (

@@ -17,12 +17,33 @@ export const calculateDeadline = (
     switch (deliveryAddress.toLowerCase()) {
       case 'алматы': return 1;
       case 'астана': return 2;
-      case 'бишкек': return 2;
+      case 'караганда': return 2;
+      case 'павлодар': return 2;
+      case 'кокшетау': return 3;
+      case 'костанай': return 3;
+      case 'петропавловск': return 3;
       case 'шымкент': return 2;
-      case 'актобе': return 3;
-      default: return 3;
+      case 'тараз': return 2;
+      case 'бишкек': return 2;
+      case 'атырау': return 3;
+      case 'актау': return 4;
+      case 'уральск': return 4;
+      case 'актобе': return 4;
+      case 'кызылорда': return 2;
+      case 'семей': return 3;
+      case 'усть-каменогорск': return 3;
+      case 'экибастуз': return 3;
+      case 'жаркент': return 2;
+      case 'конаев': return 1;
+      case 'талгар': return 1;
+      case 'жезказган': return 2;
+      case 'талдыкорган': return 2;
+      case 'ташкент': return 2;
+      case 'москва': return 5;
+      default: return 10;
     }
   })();
+  
 
   const deliveryStartDate = new Date(deliveryDate);
   deliveryStartDate.setDate(deliveryDate.getDate() - deliveryDays);
