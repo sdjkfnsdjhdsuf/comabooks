@@ -106,6 +106,11 @@ function SalePage() {
           ))}
         </div>
       </div>
+
+      <div className='order-footer'>
+        <div className='order-logo'>comabooks</div>
+        <div className='order-rek'>ИП COMAHOLDING, БИН 020621500121</div>
+      </div>
     </div>
   );
 }
