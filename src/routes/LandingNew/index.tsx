@@ -259,6 +259,9 @@ function Landing() {
           <Link to="https://www.instagram.com/comabooks/">
             Отзывы в Instagram
           </Link>
+          <Link to="https://www.comabooks.org/order">
+            Цены и частые вопросы
+          </Link>
           <Link to="https://www.comabooks.org/policies">
             Условия использования
           </Link>
