@@ -13,32 +13,32 @@ export const calculateNewDeadline = (
   
     const deliveryDays = (() => {
       switch (deliveryAddress.toLowerCase()) {
-        case 'алматы': return 1;
-        case 'астана': return 2;
-        case 'караганда': return 2;
-        case 'павлодар': return 2;
-        case 'кокшетау': return 3;
-        case 'костанай': return 3;
-        case 'петропавловск': return 3;
-        case 'шымкент': return 2;
-        case 'тараз': return 2;
-        case 'бишкек': return 2;
-        case 'атырау': return 3;
-        case 'актау': return 4;
-        case 'уральск': return 4;
-        case 'актобе': return 4;
-        case 'кызылорда': return 2;
-        case 'семей': return 3;
-        case 'усть-каменогорск': return 3;
-        case 'экибастуз': return 3;
-        case 'жаркент': return 2;
-        case 'конаев': return 1;
-        case 'талгар': return 1;
-        case 'жезказган': return 2;
-        case 'талдыкорган': return 2;
-        case 'ташкент': return 2;
-        case 'москва': return 5;
-        default: return 10;
+        case "алматы": return 2;
+        case "астана": return 3;
+        case "караганда": return 4;
+        case "павлодар": return 4;
+        case "кокшетау": return 4;
+        case "костанай": return 4;
+        case "петропавловск": return 4;
+        case "шымкент": return 3;
+        case "тараз": return 3;
+        case "бишкек": return 3;
+        case "атырау": return 4;
+        case "актау": return 5;
+        case "уральск": return 5;
+        case "актобе": return 5;
+        case "кызылорда": return 3;
+        case "семей": return 4;
+        case "усть-каменогорск": return 4;
+        case "экибастуз": return 4;
+        case "жаркент": return 3;
+        case "конаев": return 2;
+        case "талгар": return 2;
+        case "жезказган": return 3;
+        case "талдыкорган": return 3;
+        case "ташкент": return 3;
+        case "москва": return 6;
+        default: return 11;
       }
     })();
     
