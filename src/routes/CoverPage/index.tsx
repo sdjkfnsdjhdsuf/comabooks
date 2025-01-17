@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store";
 import { fetchTemplates } from "slicers/templates/template_thrunk";
 import { fetchAnswers } from "slicers/answers_slice";
-import { thunkSetPage } from "slicers/page_slicer";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 export const CoverPage = () => {
   const { id: templateId } = useParams();
@@ -30,7 +30,7 @@ export const CoverPage = () => {
     <div className="cover-main-page">
       <div className="cover-main-container">
         <Link to={`/forms/${templateId}`}>
-          <img src={arrow} className="arrow-icon" />
+          <ArrowBackIosNewIcon className="arrow-icon"/>
         </Link>
         <Cover />
       </div>

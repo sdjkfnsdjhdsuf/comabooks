@@ -1,18 +1,104 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCover, setCover } from "slicers/cover_slicer";
-import { CoverState } from "slicers/cover_slicer";
 import { AppDispatch, RootState } from "store";
-import axios from "axios";
 import "./index.css";
-import colorButton1 from "assets/red.png";
-import colorButton2 from "assets/yellow.png";
-import colorButton3 from "assets/black.png";
-import colorButton4 from "assets/blue.png";
-import colorButton5 from "assets/green.png";
-import colorButton6 from "assets/light-green.png";
+import option1cover1button from "assets/option1cover1button.png";
+import option1cover2button from "assets/option1cover2button.png";
+import option1cover3button from "assets/option1cover3button.png";
+import option1cover4button from "assets/option1cover4button.png";
+import option1cover5button from "assets/option1cover5button.png";
+import option1cover6button from "assets/option1cover6button.png";
+import option2cover1button from "assets/option2cover1button.png";
+import option2cover2button from "assets/option2cover2button.png";
+import option2cover3button from "assets/option2cover3button.png";
+import option2cover4button from "assets/option2cover4button.png";
+import option2cover5button from "assets/option2cover5button.png";
+import option2cover6button from "assets/option2cover6button.png";
+import option3cover1button from "assets/option3cover1button.png";
+import option3cover2button from "assets/option3cover2button.png";
+import option3cover3button from "assets/option3cover3button.png";
+import option3cover4button from "assets/option3cover4button.png";
+import option3cover5button from "assets/option3cover5button.png";
+import option3cover6button from "assets/option3cover6button.png";
+import option4cover1button from "assets/option4cover1button.png";
+import option4cover2button from "assets/option4cover2button.png";
+import option4cover3button from "assets/option4cover3button.png";
+import option4cover4button from "assets/option4cover4button.png";
+import option4cover5button from "assets/option4cover5button.png";
+import option4cover6button from "assets/option4cover6button.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { CoverEntityDto } from "generated";
+
+
+type CoverInfo = {
+  key: string;
+  label: string;
+  url: string;
+  groupName: string;
+};
+
+interface CoverGroups {
+  [groupName: string]: {
+    groupName: string;
+    coversNames: Omit<CoverInfo, "groupName">[];
+  };
+};
+
+const coverGroups: CoverGroups = {
+  coverOption1: {
+    groupName: "coverOption1",
+    coversNames: [
+      { key: "cover1", label: option1cover1button, url: 'https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A38%3A22.907Zblack%20front%20%282%29.png' },
+      { key: "cover2", label: option1cover2button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A39%3A10.220Zblue%20front.png" },
+      { key: "cover3", label: option1cover3button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A39%3A45.178Zdark%20green%20front.png" },
+      { key: "cover4", label: option1cover4button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A40%3A05.664Zlight%20green%20front.png" },
+      { key: "cover5", label: option1cover5button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A40%3A30.732Zred%20front.png" },
+      { key: "cover6", label: option1cover6button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A42%3A15.635Zyellow%20front.png" },
+    ],
+  },
+  coverOption2: {
+    groupName: "coverOption2",
+    coversNames: [
+      { key: "cover1", label: option2cover1button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A42%3A47.129Zblack%203.png" },
+      { key: "cover2", label: option2cover2button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A43%3A10.241Zblue%203.png" },
+      { key: "cover3", label: option2cover3button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A43%3A57.487Zgreen%203.png" },
+      { key: "cover4", label: option2cover4button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A44%3A17.214Zlight%20green%203.png" },
+      { key: "cover5", label: option2cover5button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A44%3A44.928Zred%203.png" },
+      { key: "cover6", label: option2cover6button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A44%3A58.892Zyellow%203.png" },
+    ],
+  },
+  coverOption3: {
+    groupName: "coverOption3",
+    coversNames: [
+      { key: "cover1", label: option3cover1button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A45%3A28.386Zblack%202%20%281%29.png" },
+      { key: "cover2", label: option3cover2button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A46%3A24.654Zblue%202.png" },
+      { key: "cover3", label: option3cover3button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A47%3A11.448Zdark%20green%202.png" },
+      { key: "cover4", label: option3cover4button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A47%3A31.516Zgreen%202.png" },
+      { key: "cover5", label: option3cover5button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A47%3A49.430Zred%202.png" },
+      { key: "cover6", label: option3cover6button, url: "https://comabooks.s3.eu-central-1.amazonaws.com/2025-01-17T19%3A48%3A33.214Zyellow%202.png" },
+    ],
+  },
+  coverOption4: {
+    groupName: "coverOption4",
+    coversNames: [
+      { key: "cover1", label: option4cover1button, url: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/black+fornt+(2).png" },
+      { key: "cover2", label: option4cover2button, url: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/blue+front+(2).png" },
+      { key: "cover3", label: option4cover3button, url: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/green+front+(2).png" },
+      { key: "cover4", label: option4cover4button, url: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/light+green+front+(2).png" },
+      { key: "cover5", label: option4cover5button, url: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/red+front+(3).png" },
+      { key: "cover6", label: option4cover6button, url: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/yellow+front+1.png" },
+    ],
+  },
+};
+
+const allCovers: CoverInfo[] = Object.values(coverGroups).flatMap((group) =>
+  group.coversNames.map((cover) => ({
+    ...cover,
+    groupName: group.groupName,
+  }))
+);
+
 
 function Cover() {
   const { id: templateId } = useParams();
@@ -22,20 +108,14 @@ function Cover() {
     (state) => state.cover.value
   );
 
-  const coverColors: Record<CoverKey, string> = {
-    cover1: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/red+front+(3).png",
-    cover2: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/yellow+front+1.png",
-    cover3: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/black+fornt+(2).png",
-    cover4: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/blue+front+(2).png",
-    cover5: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/green+front+(2).png",
-    cover6: "https://gtaxi.s3.eu-central-1.amazonaws.com/comabooks/light+green+front+(2).png",
-  };
-
   const [authorName, setAuthorName] = useState("");
   const [bookTitle, setBookTitle] = useState("");
   const [partnerName, setPartnerName] = useState("");
   const [displayPartnerName, setDisplayPartnerName] = useState(true);
-  const [coverColor, setCoverColor] = useState(coverColors.cover1);
+  const [coverColor, setCoverColor] = useState<string>(coverGroups.coverOption1.coversNames[4].url);
+  const [coverGroup, setCoverGroup] = useState<string>(coverGroups.coverOption1.coversNames[4].label);
+  const [selectedCover, setSelectedCover] = useState<CoverInfo | null>(null);
+  
   const [isEditable, setIsEditable] = useState(true);
   const navigate = useNavigate();
 
@@ -44,7 +124,16 @@ function Cover() {
       setAuthorName(coverData.fullName);
       setBookTitle(coverData.bookName);
       setPartnerName(coverData.fullNamePartner);
-      setCoverColor(coverData.coverUrl);
+      const foundCover = allCovers.find((c) => c.url === coverData.coverUrl);
+      if (foundCover) {
+        setSelectedCover(foundCover);
+        setCoverColor(foundCover.url);
+        setCoverGroup(foundCover.groupName);
+      } else {
+        setSelectedCover(null);
+        setCoverColor(coverData.coverUrl);
+        setCoverGroup("");
+      }
     }
   }, [coverData]);
 
@@ -85,27 +174,10 @@ function Cover() {
     setIsEditable(!isEditable);
   };
 
-  type CoverKey = 'cover1' | 'cover2' | 'cover3' | 'cover4' | 'cover5' | 'cover6';
-
-  type CoverSelectorColors = {
-    [key: string]: string;
-  };
-
-  const coverSelectorColors: CoverSelectorColors = {
-    colorButton1: colorButton1,
-    colorButton2: colorButton2,
-    colorButton3: colorButton3,
-    colorButton4: colorButton4,
-    colorButton5: colorButton5,
-    colorButton6: colorButton6,
-  };
-
-  const handleColorSelect = (color: string) => {
-    const coverKey = color as CoverKey;
-    const coverImage = coverColors[coverKey];
-    if (coverImage) {
-      setCoverColor(coverImage);
-    }
+  const handleCoverClick = (cover: CoverInfo) => {
+    setSelectedCover(cover);
+    setCoverColor(cover.url);
+    setCoverGroup(cover.groupName);
   };
 
   const receiverHolder = (templateId: string | undefined) => {
@@ -146,14 +218,14 @@ function Cover() {
             <img src={coverColor} alt="Cover" className="cover-itself" />
           </div>
 
-          <div className="cover-contains">
-            <div className="book-title">{bookTitle ? bookTitle : "\u00A0"}</div>
-            <div className="book-names">
-              <div className="author-name">
+          <div className={`cover-contains-${coverGroup}`}>
+            <div className={`book-title-${coverGroup}`}>{bookTitle ? bookTitle : "\u00A0"}</div>
+            <div className={`book-names-${coverGroup}`}>
+              <div className={`author-name-${coverGroup}`}>
                 {authorName ? authorName : "\u00A0"}
               </div>
-              <div className="partner-name">
-                {partnerName ? partnerName : "\u00A0"}
+              <div className={`partner-name-${coverGroup}`}>
+                {displayPartnerName ? partnerName : "\u00A0"}
               </div>
             </div>
           </div>
@@ -202,31 +274,36 @@ function Cover() {
               disabled={!isEditable}
             />
           </div>
-        </div>
 
-        <div className="color-selector">
-          {Object.keys(coverSelectorColors).map((colorKey) => {
-            const color = colorKey.replace("colorButton", "cover");
-            return (
-              <button
-                key={colorKey}
-                style={{
-                  backgroundColor: !isEditable ? "#DDDDDD" : "transparent",
-                  backgroundImage: !isEditable
-                    ? "none"
-                    : `url(${coverSelectorColors[colorKey]})`,
-                  border: !isEditable ? "none" : "1px solid black",
-                  cursor: !isEditable ? "not-allowed" : "pointer",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  width: "40px",
-                  height: "40px",
-                }}
-                onClick={() => handleColorSelect(color)}
-                disabled={!isEditable}
-              />
-            );
-          })}
+          <div className="input">
+            <div className="input-title">Выберите обложку</div>
+            <div className="cover-selector">
+              {allCovers.map((cover) => (
+                <button
+                  key={cover.key}
+                  type="button"
+                  className={`cover-selector-button ${
+                    selectedCover?.url === cover.url ? "selected" : ""
+                  }`}
+                  disabled={!isEditable}
+                  onClick={() => handleCoverClick(cover)}
+                  style={{
+                    backgroundImage: `url(${cover.label})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    width: "40px",
+                    height: "40px",
+                    border: isEditable
+                      ? selectedCover?.url === cover.url ? "4px solid #363E50" : "1px solid transparent"
+                      : "1px solid transparent",
+                    cursor: isEditable ? "pointer" : "not-allowed",
+                    marginRight: "8px",
+                    borderRadius: "4px"
+                  }}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="input-save-button">
@@ -241,17 +318,17 @@ function Cover() {
           <img src={coverColor} alt="Cover" className="cover-itself" />
         </div>
 
-        <div className="cover-contains">
-          <div className="book-title">{bookTitle ? bookTitle : "\u00A0"}</div>
-          <div className="book-names">
-            <div className="author-name">
-              {authorName ? authorName : "\u00A0"}
-            </div>
-            <div className="partner-name">
-              {displayPartnerName ? partnerName : "\u00A0"}
+        <div className={`cover-contains-${coverGroup}`}>
+            <div className={`book-title-${coverGroup}`}>{bookTitle ? bookTitle : "\u00A0"}</div>
+            <div className={`book-names-${coverGroup}`}>
+              <div className={`author-name-${coverGroup}`}>
+                {authorName ? authorName : "\u00A0"}
+              </div>
+              <div className={`partner-name-${coverGroup}`}>
+                {displayPartnerName ? partnerName : "\u00A0"}
+              </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
   );

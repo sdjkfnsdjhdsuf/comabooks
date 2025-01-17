@@ -2,7 +2,7 @@ import React from 'react'
 import './index.css'
 import success from '../../assets/success.png'
 
-function index() {
+function Onhold() {
 
     const handleSupport = () => {
         const message = `Здравствуйте! Я закончил(-а) содержание своей книги!`;
@@ -22,4 +22,4 @@ function index() {
   )
 }
 
-export default index
+export default Onhold
