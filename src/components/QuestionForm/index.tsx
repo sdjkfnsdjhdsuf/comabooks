@@ -64,10 +64,10 @@ const QuestionForm = ({ question, templateId }: { question: QuestionTemplateDto;
 
   return (
     <div className="question-form">
-      {/* <div className="alarm-label">По техническим причинам мы поменяли наш номер WhatsApp на +7 775 171 60 68. Обязательно напишите о вашем заказе, чтобы мы его не потеряли!
+      <div className="alarm-label">Для того чтобы получить книгу к 14 февраля, необходимо завершить заполнение до 27 января.
 
-        <button onClick={handleSupport}>Уведомить о заказе</button>
-      </div> */}
+        {/* <button onClick={handleSupport}>Уведомить о заказе</button> */}
+      </div>
       <div className="question-form-question">
         <label className="question-number-title">Вопрос {currentPage + 1}</label>
         <label className="question">{question.question}</label>
