@@ -65,7 +65,7 @@ const QuestionForm = ({ question, templateId }: { question: QuestionTemplateDto;
   return (
     <div className="question-form">
       <div className="alarm-label">Для того чтобы получить книгу к 14 февраля, необходимо завершить заполнение до 27 января.
-
+      +996 702 637 463. По всем вопросам просьба писать пока туда
         {/* <button onClick={handleSupport}>Уведомить о заказе</button> */}
       </div>
       <div className="question-form-question">
