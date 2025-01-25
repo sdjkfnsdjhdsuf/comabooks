@@ -53,7 +53,7 @@ const [isNavVisible, setIsNavVisible] = useState(false);
   const handleOrder = () => {
       const message = `Здравствуйте! Пишу с сайта по поводу книги. Можете проконсультировать?`;
       const encodedMessage = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/996702637463?text=${encodedMessage}`;
+      const whatsappUrl = `https://wa.me/77476738427?text=${encodedMessage}`;
       window.open(whatsappUrl, '_blank');
   };
 

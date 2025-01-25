@@ -45,7 +45,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const handleSupport = () => {
     const message = `Здравствуйте! Я хотел(-а) узнать на счет успеваемости сроков моей книги.`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/996702637463?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/77476738427?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
   };
 
