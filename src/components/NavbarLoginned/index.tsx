@@ -188,6 +188,7 @@ const NavbarLoginned = ({
             console.log(originalAddress)
             today.setDate(today.getDate() + 1);
             validDateFound = calculateNewDeadline(today, originalAddress);
+            console.log(`valid ${validDateFound}`)
           } else {
             today.setDate(today.getDate() + 8);
             validDateFound = true;
@@ -268,20 +269,21 @@ const NavbarLoginned = ({
   
 
   const handleChangeDate = async () => {
-    if (!day || !month || !year) return;
+    // if (!day || !month || !year) return;
 
-    const newDateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-    const newDate = new Date(newDateStr);
-    console.log(newDate)
-    if (isNaN(newDate.getTime())) return;
-    console.log('2')
+    // const newDateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    // const newDate = new Date(newDateStr);
+    // console.log(newDate)
+    // if (isNaN(newDate.getTime())) return;
+    // console.log('2')
 
-    setDeliveryDate(newDate);
-    console.log('3')
+    // setDeliveryDate(newDate);
+    // console.log('3')
 
     const token = localStorage.getItem("token");
     console.log('4')
     if (!token) return;
+    if (!deliveryDate) return;
     console.log('5')
 
     try {
@@ -292,7 +294,7 @@ const NavbarLoginned = ({
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          deliveryTime: newDate.toISOString(),
+          deliveryTime: deliveryDate.toISOString(),
           address: originalAddress,
           street: street || "",
           phone: phone || "",
@@ -311,17 +313,18 @@ const NavbarLoginned = ({
 
   const handleChangeDateAndFinish = async () => {
 
-    const newDateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-    const newDate = new Date(newDateStr);
-    if (isNaN(newDate.getTime())) {
+    // const newDateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    // const newDate = new Date(newDateStr);
+    // if (isNaN(newDate.getTime())) {
        
-      return;
-    }
+    //   return;
+    // }
 
-    setDeliveryDate(newDate);
+    // setDeliveryDate(newDate);
 
     const token = localStorage.getItem("token");
     if (!token) return;
+    if (!deliveryDate) return;
 
     try {
       await fetch("https://api.comabooks.org/user_anal", {
@@ -331,7 +334,7 @@ const NavbarLoginned = ({
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          deliveryTime: newDate.toISOString(),
+          deliveryTime: deliveryDate.toISOString(),
           address: originalAddress,
           street: street || "",
           phone: phone || "",
@@ -607,7 +610,7 @@ const NavbarLoginned = ({
             <div className="sidebar-popup-title">Изменить дату доставки</div>
             <div className="sidebar-popup-input">
               <label>Новая дата доставки</label>
-              <div className="date-selects">
+              {/* <div className="date-selects">
                 <select value={day} onChange={handleDayChange}>
                   {renderDayOptions(minDate.getDate())}
                 </select>
@@ -617,10 +620,16 @@ const NavbarLoginned = ({
                 <select value={year} onChange={handleYearChange}>
                   {renderYearOptions(minDate.getFullYear())}
                 </select>
-              </div>
+              </div> */}
+              <input
+                  type="date"
+                  value={deliveryDate ? deliveryDate.toISOString().split("T")[0] : ""}
+                  min={minDate.toISOString().split("T")[0]}
+                  onChange={(e) => setDeliveryDate(new Date(e.target.value))}
+                />
             </div>
             <div className="sidebar-popup-buttons">
-              <button className="sidebar-popup-button" onClick={handleChangeDate} disabled={isChangeDateDisabled}>
+              <button className="sidebar-popup-button" onClick={handleChangeDate}>
                 Изменить
               </button>
               <button className="sidebar-popup-button" onClick={closePopup}>
@@ -636,7 +645,7 @@ const NavbarLoginned = ({
               <div className="sidebar-popup-title">Изменить дату доставки</div>
               <div className="sidebar-popup-input">
                 <label>Новая дата доставки</label>
-                <div className="date-selects">
+                {/* <div className="date-selects">
                   <select value={day} onChange={handleDayChange}>
                     {renderDayOptions(minDate.getDate())}
                   </select>
@@ -646,10 +655,17 @@ const NavbarLoginned = ({
                   <select value={year} onChange={handleYearChange}>
                     {renderYearOptions(minDate.getFullYear())}
                   </select>
-                </div>
+                </div> */}
+                <input
+                  type="date"
+                  value={deliveryDate ? deliveryDate.toISOString().split("T")[0] : ""}
+                  min={minDate.toISOString().split("T")[0]}
+                  onChange={(e) => setDeliveryDate(new Date(e.target.value))}
+                />
+
               </div>
               <div className="sidebar-popup-buttons">
-                <button className="sidebar-popup-button" onClick={handleChangeDateAndFinish} disabled={isChangeDateDisabled}>
+                <button className="sidebar-popup-button" onClick={handleChangeDateAndFinish}>
                   Изменить
                 </button>
                 <button className="sidebar-popup-button" onClick={closePopup}>

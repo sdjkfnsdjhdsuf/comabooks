@@ -8,7 +8,7 @@ export const calculateNewDeadline = (
     const timeDiff = deliveryDate.getTime() - today.getTime();
     const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
   
-    const editingDays = 2;
+    const editingDays = 5;
     const productionDays = 2;
   
     const deliveryDays = (() => {
