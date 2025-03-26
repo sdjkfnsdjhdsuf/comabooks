@@ -21,7 +21,6 @@ import Analytics from "routes/Analytics";
 import Onhold from "routes/Onhold";
 import AnalyticsChecker from "routes/AnalyticsChecker";
 import SalePage from "routes/SalePage";
-import LandingUpdated from "routes/Landing/RedOne";
 // import AddPhoto from "components/AddPhoto";
 
 export const instance = axios.create({
@@ -38,7 +37,7 @@ root.render(
     <BrowserRouter>
     <AnalyticsChecker />
       <Routes>
-        <Route path="/" element={<LandingUpdated />} />
+        <Route path="/" element={<Landing />} />
         <Route path="/ads" element={<Landing2 />} />
         <Route path="/sales" element={<LandingNew />} />
         <Route path="/order" element={<SalePage />} />
