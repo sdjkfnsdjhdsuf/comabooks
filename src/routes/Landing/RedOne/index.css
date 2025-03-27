@@ -350,10 +350,6 @@
     display: none;
 }
 
-.landing-upd-fixed-mobile {
-    display: none;
-}
-
 .landing-upd-footer-row-mobile {
     display: none;
 }
@@ -466,6 +462,14 @@
     font-size: 18px;
 }
 
+
+@media (min-width: 900px) {
+    .landing-upd-fixed-mobile {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+}
+}
 
 @media (max-width: 900px) {
     /* .landing-upd-first-reviews {
