@@ -1,0 +1,736 @@
+.landing-upd {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    max-width: 2000px;
+    margin: 0 auto;
+}
+
+.landing-upd-header {
+    z-index: 10;
+    max-width: 2000px;
+    margin: 0 auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    background-color: white;
+    padding: 12px 30px;
+    mask: radial-gradient(30px at 0 100%,#0000 98%,black) 0 100%/51%  100% no-repeat,
+    radial-gradient(30px at 100% 100%,#0000 98%,black) 100% 100%/51%  100% no-repeat;
+
+}
+
+.landing-upd-header-logo {
+    color: #820000;
+    font-size: 24px;
+    letter-spacing: -1px;
+}
+
+.landing-upd-header-links, .landing-upd-header-links a {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-family: 'TT Drugs';
+    color: #820000;
+}
+
+.landing-upd-header-button-empty {
+    padding: 12px 24px;
+    color: #820000;
+    font-family: 'TT Drugs';
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #820000;
+    border-radius: 24px;
+    background-color: transparent;
+    font-size: 16px;
+    margin-left: 12px;
+}
+
+.landing-upd-header-button-filled {
+    padding: 12px 24px;
+    background-color: #820000;
+    font-family: 'TT Drugs';
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 24px;
+    color: white;
+    border: none;
+    font-size: 16px;
+}
+
+.landing-upd-first {
+    background: url('/src/routes/Landing/RedOne/assets/bgmain.jpg');
+    background-size: cover;
+    background-position: center;
+    /* height: 110vh; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.landing-upd-first-action {
+    margin-top: 150px;
+    text-align: center;
+    font-family: 'Leotaro';
+    font-size: 48px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    line-height: 1.1;
+}
+
+.landing-upd-first-action div {
+    max-width: 600px;
+}
+
+.landing-upd-first-action button {
+    padding: 12px 20px;
+    color: #B00017;
+    font-family: 'TT Drugs';
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+}
+
+.landing-upd-second {
+    display: flex;
+    padding: 40px;
+    height: 100vh;
+    margin-top: -10vh;
+    position: relative;
+    z-index: 2;
+    background-color: white;
+    mask: radial-gradient(30px at 40px 40px, transparent 98%, black) -40px -40px;
+}
+
+.landing-upd-second-content-item {
+    display: flex;
+    flex-direction: column;
+    color: #820000;
+    font-size: 18px;
+    font-family: 'TT Drugs';
+    padding-right: 250px;
+    margin-top: 30px;
+    gap: 10px;
+    line-height: 1.1;
+}
+
+.landing-upd-second-content-item-row {
+    display: flex;
+    font-size: 36px;
+    font-weight: 500;
+    gap: 10px;
+    align-items: center;
+}
+
+.landing-upd-second-content {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.landing-upd-second-content-title {
+    color: #820000;
+    font-size: 48px;
+    font-family: 'Leotaro';
+    padding-right: 100px;
+    line-height: 1.1;
+    margin-bottom: 30px;
+}
+
+.landing-upd-second-content button {
+    padding: 12px 20px;
+    background-color: #B00017;
+    font-family: 'TT Drugs';
+    font-weight: 600;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    width: 200px;
+    margin-top: auto;
+}
+
+.landing-upd-second-video {
+    width: 40%;
+    height: 100%;
+    object-fit: cover;
+    mask: radial-gradient(30px at 40px 40px, transparent 98%, black) -40px -40px;
+}
+
+.landing-upd-third {
+    background: url('/src/routes/Landing/RedOne/assets/third.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 105vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: -5vh;
+    position: relative;
+}
+
+.landing-upd-forth {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    margin-top: -5vh;
+    position: relative;
+    z-index: 2;
+    background-color: white;
+    mask: radial-gradient(30px at 40px 40px, transparent 98%, black) -40px -40px;
+}
+
+.landing-upd-forth-title {
+    color: #B00017;
+    font-size: 48px;
+    font-family: 'Leotaro';
+    line-height: 1.1;
+    margin-bottom: 30px;
+    justify-self: center;
+    margin: 60px auto 0 auto;
+}
+
+.landing-upd-fifth {
+    background: url('/src/routes/Landing/RedOne/assets/fifth.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 110vh;
+    width: 100%;
+    display: flex;
+    margin-top: -5vh;
+    position: relative;
+    padding: 150px 20px;
+}
+
+.landing-upd-fifth-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 35%;
+    font-family: 'Leotaro';
+    font-size: 36px;
+    color: white;
+    letter-spacing: -2px;
+    line-height: 0.8;
+    padding: 30px;
+    border: 1px solid white;
+    gap: 20px
+}
+
+.landing-upd-fifth-content button {
+    padding: 12px 20px;
+    color: #B00017;
+    font-family: 'TT Drugs';
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+    width: 80%;
+}
+
+.landing-upd-fifth-grid {
+    width: 65%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background-color: white;
+    padding: 1px;
+}
+
+.landing-upd-fifth-grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.landing-upd-fifth-grid-item img {
+    width: 30px;
+    aspect-ratio: 1/1;
+}
+
+.landing-upd-fifth-grid-item:nth-child(1) {
+    background: url('/src/routes/Landing/RedOne/assets/review1.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.landing-upd-fifth-grid-item:nth-child(2) {
+    background: url('/src/routes/Landing/RedOne/assets/review2.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.landing-upd-fifth-grid-item:nth-child(3) {
+    background: url('/src/routes/Landing/RedOne/assets/review3.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.landing-upd-fifth-grid-item:nth-child(4) {
+    background: url('/src/routes/Landing/RedOne/assets/review4.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.landing-upd-fifth-grid-item:nth-child(5) {
+    background: url('/src/routes/Landing/RedOne/assets/review5.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.landing-upd-fifth-grid-item:nth-child(6) {
+    background: url('/src/routes/Landing/RedOne/assets/review6.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+
+.landing-upd-footer {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    height: 70vh;
+    width: 100%;
+    margin-top: -5vh;
+    position: relative;
+    z-index: 2;
+    background-color: white;
+    mask: radial-gradient(30px at 40px 40px, transparent 98%, black) -40px -40px;
+}
+
+.landing-upd-footer-row, .landing-upd-footer-row-2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+.landing-upd-footer-row div, .landing-upd-footer-row a, .landing-upd-footer-row-2 a, .landing-upd-footer-row-2 div {
+    font-family: 'Leotaro';
+    max-width: 250px;
+    line-height: 1;
+    color: #B00017;
+    font-size: 20px;
+}
+
+.landing-upd-footer-row button {
+    padding: 0 20px;
+    background-color: #B00017;
+    color: white;
+    font-family: 'TT Drugs';
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    height: 50px;
+}
+
+.landing-upd-footer-logo {
+    font-size: 200px;
+    color: #B00017;
+    margin: auto 0;
+    align-self: center;
+    line-height: 1;
+    letter-spacing: -10px;
+}
+
+.landing-upd-second-content-mobile {
+    display: none;
+}
+
+.landing-upd-header-mobile {
+    display: none;
+}
+
+.landing-upd-fixed-mobile {
+    display: none;
+}
+
+.landing-upd-footer-row-mobile {
+    display: none;
+}
+
+.landing-upd-first-reviews {
+    display: flex;
+    padding: 0 30px;
+    padding-bottom: 150px;
+    flex: 1;
+    gap: 30px;
+    margin-top: 600px;
+    overflow-x: scroll;
+}
+
+.landing-upd-first-reviews::-webkit-scrollbar {
+    display: none;
+  }
+
+.landing-upd-first-reviews-item {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 350px;
+}
+
+.landing-upd-first-reviews-item-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 250px;
+    height: 350px;
+}
+
+.landing-upd-first-reviews-item-preview.s1 {
+    background: url('/src/routes/Landing/RedOne/assets/girlfriend.jpg');
+    mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+    background-size: cover;
+    background-position: center;
+}
+
+.landing-upd-first-reviews-item-preview.s2 {
+    background: url('/src/routes/Landing/RedOne/assets/husband.jpg');
+    mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+    background-size: cover;
+    background-position: center;
+}
+
+.landing-upd-first-reviews-item-preview.s3 {
+    background: url('/src/routes/Landing/RedOne/assets/grands.jpg');
+    mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+    background-size: cover;
+    background-position: center;
+}
+
+.landing-upd-first-reviews-item-preview.s4 {
+    background: url('/src/routes/Landing/RedOne/assets/friendgirl.jpg');
+    mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+    background-size: cover;
+    background-position: center;
+}
+
+.landing-upd-first-reviews-item-preview.s5 {
+    background: url('/src/routes/Landing/RedOne/assets/parets.jpg');
+    mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+    background-size: cover;
+    background-position: center;
+}
+
+.landing-upd-first-reviews-item-preview.s6 {
+    background: url('/src/routes/Landing/RedOne/assets/kids.jpg');
+    mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+    background-size: cover;
+    background-position: center;
+}
+
+.landing-upd-first-reviews-item-preview.s7 {
+    background: url('/src/routes/Landing/RedOne/assets/sister.jpg');
+    mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+    background-size: cover;
+    background-position: center;
+}
+
+.landing-upd-first-reviews-item-preview.s8 {
+    background: url('/src/routes/Landing/RedOne/assets/myself.jpg');
+    mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+    background-size: cover;
+    background-position: center;
+}
+
+.landing-upd-first-reviews-item-preview.s9 {
+    background: url('/src/routes/Landing/RedOne/assets/girlfriend\ 2.jpg');
+    mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+    background-size: cover;
+    background-position: center;
+}
+
+.landing-upd-first-reviews-item-preview.s10 {
+    background: url('/src/routes/Landing/RedOne/assets/colleague.jpg');
+    mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+    background-size: cover;
+    background-position: center;
+}
+
+.landing-upd-first-reviews-item div {
+    color: white;
+    font-size: 18px;
+}
+
+
+@media (max-width: 900px) {
+    /* .landing-upd-first-reviews {
+        display: none;
+    } */
+    .landing-upd-first-reviews {
+        margin-top: 400px;
+        padding: 0 20px;
+        margin-bottom: 100px;
+        gap: 20px
+    }
+
+    .landing-upd-first-reviews-item {
+        width: 150px;
+        height: 250px;
+        gap: 8px
+    }
+
+    .landing-upd-first-reviews-item-preview {
+        width: 150px;
+        height: 250px;
+    }
+
+    .landing-upd-header {
+        display: none;
+    }
+
+    .landing-upd-fixed-mobile {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 50px;
+        z-index: 100;
+    }
+
+    .landing-upd-fixed-mobile-button-action {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #B00017;
+        color: white;
+        font-size: 16px;
+        font-family: 'TT Drugs';
+        border: none;
+        font-weight: 600;
+    }
+
+    .landing-upd-fixed-mobile-button-ask {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        color: #05A000;
+        font-size: 16px;
+        font-family: 'TT Drugs';
+        border: none;
+        font-weight: 600;
+    }
+
+    .landing-upd-header-mobile {
+        z-index: 10;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+        padding: 20px 16px;
+    }
+
+    .landing-upd-header-button-filled {
+        background-color: #B00017;
+        font-size: 12px;
+    }
+
+    .landing-upd-header-logo {
+        color: white;
+        font-size: 20px;
+    }
+
+    .landing-upd-first {
+        background: url('/src/routes/Landing/RedOne/assets/mobile-bg.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        /* height: 120vh; */
+    }
+
+    .landing-upd-first-action {
+        font-size: 32px;
+        margin-top: 130px;
+    }
+
+    .landing-upd-first-action div {
+        max-width: 600px;
+        line-height: 1;
+    }
+
+    .landing-upd-third {
+        background: url('/src/routes/Landing/RedOne/assets/third-mob.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 105vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: -5vh;
+        position: relative;
+    }
+
+    .landing-upd-second {
+        flex-direction: column;
+        height: auto;
+        mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+        padding: 20px 16px 30px 16px;
+    }
+
+    .landing-upd-second-content {
+        display: none;
+    }
+
+    .landing-upd-second-video {
+        display: none;
+        
+    }
+
+    .landing-upd-second-content-title {
+        padding-right: 0;
+        font-size: 30px;
+        line-height: 1;
+        margin-bottom: 20px;
+    }
+
+    .landing-upd-second-video-mobile {
+        width: auto;
+        height: 500px;
+        object-fit: cover;
+        mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+    }
+
+    .landing-upd-second-content-item {
+        padding-right: 0;
+    }
+
+    .landing-upd-second-content-item-row {
+        font-size: 24px;
+    }
+
+    .landing-upd-second-content-mobile button {
+        display: none;
+    }
+
+    .landing-upd-second-content-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .landing-upd-second-content-item-row img {
+        width: 18px;
+    }
+
+    .landing-upd-second-content-item {
+        font-size: 16px;
+    }
+
+    .landing-upd-forth {
+        mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+        padding: 0;
+    }
+
+    .landing-upd-forth-title {
+        position: absolute;
+        top: 30px;
+        font-size: 24px;
+        z-index: 5;
+        margin: 0;
+        text-align: center;
+        width: 100%;
+        padding: 0 60px;
+        line-height: 1;
+        font-weight: 600;
+    }
+
+    .landing-upd-fifth {
+        flex-direction: column;
+        background: url('/src/routes/Landing/RedOne/assets/fifth-mob.jpg');
+        background-size: cover;
+        background-position: center;
+        padding: 80px 20px;
+    }
+
+    .landing-upd-fifth-content {
+        width: auto;
+        align-items: center;
+        text-align: center;
+        padding: 50px 8px;
+        font-size: 30px;
+    }
+
+    .landing-upd-fifth-content button {
+        width: auto;
+        font-size: 16px;
+    }
+
+    .landing-upd-fifth-grid {
+        width: auto;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .landing-upd-fifth-grid {
+        flex: 1;
+    }
+
+    .landing-upd-footer {
+        height: auto;
+        padding: 40px 20px 100px 20px;
+        mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
+    }
+
+    .landing-upd-footer-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        align-items: center;
+    }
+
+    .landing-upd-footer-row div {
+        font-size: 28px;
+        max-width: unset;
+        line-height: 1;
+    }
+
+    .landing-upd-footer-row button {
+        font-size: 16px;
+        height: 40px;
+    }
+
+    .landing-upd-footer-logo {
+        margin: 40px 0 20px 0;
+        font-size: 22vw;
+        letter-spacing: -5px;
+    }
+
+    .landing-upd-footer-row-2 {
+        display: none;
+    }
+
+    .landing-upd-footer-row-mobile, .landing-upd-footer-row-mobile a {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        justify-content: center;
+        text-align: center;
+        color: #B00017;
+        font-family: 'TT Drugs';
+    }
+
+    .landing-upd-footer-row-mobile div:last-child {
+        color: black
+    }
+}
