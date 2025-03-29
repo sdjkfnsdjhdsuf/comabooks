@@ -49,14 +49,14 @@ function LandingUpdated() {
       }, []);
 
   const handleOrder = () => {
-    const message = `Здравствуйте! Я по поводу книги, можете проконсультировать ?`;
+    const message = `Здравствуйте! Хочу сделать заказ. Можете проконсультировать?`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/77476738427?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
 };
 
 const handleAsk = () => {
-    const message = `Здравствуйте! Есть вопрос по книге: `;
+    const message = `Здравствуйте! Хочу узнать подробнее о книге`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/77476738427?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
@@ -68,7 +68,7 @@ const handleInst = () => {
 };
 
 const handleLogin = () => {
-    const instUrl = `https:/comabooks.org/login`;
+    const instUrl = `https://comabooks.org/login`;
     window.open(instUrl, '_blank');
 };
 
