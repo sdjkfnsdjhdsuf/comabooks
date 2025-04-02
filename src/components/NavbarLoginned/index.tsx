@@ -47,7 +47,7 @@ const NavbarLoginned = ({
 
   useEffect(() => {
     const today = new Date();
-    today.setDate(today.getDate() + 7); // Add 7 days to today's date
+    today.setDate(today.getDate() + 7); 
     setMinDate(today);
   }, []);
 
@@ -629,7 +629,7 @@ const NavbarLoginned = ({
                 />
             </div>
             <div className="sidebar-popup-buttons">
-              <button className="sidebar-popup-button" onClick={handleChangeDate}>
+              <button disabled={!deliveryDate || new Date(deliveryDate.getTime() + 86400000) < minDate}  className="sidebar-popup-button" onClick={handleChangeDate}>
                 Изменить
               </button>
               <button className="sidebar-popup-button" onClick={closePopup}>
@@ -665,7 +665,7 @@ const NavbarLoginned = ({
 
               </div>
               <div className="sidebar-popup-buttons">
-                <button className="sidebar-popup-button" onClick={handleChangeDateAndFinish}>
+                <button disabled={!deliveryDate || new Date(deliveryDate.getTime() + 86400000) < minDate} className="sidebar-popup-button" onClick={handleChangeDateAndFinish}>
                   Изменить
                 </button>
                 <button className="sidebar-popup-button" onClick={closePopup}>

@@ -637,6 +637,9 @@ export interface PhotoEnityDto {
 
   /**  */
   questionTxt: string;
+
+  /**  */
+  status: string;
 }
 
 export interface AddPhotoEnityDto {
@@ -660,6 +663,9 @@ export interface AddPhotoEnityDto {
 
   /**  */
   questionTxt: string;
+
+  /**  */
+  status: string;
 }
 
 export interface AnswerSmartEntityDto {

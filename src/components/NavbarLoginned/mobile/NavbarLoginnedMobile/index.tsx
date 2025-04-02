@@ -601,7 +601,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                 />
               </div>
               <div className="sidebar-popup-buttons">
-                <button className="sidebar-popup-button" onClick={handleChangeDate}>
+                <button disabled={!deliveryDate || new Date(deliveryDate.getTime() + 86400000) < minDate} className="sidebar-popup-button" onClick={handleChangeDate}>
                   Изменить
                 </button>
                 <button className="sidebar-popup-button" onClick={closePopup}>
@@ -637,7 +637,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                 />
               </div>
               <div className="sidebar-popup-buttons">
-                <button className="sidebar-popup-button" onClick={handleChangeDateAndFinish} >
+                <button disabled={!deliveryDate || new Date(deliveryDate.getTime() + 86400000) < minDate} className="sidebar-popup-button" onClick={handleChangeDateAndFinish} >
                   Изменить
                 </button>
                 <button className="sidebar-popup-button" onClick={closePopup}>

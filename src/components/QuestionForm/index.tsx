@@ -64,10 +64,10 @@ const QuestionForm = ({ question, templateId }: { question: QuestionTemplateDto;
 
   return (
     <div className="question-form">
-      <div className="alarm-label">Печать не будет работать 19-25 числа включительно. Если хотите получить книгу до конца этой недели, вам нужно завершить ее сегодня до 21.00 по казахстанскому времени.
+      {/* <div className="alarm-label">Печать не будет работать 19-25 числа включительно. Если хотите получить книгу до конца этой недели, вам нужно завершить ее сегодня до 21.00 по казахстанскому времени.
 
-        {/* <button onClick={handleSupport}>Уведомить о заказе</button> */}
-      </div>
+        <button onClick={handleSupport}>Уведомить о заказе</button>
+      </div> */}
       <div className="question-form-question">
         <label className="question-number-title">Вопрос {currentPage + 1}</label>
         <label className="question">{question.question}</label>

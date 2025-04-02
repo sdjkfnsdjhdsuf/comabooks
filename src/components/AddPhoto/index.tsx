@@ -20,6 +20,7 @@ const AddPhoto = () => {
   const { templateId, photoId } = useParams();
   const [photoDate, setPhotoDate] = useState<Date | null>(null);
   const [photoDescription, setPhotoDescription] = useState<string>("");
+  const [photoPosition, setPhotoPosition] = useState<string>("center");
   const [photoFile, setPhotoFile] = useState<string | null>(null);
   const [isEditable, setIsEditable] = useState<boolean>(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -113,6 +114,7 @@ const AddPhoto = () => {
             setHideDate(photoDetails.hideDate);
             setHideDescription(photoDetails.hideDescription);
             setQuestionTxt(photoDetails.questionTxt);
+            setPhotoPosition(photoDetails.status || 'center')
             setIsEditable(false);
           }
         } catch (error) {
@@ -157,6 +159,14 @@ const AddPhoto = () => {
 
   const handleSave = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+  
+    // If we are not in edit mode, just toggle to edit mode without validating
+    if (!isEditable) {
+      setIsEditable(true);
+      return;
+    }
+  
+    // If in edit mode, validate the fields before saving
     if (photoDate && photoDescription && photoFile && templateId && questionTxt) {
       const photoData = {
         date: photoDate,
@@ -166,27 +176,24 @@ const AddPhoto = () => {
         hideDate: hideDate,
         hideDescription: hideDescription,
         questionTxt: questionTxt,
+        status: photoPosition,
       };
-
-      if (isEditable) {
-        if (photoId) {
-          dispatch(updatePhoto({
-            ...photoData, photoId,
-            userId: ""
-          })); 
-        } else {
-          dispatch(addPhoto(photoData));
-        }
+  
+      if (photoId) {
+        dispatch(updatePhoto({ ...photoData, photoId, userId: "" }));
+      } else {
+        dispatch(addPhoto(photoData));
       }
-
-      setIsEditable(!isEditable);
+      // After saving, toggle to non-editable (view) mode
+      setIsEditable(false);
     } else {
-      setNotify(true)
+      setNotify(true);
       setTimeout(() => {
-        setNotify(false)
-      }, 2000)
+        setNotify(false);
+      }, 2000);
     }
   };
+  
 
   const handleDelete = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -222,7 +229,7 @@ const AddPhoto = () => {
   }
 
   const formattedDate = parseDate(photoDate ? photoDate.toString() : " ");
-
+  console.log(isEditable)
   
 
   return (
@@ -306,6 +313,12 @@ const AddPhoto = () => {
             ))}
       </select>
       </div>
+
+      <div className="photo-positions">
+        <button disabled={!isEditable} style={{backgroundColor: isEditable ? (photoPosition === 'center' ? '#c3d3f9' : 'transparent') : '#DDDDDD'}} onClick={() => {setPhotoPosition('center')}}>По центру</button>
+        <button disabled={!isEditable} style={{backgroundColor: isEditable ? (photoPosition === 'bottom' ? '#c3d3f9' : 'transparent') : '#DDDDDD'}} onClick={() => {setPhotoPosition('bottom')}}>Снизу</button>
+        <button disabled={!isEditable} style={{backgroundColor: isEditable ? (photoPosition === 'top' ? '#c3d3f9' : 'transparent') : '#DDDDDD'}} onClick={() => {setPhotoPosition('top')}}>Сверху</button>
+      </div>
       <div className="add-photo-buttons">
         <button
           className="input-save-button-add"
@@ -333,7 +346,7 @@ const AddPhoto = () => {
                 alt="Preview"
               />
           )}
-          <div className="photo-preview-details">
+          <div className={`photo-preview-details ${photoPosition}`}>
           {photoDate && !hideDate && <div className="photo-preview-date">{formattedDate}</div>}
           {photoDescription && !hideDescription && <div className="photo-preview-description">{photoDescription}</div>}
           </div>
