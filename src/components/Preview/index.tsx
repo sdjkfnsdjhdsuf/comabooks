@@ -122,7 +122,7 @@ export const Preview = ({
           className="book-preview-content"
           onClick={(e) => e.stopPropagation()}
         >
-        {pageIndex === 0 && (
+        {pageIndex === 0 && question != '-' && (
           <p className="preview-question">{question || '\u00A0'}</p>
         )}
           {pageLines.map((line, idx) => (

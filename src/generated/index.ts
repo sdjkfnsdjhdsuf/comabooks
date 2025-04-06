@@ -511,6 +511,9 @@ export interface AnswerEntityDto {
   answer: string;
 
   /**  */
+  clientQuestion: string;
+
+  /**  */
   userId: string;
 
   /**  */
@@ -520,6 +523,7 @@ export interface AnswerEntityDto {
 export interface AnswerEditDto {
   /**  */
   questionMessage: string;
+  clientQuestion: string;
 }
 
 export interface SingReauestDto {

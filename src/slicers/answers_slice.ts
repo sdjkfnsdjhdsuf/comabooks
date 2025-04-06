@@ -58,13 +58,14 @@ export const fetchAnswers = createAsyncThunk(
 
 export const setAnswers = createAsyncThunk(
   "answers/set",
-  async (payload: { questionId: string; text: string }) => {
-    const { questionId, text } = payload;
+  async (payload: { questionId: string; text: string, clientQuestion: string }) => {
+    const { questionId, text, clientQuestion } = payload;
     const newAnswer = await AnswerService.answersControllerEditAnswer(
       {
         id: questionId,
         body: {
           questionMessage: text,
+          clientQuestion: clientQuestion
         },
       },
       {
