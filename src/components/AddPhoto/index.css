@@ -19,7 +19,7 @@
 .photo-preview {
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    width: 384px;
+    width: 404px;
     height: 630px;
     box-sizing: border-box;
     display: flex;
@@ -30,8 +30,11 @@
 }
 
 
+
+
+
 .photo-preview-media {
-    width: 384px;
+    width: 404px;
     height: 630px;
     object-fit: cover;
     position: absolute;
@@ -45,6 +48,39 @@
     width: 190px;
     height: 190px;
     object-fit: cover;
+}
+
+.photo-preview-media.vertical,
+.photo-preview-media.square,
+.photo-preview-media.horizontal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: auto;
+  object-fit: cover;
+  filter: brightness(60%);
+  z-index: 0;
+}
+
+.preview-photo-colon.vertical,
+.preview-photo-colon.square,
+.preview-photo-colon.horizontal,
+.photo-preview-description.vertical,
+.photo-preview-description.square,
+.photo-preview-description.horizontal,
+.photo-preview-date.vertical,
+.photo-preview-date.square,
+.photo-preview-date.horizontal {
+    color: black
+}
+
+.photo-preview-description.vertical,
+.photo-preview-description.square,
+.photo-preview-description.horizontal {
+    font-style: normal;
+    font-weight: 600;
 }
 
 .photo-preview-details {
@@ -67,6 +103,33 @@
 .photo-preview-details.bottom {
     top: 80%;
 }
+
+
+.photo-preview-asset.horizontal,
+.photo-preview-media.horizontal{ aspect-ratio:1052/553; }
+.photo-preview-asset.square,
+.photo-preview-media.square    { aspect-ratio:1052/935; }
+.photo-preview-asset.vertical,
+.photo-preview-media.vertical  { aspect-ratio:1052/1536; } 
+
+.photo-preview-asset {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .photo-preview-details.vertical,
+  .photo-preview-details.square,
+  .photo-preview-details.horizontal {
+    top: 7%;
+    width: 80%;
+    gap: 2px;
+  }
 
 .photo-preview-date {
     font-size: 12px;
@@ -182,8 +245,9 @@
 
 .photo-positions {
     display: flex;
-    justify-content: space-between;
     width: 60%;
+    gap: 6px;
+    flex-wrap: wrap;
 }
 
 .photo-positions button {

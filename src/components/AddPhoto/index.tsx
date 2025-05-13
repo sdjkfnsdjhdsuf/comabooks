@@ -8,13 +8,21 @@ import React, {
 import "./index.css";
 import viewicon from "assets/viewicon.png";
 import { useDispatch, useSelector } from "react-redux";
-import { addPhoto, deletePhoto, fetchPhotos, updatePhoto } from "slicers/photos_slicer";
+import {
+  addPhoto,
+  deletePhoto,
+  fetchPhotos,
+  updatePhoto,
+} from "slicers/photos_slicer";
 import { AppDispatch, RootState } from "store";
 import { CoverEntityDto, PhotoService, UplaodService } from "generated";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import arrow from "assets/arrow.png";
-import uploadicon from "assets/upload-icon.png"
+import horizontal from "assets/horizontal.png";
+import square from "assets/square.png";
+import vertical from "assets/vertical.png";
+import uploadicon from "assets/upload-icon.png";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 const AddPhoto = () => {
   const { templateId, photoId } = useParams();
@@ -34,10 +42,12 @@ const AddPhoto = () => {
   const [hideDate, setHideDate] = useState<boolean>(false);
   const [hideDescription, setHideDescription] = useState<boolean>(false);
   const [questionTxt, setQuestionTxt] = useState<string>("");
-  const [questions, setQuestions] = useState<{ number: number; question: string }[]>([]);
+  const [questions, setQuestions] = useState<
+    { number: number; question: string }[]
+  >([]);
 
-  const [notify, setNotify] = useState(false)
-  
+  const [notify, setNotify] = useState(false);
+
   useEffect(() => {
     if (textareaRef.current) {
       const textarea = textareaRef.current;
@@ -52,31 +62,40 @@ const AddPhoto = () => {
         try {
           const [questionsResponse, answersResponse] = await Promise.all([
             fetch(`https://api.comabooks.org/questions/${templateId}`, {
-              method: 'GET',
+              method: "GET",
               headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
               },
-            }).then(res => res.json()),
+            }).then((res) => res.json()),
             fetch(`https://api.comabooks.org/answers/my/${templateId}`, {
-              method: 'GET',
+              method: "GET",
               headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
               },
-            }).then(res => res.json()),
+            }).then((res) => res.json()),
           ]);
 
-          const filteredAnswers = answersResponse.filter((answer: any) => answer.answer !== "-" && answer.answer.trim() !== "");
+          const filteredAnswers = answersResponse.filter(
+            (answer: any) =>
+              answer.answer !== "-" && answer.answer.trim() !== ""
+          );
 
-          const questionsWithAnswers = questionsResponse.map((question: any, index: number) => {
-            const answer = filteredAnswers.find((ans: any) => ans.questionId === question._id);
-            return answer ? { number: index + 1, question: question.question } : null;
-          }).filter((question: any) => question !== null);
+          const questionsWithAnswers = questionsResponse
+            .map((question: any, index: number) => {
+              const answer = filteredAnswers.find(
+                (ans: any) => ans.questionId === question._id
+              );
+              return answer
+                ? { number: index + 1, question: question.question }
+                : null;
+            })
+            .filter((question: any) => question !== null);
 
           setQuestions(questionsWithAnswers);
         } catch (error) {
-          console.error('Error fetching questions and answers:', error);
+          console.error("Error fetching questions and answers:", error);
         }
       };
 
@@ -100,12 +119,15 @@ const AddPhoto = () => {
       console.log(`Fetching details for photoId: ${photoId}`);
       if (templateId && photoId) {
         try {
-          const photos = await PhotoService.photoControllerGetPhotos({ templateId }, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
-          const photoDetails = photos.find(photo => photo._id === photoId); 
+          const photos = await PhotoService.photoControllerGetPhotos(
+            { templateId },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+          const photoDetails = photos.find((photo) => photo._id === photoId);
           console.log(photoDetails);
           if (photoDetails) {
             setPhotoDate(new Date(photoDetails.date));
@@ -114,7 +136,7 @@ const AddPhoto = () => {
             setHideDate(photoDetails.hideDate);
             setHideDescription(photoDetails.hideDescription);
             setQuestionTxt(photoDetails.questionTxt);
-            setPhotoPosition(photoDetails.status || 'center')
+            setPhotoPosition(photoDetails.status || "center");
             setIsEditable(false);
           }
         } catch (error) {
@@ -122,23 +144,28 @@ const AddPhoto = () => {
         }
       }
     };
-  
+
     fetchPhotoDetails();
   }, [photoId, templateId]);
-  
+
   const handlePhotoChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      const allowedFormats = ["image/png", "image/jpeg", "image/jpg", "image/heic"];
-  
+      const allowedFormats = [
+        "image/png",
+        "image/jpeg",
+        "image/jpg",
+        "image/heic",
+      ];
+
       if (!allowedFormats.includes(file.type)) {
         alert("Допустимый формат для фото: PNG, JPEG, JPG, HEIC");
         return;
       }
-  
+
       const formData = new FormData();
       formData.append("file", file);
-  
+
       try {
         const uploadedFile = await axios.post(
           "https://api.comabooks.org/upload",
@@ -155,19 +182,24 @@ const AddPhoto = () => {
       }
     }
   };
-  
 
   const handleSave = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-  
+
     // If we are not in edit mode, just toggle to edit mode without validating
     if (!isEditable) {
       setIsEditable(true);
       return;
     }
-  
+
     // If in edit mode, validate the fields before saving
-    if (photoDate && photoDescription && photoFile && templateId && questionTxt) {
+    if (
+      photoDate &&
+      photoDescription &&
+      photoFile &&
+      templateId &&
+      questionTxt
+    ) {
       const photoData = {
         date: photoDate,
         description: photoDescription,
@@ -178,7 +210,7 @@ const AddPhoto = () => {
         questionTxt: questionTxt,
         status: photoPosition,
       };
-  
+
       if (photoId) {
         dispatch(updatePhoto({ ...photoData, photoId, userId: "" }));
       } else {
@@ -193,81 +225,94 @@ const AddPhoto = () => {
       }, 2000);
     }
   };
-  
 
   const handleDelete = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (photoId) {
       try {
         await dispatch(deletePhoto(photoId));
-        navigate('/forms');
+        navigate("/forms");
       } catch (error) {
-        console.error('Failed to delete photo:', error);
+        console.error("Failed to delete photo:", error);
       }
     }
   };
 
   function parseDate(dateString: string) {
-
-    console.log(dateString)
+    console.log(dateString);
 
     const months = {
-      Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
-      Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
+      Jan: "01",
+      Feb: "02",
+      Mar: "03",
+      Apr: "04",
+      May: "05",
+      Jun: "06",
+      Jul: "07",
+      Aug: "08",
+      Sep: "09",
+      Oct: "10",
+      Nov: "11",
+      Dec: "12",
     };
 
-    const parts = dateString.split(' ');
-    console.log(parts)
+    const parts = dateString.split(" ");
+    console.log(parts);
 
     const day = parts[2];
     const monthName = parts[1];
     const year = parts[3];
-  
+
     const month = months[monthName as keyof typeof months];
-  
+
     return `${day}.${month}.${year}`;
   }
 
   const formattedDate = parseDate(photoDate ? photoDate.toString() : " ");
-  console.log(isEditable)
-  
+  console.log(isEditable);
 
   return (
     <>
-    <div className="add-photo-container">
-      {notify && 
-      <div className="notify-popup">
-        <div className="notify-popup-content">
-        Для сохранения заполните все поля!
-        </div>
-      </div>}
-    <form className="add-photo-form" onSubmit={(e) => e.preventDefault()}>
-      <div className="form-group-photo">
-        <label htmlFor="photoFile">Фото</label>
-        <input
-          type="file"
-          id="photoFile"
-          ref={fileInputRef}
-          accept="image/*"
-          onChange={handlePhotoChange}
-          disabled={!isEditable}
-          style={{ display: "none" }}/>
-          <label htmlFor="photoFile" className="upload-icon-label"
-          style={{ backgroundColor: isEditable ? 'white' : '#DDDDDD' }}>
-          <img src={uploadicon} alt="Upload" className="upload-icon"/>
-          </label>
-      </div>
-      <div className="form-group">
-        <label htmlFor="photoDate">Дата</label>
-        <input
-          type="date"
-          id="photoDate"
-          value={photoDate?.toISOString().substring(0, 10)}
-          onChange={handleDateChange}
-          disabled={!isEditable}
-          style={{ backgroundColor: isEditable ? 'white' : '#DDDDDD' }}/>
-      </div>
-      <div className="hidephoto">
+      <div className="add-photo-container">
+        {notify && (
+          <div className="notify-popup">
+            <div className="notify-popup-content">
+              Для сохранения заполните все поля!
+            </div>
+          </div>
+        )}
+        <form className="add-photo-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="form-group-photo">
+            <label htmlFor="photoFile">Фото</label>
+            <input
+              type="file"
+              id="photoFile"
+              ref={fileInputRef}
+              accept="image/*"
+              onChange={handlePhotoChange}
+              disabled={!isEditable}
+              style={{ display: "none" }}
+            />
+            <label
+              htmlFor="photoFile"
+              className="upload-icon-label"
+              style={{ backgroundColor: isEditable ? "white" : "#DDDDDD" }}
+            >
+              <img src={uploadicon} alt="Upload" className="upload-icon" />
+            </label>
+          </div>
+          <div className="form-group">
+            <label htmlFor="photoDate">Дата</label>
+            <input
+              type="date"
+              id="photoDate"
+              value={photoDate?.toISOString().substring(0, 10)}
+              onChange={handleDateChange}
+              disabled={!isEditable}
+              style={{ backgroundColor: isEditable ? "white" : "#DDDDDD" }}
+            />
+          </div>
+          <div className="hidephoto">
             <label>
               <input
                 type="checkbox"
@@ -277,18 +322,19 @@ const AddPhoto = () => {
               />
               Скрыть дату
             </label>
-      </div>
-      <div className="form-group">
-        <label htmlFor="photoDescription">Описание</label>
-        <textarea
-          ref={textareaRef}
-          id="photoDescription"
-          value={photoDescription}
-          onChange={handleDescriptionChange}
-          disabled={!isEditable}
-          style={{ backgroundColor: isEditable ? 'white' : '#DDDDDD' }}/>
-      </div>
-      <div className="hidephoto">
+          </div>
+          <div className="form-group">
+            <label htmlFor="photoDescription">Описание</label>
+            <textarea
+              ref={textareaRef}
+              id="photoDescription"
+              value={photoDescription}
+              onChange={handleDescriptionChange}
+              disabled={!isEditable}
+              style={{ backgroundColor: isEditable ? "white" : "#DDDDDD" }}
+            />
+          </div>
+          <div className="hidephoto">
             <label>
               <input
                 type="checkbox"
@@ -298,69 +344,182 @@ const AddPhoto = () => {
               />
               Скрыть описание
             </label>
-      </div>
-      <div className="form-group">
-      <label htmlFor="questionTxt">После какого вопроса поставить фото</label>
-      <select
-            id="questionTxt"
-            value={questionTxt || ''}
-            onChange={(e) => setQuestionTxt(e.target.value)}
-            disabled={!isEditable}
-          >
-            <option value="">Выбрать вопрос</option>
-            {questions.map((pair, idx) => (
-              <option key={idx} value={pair.question}>{pair.number}. {pair.question}</option>
-            ))}
-      </select>
-      </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="questionTxt">
+              После какого вопроса поставить фото
+            </label>
+            <select
+              id="questionTxt"
+              value={questionTxt || ""}
+              onChange={(e) => setQuestionTxt(e.target.value)}
+              disabled={!isEditable}
+            >
+              <option value="">Выбрать вопрос</option>
+              {questions.map((pair, idx) => (
+                <option key={idx} value={pair.question}>
+                  {pair.number}. {pair.question}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      <div className="photo-positions">
-        <button disabled={!isEditable} style={{backgroundColor: isEditable ? (photoPosition === 'center' ? '#c3d3f9' : 'transparent') : '#DDDDDD'}} onClick={() => {setPhotoPosition('center')}}>По центру</button>
-        <button disabled={!isEditable} style={{backgroundColor: isEditable ? (photoPosition === 'bottom' ? '#c3d3f9' : 'transparent') : '#DDDDDD'}} onClick={() => {setPhotoPosition('bottom')}}>Снизу</button>
-        <button disabled={!isEditable} style={{backgroundColor: isEditable ? (photoPosition === 'top' ? '#c3d3f9' : 'transparent') : '#DDDDDD'}} onClick={() => {setPhotoPosition('top')}}>Сверху</button>
-      </div>
-      <div className="add-photo-buttons">
-        <button
-          className="input-save-button-add"
-          type="button"
-          onClick={handleSave}
-        >
-          {isEditable ? "Сохранить" : "Изменить"}
-        </button>
-        <button
-          className="input-save-button-add"
-          type="button"
-          onClick={handleDelete}
-        >
-          Удалить
-        </button>
-      </div>
-    </form>
+          <div className="photo-positions">
+            <button
+              disabled={!isEditable}
+              style={{
+                backgroundColor: isEditable
+                  ? photoPosition === "center"
+                    ? "#c3d3f9"
+                    : "transparent"
+                  : "#DDDDDD",
+              }}
+              onClick={() => {
+                setPhotoPosition("center");
+              }}
+            >
+              По центру
+            </button>
+            <button
+              disabled={!isEditable}
+              style={{
+                backgroundColor: isEditable
+                  ? photoPosition === "bottom"
+                    ? "#c3d3f9"
+                    : "transparent"
+                  : "#DDDDDD",
+              }}
+              onClick={() => {
+                setPhotoPosition("bottom");
+              }}
+            >
+              Снизу
+            </button>
+            <button
+              disabled={!isEditable}
+              style={{
+                backgroundColor: isEditable
+                  ? photoPosition === "top"
+                    ? "#c3d3f9"
+                    : "transparent"
+                  : "#DDDDDD",
+              }}
+              onClick={() => {
+                setPhotoPosition("top");
+              }}
+            >
+              Сверху
+            </button>
+            <button
+              disabled={!isEditable}
+              style={{
+                backgroundColor: isEditable
+                  ? photoPosition === "vertical"
+                    ? "#c3d3f9"
+                    : "transparent"
+                  : "#DDDDDD",
+              }}
+              onClick={() => {
+                setPhotoPosition("vertical");
+              }}
+            >
+              Вертикально
+            </button>
+            <button
+              disabled={!isEditable}
+              style={{
+                backgroundColor: isEditable
+                  ? photoPosition === "square"
+                    ? "#c3d3f9"
+                    : "transparent"
+                  : "#DDDDDD",
+              }}
+              onClick={() => {
+                setPhotoPosition("square");
+              }}
+            >
+              Квадрат
+            </button>
+            <button
+              disabled={!isEditable}
+              style={{
+                backgroundColor: isEditable
+                  ? photoPosition === "horizontal"
+                    ? "#c3d3f9"
+                    : "transparent"
+                  : "#DDDDDD",
+              }}
+              onClick={() => {
+                setPhotoPosition("horizontal");
+              }}
+            >
+              Горизонтально
+            </button>
+          </div>
+          <div className="add-photo-buttons">
+            <button
+              className="input-save-button-add"
+              type="button"
+              onClick={handleSave}
+            >
+              {isEditable ? "Сохранить" : "Изменить"}
+            </button>
+            <button
+              className="input-save-button-add"
+              type="button"
+              onClick={handleDelete}
+            >
+              Удалить
+            </button>
+          </div>
+        </form>
 
-    <div className="photo-preview-container">
-        <div className="photo-preview">
-          {photoFile && (
+        <div className="photo-preview-container">
+          <div className={`photo-preview ${photoPosition}`}>
+                  
+            {photoFile && (
               <img
-                className='photo-preview-media'
+                className={`photo-preview-media ${photoPosition}`}
                 src={photoFile}
                 alt="Preview"
               />
-          )}
-          <div className={`photo-preview-details ${photoPosition}`}>
-          {photoDate && !hideDate && <div className="photo-preview-date">{formattedDate}</div>}
-          {photoDescription && !hideDescription && <div className="photo-preview-description">{photoDescription}</div>}
-          </div>
-          <div className="preview-photo-colon">
-            <p>{coverData?.bookName || "\u00A0"}</p>
-            <p>95</p>
+            )}
+            {["vertical", "square", "horizontal"].includes(photoPosition) && (
+              <img
+                src={
+                  photoPosition === "vertical"
+                    ? vertical
+                    : photoPosition === "square"
+                    ? square
+                    : horizontal
+                }
+                alt={`${photoPosition} asset`}
+                className="photo-preview-asset" 
+              />
+            )}
+
+            <div className={`photo-preview-details ${photoPosition}`}>
+              {photoDate && !hideDate && (
+                <div className={`photo-preview-date ${photoPosition}`}>{formattedDate}</div>
+              )}
+              {photoDescription && !hideDescription && (
+                <div className={`photo-preview-description ${photoPosition}`}>
+                  {photoDescription}
+                </div>
+              )}
+            </div>
+            <div className={`preview-photo-colon ${photoPosition}`}>
+              <p>{coverData?.bookName || "\u00A0"}</p>
+              <p>95</p>
+            </div>
           </div>
         </div>
-    </div>
-    </div>
-    
-    <Link to={`/forms/${templateId}`}>
-        <img src={arrow} className="arrow-icon" />
-    </Link></>
+      </div>
+
+      <Link to={`/forms/${templateId}`}>
+        <ArrowBackIosNewIcon className="arrow-icon" />
+      </Link>
+    </>
   );
 };
 
