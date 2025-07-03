@@ -169,7 +169,7 @@ const BookConstructor: React.FC = () => {
   const handleOrder = () => {
     const message = `Здравствуйте! Я по поводу книги, можете проконсультировать ?`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/77018656947?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/77476738427?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
   };
 
