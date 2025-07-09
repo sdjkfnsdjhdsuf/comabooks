@@ -3,13 +3,13 @@ import "./index.css";
 import video from "./assets/video.mp4";
 import player from "./assets/player.svg";
 import starsmall from "./assets/starsmall.svg";
-import review from './assets/review2.jpg'
+import review from "./assets/review2.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import BookConstructor from "./Constructor";
+import BookConstructor, { globalPhoneNumber } from "./Constructor";
 
 function LandingUpdated() {
   const navigate = useNavigate();
-  const [currentWord, setCurrentWord] = useState('любимому человеку');
+  const [currentWord, setCurrentWord] = useState("любимому человеку");
 
   const reviewsRef = useRef<HTMLDivElement>(null);
 
@@ -21,7 +21,10 @@ function LandingUpdated() {
     const intervalTime = 20; // milliseconds between scroll updates
 
     const scrollInterval = setInterval(() => {
-      if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
+      if (
+        container.scrollLeft >=
+        container.scrollWidth - container.clientWidth
+      ) {
         container.scrollLeft = 0; // Reset scroll to the start
       } else {
         container.scrollLeft += speed;
@@ -32,56 +35,78 @@ function LandingUpdated() {
   }, []);
 
   const words = [
-    'любимому человеку', 'девушке', 'парню', 'жене', 'мужу', 'маме', 'папе', 
-    'родителям', 'брату', 'сестре', 'друзьям', 'коллеге'
+    "любимому человеку",
+    "девушке",
+    "парню",
+    "жене",
+    "мужу",
+    "маме",
+    "папе",
+    "родителям",
+    "брату",
+    "сестре",
+    "друзьям",
+    "коллеге",
   ];
 
   useEffect(() => {
-          const intervalId = setInterval(() => {
-              setCurrentWord(prevWord => {
-                  const currentIndex = words.indexOf(prevWord);
-                  const nextIndex = (currentIndex + 1) % words.length;
-                  return words[nextIndex];
-              });
-          }, 1000);
-  
-          return () => clearInterval(intervalId);
-      }, []);
+    const intervalId = setInterval(() => {
+      setCurrentWord((prevWord) => {
+        const currentIndex = words.indexOf(prevWord);
+        const nextIndex = (currentIndex + 1) % words.length;
+        return words[nextIndex];
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleOrder = () => {
     const message = `Здравствуйте! Хочу сделать заказ. Можете проконсультировать?`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/77757962360?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
-};
+    const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
 
-const handleAsk = () => {
+  const handleAsk = () => {
     const message = `Здравствуйте! Хочу узнать подробнее о книге`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/77757962360?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
-};
+    const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
 
-const handleInst = () => {
+  const handleInst = () => {
     const instUrl = `https://instagram.com/comabooks`;
-    window.open(instUrl, '_blank');
-};
+    window.open(instUrl, "_blank");
+  };
 
-const handleLogin = () => {
+  const handleLogin = () => {
     const instUrl = `https://comabooks.org/login`;
-    window.open(instUrl, '_blank');
-};
+    window.open(instUrl, "_blank");
+  };
 
   return (
     <div className="landing-upd">
       <div className="landing-upd-header">
-        <div onClick={() => navigate('/')} className="landing-upd-header-logo">comabooks</div>
+        <div onClick={() => navigate("/")} className="landing-upd-header-logo">
+          comabooks
+        </div>
         <div className="landing-upd-header-links">
-          <Link to={'https://www.instagram.com/comabooks/'}>Отзывы</Link>
-          <Link to={'https:/comabooks.org/order'}>Цены и вопросы</Link>
-          <Link to={'https:/comabooks.org/policies'}>Условия использования</Link>
-          <button onClick={handleLogin} className="landing-upd-header-button-empty">Войти</button>
-          <button onClick={handleOrder} className="landing-upd-header-button-filled">
+          <Link to={"https://www.instagram.com/comabooks/"}>Отзывы</Link>
+          <Link to={"https:/comabooks.org/order"}>Цены и вопросы</Link>
+          <Link to={"https:/comabooks.org/policies"}>
+            Условия использования
+          </Link>
+          <button
+            onClick={handleLogin}
+            className="landing-upd-header-button-empty"
+          >
+            Войти
+          </button>
+          <button
+            onClick={handleOrder}
+            className="landing-upd-header-button-filled"
+          >
             Заказать книгу
           </button>
         </div>
@@ -89,14 +114,25 @@ const handleLogin = () => {
 
       <div className="landing-upd-header-mobile">
         <div className="landing-upd-header-logo">comabooks</div>
-        <button onClick={handleLogin} className="landing-upd-header-button-filled">Войти</button>
+        <button
+          onClick={handleLogin}
+          className="landing-upd-header-button-filled"
+        >
+          Войти
+        </button>
       </div>
 
       <div className="landing-upd-fixed-mobile">
-        <button onClick={handleAsk} className="landing-upd-fixed-mobile-button-ask">
+        <button
+          onClick={handleAsk}
+          className="landing-upd-fixed-mobile-button-ask"
+        >
           Задать вопрос
         </button>
-        <button onClick={handleOrder} className="landing-upd-fixed-mobile-button-action">
+        <button
+          onClick={handleOrder}
+          className="landing-upd-fixed-mobile-button-action"
+        >
           Заказать книгу
         </button>
       </div>
@@ -107,80 +143,108 @@ const handleLogin = () => {
           <button onClick={handleOrder}>Заказать книгу</button>
         </div>
 
-
         <div className="landing-upd-first-reviews" ref={reviewsRef}>
-                <Link to='https://www.instagram.com/reel/DGaoqFMN3T7/?igsh=bTR0Zzk5bXZlNGRt' className="landing-upd-first-reviews-item">
-                    <div className="landing-upd-first-reviews-item-preview s1">
-                    <img src={player} />
-                    </div>
-                    <div>Девушке</div>
-                </Link>
+          <Link
+            to="https://www.instagram.com/reel/DGaoqFMN3T7/?igsh=bTR0Zzk5bXZlNGRt"
+            className="landing-upd-first-reviews-item"
+          >
+            <div className="landing-upd-first-reviews-item-preview s1">
+              <img src={player} />
+            </div>
+            <div>Девушке</div>
+          </Link>
 
-                <Link to='https://www.instagram.com/reel/C8CS1heN8if/?igsh=MTVya3FwbjN4OHQ2cQ%3D%3D' className="landing-upd-first-reviews-item">
-                    <div className="landing-upd-first-reviews-item-preview s2">
-                    <img src={player} />
-                    </div>
-                    <div>Мужу</div>
-                </Link>
+          <Link
+            to="https://www.instagram.com/reel/C8CS1heN8if/?igsh=MTVya3FwbjN4OHQ2cQ%3D%3D"
+            className="landing-upd-first-reviews-item"
+          >
+            <div className="landing-upd-first-reviews-item-preview s2">
+              <img src={player} />
+            </div>
+            <div>Мужу</div>
+          </Link>
 
-                <Link to='https://www.instagram.com/reel/DGLQqQpMWNv/?igsh=cGQwcW05Nmk1cmVo' className="landing-upd-first-reviews-item">
-                    <div className="landing-upd-first-reviews-item-preview s3">
-                    <img src={player} />
-                    </div>
-                    <div>Бабушке</div>
-                </Link>
+          <Link
+            to="https://www.instagram.com/reel/DGLQqQpMWNv/?igsh=cGQwcW05Nmk1cmVo"
+            className="landing-upd-first-reviews-item"
+          >
+            <div className="landing-upd-first-reviews-item-preview s3">
+              <img src={player} />
+            </div>
+            <div>Бабушке</div>
+          </Link>
 
-                <Link to='https://www.instagram.com/reel/DGIReIctGMW/?igsh=eXpkcGRxN21mNmN0' className="landing-upd-first-reviews-item">
-                    <div className="landing-upd-first-reviews-item-preview s4">
-                    <img src={player} />
-                    </div>
-                    <div>Подруге</div>
-                </Link>
+          <Link
+            to="https://www.instagram.com/reel/DGIReIctGMW/?igsh=eXpkcGRxN21mNmN0"
+            className="landing-upd-first-reviews-item"
+          >
+            <div className="landing-upd-first-reviews-item-preview s4">
+              <img src={player} />
+            </div>
+            <div>Подруге</div>
+          </Link>
 
-                <Link to='https://www.instagram.com/reel/DE4xDPTNDVy/?igsh=MTI4a3Jhd2VxajduMQ==' className="landing-upd-first-reviews-item">
-                    <div className="landing-upd-first-reviews-item-preview s5">
-                    <img src={player} />
-                    </div>
-                    <div>Родителям</div>
-                </Link>
+          <Link
+            to="https://www.instagram.com/reel/DE4xDPTNDVy/?igsh=MTI4a3Jhd2VxajduMQ=="
+            className="landing-upd-first-reviews-item"
+          >
+            <div className="landing-upd-first-reviews-item-preview s5">
+              <img src={player} />
+            </div>
+            <div>Родителям</div>
+          </Link>
 
-                <Link to='https://www.instagram.com/reel/DG2-FhONQtm/?igsh=MWJtOXBjdHJhZXQ2Ng==' className="landing-upd-first-reviews-item">
-                    <div className="landing-upd-first-reviews-item-preview s6">
-                    <img src={player} />
-                    </div>
-                    <div>Детям</div>
-                </Link>
+          <Link
+            to="https://www.instagram.com/reel/DG2-FhONQtm/?igsh=MWJtOXBjdHJhZXQ2Ng=="
+            className="landing-upd-first-reviews-item"
+          >
+            <div className="landing-upd-first-reviews-item-preview s6">
+              <img src={player} />
+            </div>
+            <div>Детям</div>
+          </Link>
 
-                <Link to='https://www.instagram.com/reel/DHqnaqstZWU/?igsh=MWdleGF6bGN2aW0zYw==' className="landing-upd-first-reviews-item">
-                    <div className="landing-upd-first-reviews-item-preview s7">
-                    <img src={player} />
-                    </div>
-                    <div>Сестре</div>
-                </Link>
+          <Link
+            to="https://www.instagram.com/reel/DHqnaqstZWU/?igsh=MWdleGF6bGN2aW0zYw=="
+            className="landing-upd-first-reviews-item"
+          >
+            <div className="landing-upd-first-reviews-item-preview s7">
+              <img src={player} />
+            </div>
+            <div>Сестре</div>
+          </Link>
 
-                <Link to='https://www.instagram.com/reel/DG5C213I3D7/?igsh=YWtvczk3djhwY2xt' className="landing-upd-first-reviews-item">
-                    <div className="landing-upd-first-reviews-item-preview s8">
-                    <img src={player} />
-                    </div>
-                    <div>Себе</div>
-                </Link>
+          <Link
+            to="https://www.instagram.com/reel/DG5C213I3D7/?igsh=YWtvczk3djhwY2xt"
+            className="landing-upd-first-reviews-item"
+          >
+            <div className="landing-upd-first-reviews-item-preview s8">
+              <img src={player} />
+            </div>
+            <div>Себе</div>
+          </Link>
 
-                <Link to='https://www.instagram.com/reel/C8UaVEXC95t/?igsh=ejV0djJiMHV3Y2t3' className="landing-upd-first-reviews-item">
-                    <div className="landing-upd-first-reviews-item-preview s9">
-                    <img src={player} />
-                    </div>
-                    <div>Девушке</div>
-                </Link>
+          <Link
+            to="https://www.instagram.com/reel/C8UaVEXC95t/?igsh=ejV0djJiMHV3Y2t3"
+            className="landing-upd-first-reviews-item"
+          >
+            <div className="landing-upd-first-reviews-item-preview s9">
+              <img src={player} />
+            </div>
+            <div>Девушке</div>
+          </Link>
 
-                <Link to='https://www.instagram.com/reel/DEPNZJyo2oB/?igsh=dnMzam9iank2NHV0' className="landing-upd-first-reviews-item">
-                    <div className="landing-upd-first-reviews-item-preview s10">
-                    <img src={player} />
-                    </div>
-                    <div>Коллеге</div>
-                </Link>
+          <Link
+            to="https://www.instagram.com/reel/DEPNZJyo2oB/?igsh=dnMzam9iank2NHV0"
+            className="landing-upd-first-reviews-item"
+          >
+            <div className="landing-upd-first-reviews-item-preview s10">
+              <img src={player} />
+            </div>
+            <div>Коллеге</div>
+          </Link>
         </div>
       </div>
-
 
       <div className="landing-upd-second">
         <div className="landing-upd-second-content">
@@ -318,22 +382,40 @@ const handleLogin = () => {
         </div>
 
         <div className="landing-upd-fifth-grid">
-          <Link to='https://www.instagram.com/reel/C8ysJ4gN9Im/?utm_source=ig_web_copy_link' className="landing-upd-fifth-grid-item">
+          <Link
+            to="https://www.instagram.com/reel/C8ysJ4gN9Im/?utm_source=ig_web_copy_link"
+            className="landing-upd-fifth-grid-item"
+          >
             <img src={player} />
           </Link>
-          <Link to='https://www.tiktok.com/@chakievaa/video/7364429063080971537?is_from_webapp=1&sender_device=pc' className="landing-upd-fifth-grid-item">
+          <Link
+            to="https://www.tiktok.com/@chakievaa/video/7364429063080971537?is_from_webapp=1&sender_device=pc"
+            className="landing-upd-fifth-grid-item"
+          >
             <img src={player} />
           </Link>
-          <Link to='https://www.instagram.com/reel/C8UaVEXC95t/?igsh=ejV0djJiMHV3Y2t3' className="landing-upd-fifth-grid-item">
+          <Link
+            to="https://www.instagram.com/reel/C8UaVEXC95t/?igsh=ejV0djJiMHV3Y2t3"
+            className="landing-upd-fifth-grid-item"
+          >
             <img src={player} />
           </Link>
-          <Link to='https://www.instagram.com/reel/C8CS1heN8if/?utm_source=ig_web_copy_link' className="landing-upd-fifth-grid-item">
+          <Link
+            to="https://www.instagram.com/reel/C8CS1heN8if/?utm_source=ig_web_copy_link"
+            className="landing-upd-fifth-grid-item"
+          >
             <img src={player} />
           </Link>
-          <Link to='https://www.instagram.com/reel/C9PpvKMtC7s/?igsh=MXFyMmIxeWhuYThzcw==' className="landing-upd-fifth-grid-item">
+          <Link
+            to="https://www.instagram.com/reel/C9PpvKMtC7s/?igsh=MXFyMmIxeWhuYThzcw=="
+            className="landing-upd-fifth-grid-item"
+          >
             <img src={player} />
           </Link>
-          <Link to='https://www.instagram.com/reel/DF-l9q2IH7F/?igsh=NGxqNTVsMHp1N2p6' className="landing-upd-fifth-grid-item">
+          <Link
+            to="https://www.instagram.com/reel/DF-l9q2IH7F/?igsh=NGxqNTVsMHp1N2p6"
+            className="landing-upd-fifth-grid-item"
+          >
             <img src={player} />
           </Link>
         </div>
@@ -349,14 +431,16 @@ const handleLogin = () => {
 
         <div className="landing-upd-footer-row-2">
           <div>hello@comabooks.org</div>
-          <Link to={'https://www.instagram.com/comabooks/'}>Instagram</Link>
+          <Link to={"https://www.instagram.com/comabooks/"}>Instagram</Link>
         </div>
 
         <div className="landing-upd-footer-row-mobile">
           <div>hello@comabooks.org</div>
-          <Link to={'https://www.instagram.com/comabooks/'}>Instagram</Link>
-          <Link to={'https:/comabooks.org/order'}>Цены и вопросы</Link>
-          <Link to={'https:/comabooks.org/policies'}>Условия использования</Link>
+          <Link to={"https://www.instagram.com/comabooks/"}>Instagram</Link>
+          <Link to={"https:/comabooks.org/order"}>Цены и вопросы</Link>
+          <Link to={"https:/comabooks.org/policies"}>
+            Условия использования
+          </Link>
           <div>ИП COMAHOLDING, 2025</div>
         </div>
       </div>
