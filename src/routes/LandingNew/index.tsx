@@ -18,6 +18,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 import InstagramIcon from '@mui/icons-material/Instagram';
 
+export const globalPhoneNumber = '77759843675';
+
 function Landing() {
     const navigate = useNavigate()
     const [isScrolled, setIsScrolled] = useState(false);
@@ -198,7 +200,7 @@ function Landing() {
     const handleOrder = () => {
         const message = `Здравствуйте! Интересуюсь книгой, подскажите пожалуйста подробности`;
         const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/77757962360?text=${encodedMessage}`;
+        const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
     };
   

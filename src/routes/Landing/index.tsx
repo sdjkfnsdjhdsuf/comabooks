@@ -39,6 +39,7 @@ import print from 'assets/print.png'
 import wrapper from 'assets/wrapper.png'
 import result5 from 'assets/result5.png'
 import result6 from 'assets/result6.png'
+import { globalPhoneNumber } from 'routes/LandingNew'
 
 function Landing() {
 const navigate = useNavigate();
@@ -59,7 +60,7 @@ const [isNavVisible, setIsNavVisible] = useState(false);
   const handleOrder = () => {
     const message = `Здравствуйте, пишу с сайта по поводу книги. Можете проконсультировать?`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/77757962360?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
   };
   useEffect(() => {
