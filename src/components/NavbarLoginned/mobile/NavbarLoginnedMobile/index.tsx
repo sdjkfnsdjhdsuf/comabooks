@@ -15,6 +15,7 @@ import { fetchPhotos } from "slicers/photos_slicer";
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { calculateNewDeadline } from "components/NavbarLoginned/calculateNewDeadline";
+import { globalPhoneNumber } from "components/NavbarLoginned";
 
 const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -45,7 +46,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const handleSupport = () => {
     const message = `Здравствуйте! Я хотел(-а) узнать на счет успеваемости сроков моей книги.`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/77757962360?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
   };
 

@@ -14,6 +14,8 @@ import { fetchPhotos } from "slicers/photos_slicer";
 import { calculateDeadline } from "./deadlineCounter";
 import { calculateNewDeadline } from "./calculateNewDeadline";
 
+export const globalPhoneNumber = 77759843675;
+
 const NavbarLoginned = ({
   templateId,
   isCover = false,
@@ -54,7 +56,7 @@ const NavbarLoginned = ({
   const handleSupport = () => {
     const message = `Здравствуйте! Я хотел(-а) узнать на счет успеваемости сроков моей книги.`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/77757962360?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
   };
 

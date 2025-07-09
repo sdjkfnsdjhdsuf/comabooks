@@ -17,6 +17,7 @@ import previewbg from '../../assets/newlandingmobilebg.jpeg'
 import { Link, useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import { globalPhoneNumber } from 'components/NavbarLoginned'
 
 function Landing() {
     const navigate = useNavigate()
@@ -198,7 +199,7 @@ function Landing() {
     const handleOrder = () => {
         const message = `Здравствуйте! Я по поводу книги, можете проконсультировать ?`;
         const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/77757962360?text=${encodedMessage}`;
+        const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
     };
   
