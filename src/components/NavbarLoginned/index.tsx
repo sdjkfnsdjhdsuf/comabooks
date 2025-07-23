@@ -14,7 +14,7 @@ import { fetchPhotos } from "slicers/photos_slicer";
 import { calculateDeadline } from "./deadlineCounter";
 import { calculateNewDeadline } from "./calculateNewDeadline";
 
-export const globalPhoneNumber = 77759843675;
+export const globalPhoneNumber = 77757962360;
 
 const NavbarLoginned = ({
   templateId,
