@@ -18,7 +18,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 import InstagramIcon from '@mui/icons-material/Instagram';
 
-export const globalPhoneNumber = '77757962360';
+export const globalPhoneNumber = '77772443574';
 
 function Landing() {
     const navigate = useNavigate()
