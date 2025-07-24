@@ -1,0 +1,1 @@
+export const globalPhoneNumber = '77788638419'
