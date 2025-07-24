@@ -39,7 +39,8 @@ import print from 'assets/print.png'
 import wrapper from 'assets/wrapper.png'
 import result5 from 'assets/result5.png'
 import result6 from 'assets/result6.png'
-import { globalPhoneNumber } from 'wp_number'
+import { globalPhoneNumber } from 'routes/LandingNew'
+
 
 function Landing() {
 const navigate = useNavigate();
