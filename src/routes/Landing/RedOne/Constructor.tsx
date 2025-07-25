@@ -10,7 +10,7 @@ import process3 from "./assets/proccess3.png";
 import example from "./assets/example.jpg";
 import "./Constructor.css";
 
-export const globalPhoneNumber = '77011090865'
+export const globalPhoneNumber = '77024759835'
 
 interface PreviewProps {
     currentStep: number;
