@@ -141,10 +141,6 @@ const BookConstructor: React.FC = () => {
       async function fetchPhone() {
         try {
           const res = await fetch("https://api.comabooks.org/sales/phoneNumber", {
-            headers: {
-              Authorization:
-                "fbhadbfjaebnjrnajrnjkanrkaenrkenrjeanrkeanrknarkneakrnakrn",
-            },
           });
           if (!res.ok) throw new Error("Не удалось получить номер");
           const data = await res.json();
