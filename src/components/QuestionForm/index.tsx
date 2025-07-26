@@ -139,7 +139,7 @@ const QuestionForm = ({ question, templateId }: { question: QuestionTemplateDto;
         </div>
       </div>
 
-      <Preview question={(newClientQuestion != '') ? newClientQuestion : question.question} answer={newAnswer ? newAnswer : 'Ваш ответ будет здесь'} templateId={templateId} />
+      <Preview questionKey={question.question} />
 
     </div>
   );

@@ -26,6 +26,8 @@ export const generatePdfForCurrentUser =
     selectAnswers(state).forEach(a => { answersById[a.questionId] = a; });
 
     /* строим questionAnswerPairs строго по порядку tpl.questions ------- */
+    const pagesMap: Record<string, number> = {};
+    let currentPage = 7;   
     const questionAnswerPairs = tpl.questions.map((q, idx) => {
       const ans = answersById[q._id];          // undefined, если ответа нет
 
@@ -35,7 +37,7 @@ export const generatePdfForCurrentUser =
       return {
         isRemoved        : !answerText,                // скрыть пустые
         chapter          : getChapter(idx, tpl._id),
-        question         : q.question,                 // сам текст вопроса
+        question         : q.question,              // сам текст вопроса
         answer           : answerText,
         clientQuestion   : clientQ,
         number           : String(idx + 1),
@@ -70,16 +72,18 @@ export const generatePdfForCurrentUser =
     const user: User = {
       questionAnswerPairs,
       questionTemplates : [{ id: tpl._id, name: tpl.name }],
-      bookName          : cover.bookName,
-      authorName        : cover.fullName,
-      partnerName       : cover.fullNamePartner,
-      coverUrl          : cover.coverUrl,
+      bookName          : cover ? cover.bookName : 'Название книги',
+      authorName        : cover ? cover.fullName : 'Инициалы автора',
+      partnerName       : cover ? cover.fullNamePartner : '',
+      coverUrl          : cover ?  cover.coverUrl : '',
       photos,
       blanks            : [],
     };
 
     try {
-      await generatePDF(user);
+      const { doc, pagesMap } = await generatePDF(user);
+      const blob = doc.output('blob');
+      return { blob, pagesMap };
     } catch (err) {
       console.error("PDF generation failed:", err);
     }

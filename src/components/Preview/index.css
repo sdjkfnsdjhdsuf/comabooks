@@ -1,189 +1,46 @@
+/* Корневой квадрат‑контейнер */
+.sq-wrapper{
+  position:relative;
+  width: 100%;
+  height: 600px;
+  box-sizing:border-box;
+  padding:12px;
+  border:3px solid #1f1f1f;
+  border-radius:6px;
+  background:#27272a;
+  overflow:hidden;          /* скроллим только внутренний блок */
+}
 
-.book-preview-backdrop {
-    /* position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    align-items: center;
-    z-index: 10;
-    gap: 10px; */
+.sq-scroll{
+  width:100%;
+  height:100%;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;   /* <-- страницы по центру */
+  gap:12px;
 
-    display: flex;
-    flex-direction: column;
-    padding: 60px;
-    border-radius: 6px;
-    background: #27272a;
-    gap: 10px;
-    width: 100%;
-    align-items: center;
-  }
-  
-  .book-preview-content {
-    background: white;
-    padding: 30px 20px;
-    display: flex;
-    flex-direction: column;
-    min-width: 222px;
-    min-height: 362px;
-    width: 222px;
-    height: 362px;
-    z-index: 11;
-    text-align: left;
-    position: relative;
-  }
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; 
+}
 
-  .book-preview-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 222px;
-    height: 362px;
-    object-fit: cover;
-    z-index: 12;
-  }
+.sq-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
 
-  .book-preview-shadow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 222px;
-    height: 362px;
-    z-index: 13;
-    background: rgba(0,0,0,0.35);
-  }
+/* Простой лейбл «идёт генерация» */
+.sq-loading{
+  margin:auto;
+  color:#fff;
+  font-size:14px;
+  text-align:center;
+}
 
-  .book-preview-photo-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 222px;
-    height: 362px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    text-align: center;
-    color: white;
-    font-size: 8px;
-    font-family: "Playfair Display";
-    z-index: 20;
-  }
+/* убираем лишний margin у Page */
+.sq-doc .react-pdf__Page{
+  margin:0!important;
+}
 
-  .book-preview-photo-description {
-    font-style: italic;
-  }
-
-
-
-  .preview-colon.white {
-    z-index: 20;
-    color: white;
-  }
-  
-  .preview-question {
-    font-size: 8px;
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
-    margin-bottom: 16px;
-  }
-
-  .preview-answer {
-    font-size: 14px;
-    line-height: 1.1;
-    color: black;
-    font-family: "Playfair Display";
-  }
-
-  .preview-colon {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: auto;
-    font-size: 8px;
-    color: black;
-    font-family: "Playfair Display";
-  }
-
-
-@media screen and (max-width: 768px) {
-    .book-preview-content {
-        background: white;
-        padding: 40px 30px;
-        display: flex;
-        flex-direction: column;
-        width: 250px;
-        height: 400px;
-        min-width: 250px;
-        min-height: 400px;
-        z-index: 11;
-        text-align: left;
-      }
-
-      .book-preview-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 250px;
-        height: 400px;
-        object-fit: cover;
-        z-index: 12;
-      }
-    
-      .book-preview-shadow {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 250px;
-        height: 400px;
-        z-index: 13;
-        background: rgba(0,0,0,0.35);
-      }
-
-      .book-preview-photo-content {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 250px;
-        height: 400px;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-        color: white;
-        font-size: 8px;
-        font-family: "Playfair Display";
-        z-index: 20;
-      }
-
-      .preview-question {
-        font-size: 8px;
-        color: black;
-        font-family: Arial, Helvetica, sans-serif;
-        margin-bottom: 14px;
-      }
-    
-      .preview-answer {
-        font-size: 16px;
-        color: black;
-      }
-    
-      .preview-colon {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        margin-top: auto;
-        font-size: 8px;
-        color: black;
-      }
-}  
-  
+.sq-scroll .react-pdf__Page__canvas {
+  margin-bottom: 24px;   /* 24 px = расстояние между страницами */
+}

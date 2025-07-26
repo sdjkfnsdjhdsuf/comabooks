@@ -8,6 +8,11 @@ import { font2 } from "../assets/previewAssets/playfair.js";
 import { font3 } from "../assets/previewAssets/playfairitalic.js";
 import { font4 } from "../assets/previewAssets/interbold.js";
 
+
+export interface PdfResult {
+  doc: jsPDF;
+  pagesMap: Record<string /* questionId */, number /* page */>;
+}
 export interface QuestionTemplate {
   id: string;
   name: string;
@@ -69,7 +74,11 @@ const templatesWithChapter = [
   "66137cae18ab6072f1cea1df",
 ];
 
-export const generatePDF = async (user: User, change: number = 11.34) => {
+export const generatePDF = async (
+  user: User,
+  change: number = 11.34
+): Promise<PdfResult> => {
+  const pagesMap: Record<string, number> = {}; 
   const doc = new jsPDF({
     orientation: "p",
     unit: "px",
@@ -345,6 +354,8 @@ export const generatePDF = async (user: User, change: number = 11.34) => {
         currentChapter = pair.chapter;
       }
     }
+
+    pagesMap[pair.question] = pageNumber;
 
     doc.setDrawColor(0);
     doc.setFillColor(255, 255, 255);
@@ -845,7 +856,7 @@ export const generatePDF = async (user: User, change: number = 11.34) => {
   doc.addPage();
   pageNumber++;
 
-  doc.save(`${user.authorName}_preview.pdf`);
+  return { doc, pagesMap };
 };
 
 function addFooter(
