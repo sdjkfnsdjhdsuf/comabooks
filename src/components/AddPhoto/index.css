@@ -2,7 +2,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    background-color: #E9E9EB;
+    background-color: #F9FAFB;
     position: absolute;
     top: 0;
     left: 0;
@@ -416,6 +416,6 @@
     display: flex;
     gap: 10px;
     margin: 0;
-    background-color: #363E50;
+    background-color: #18181b;
     color: white;
 }

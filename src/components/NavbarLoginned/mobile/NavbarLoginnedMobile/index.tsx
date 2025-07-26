@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "assets/comabooks-white.svg";
+import logo from "assets/comabooks-black.svg";
 import { calculateDeadline } from "../../deadlineCounter"; // Import the function
 import {
   AnswerEntityDto,
@@ -16,6 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { calculateNewDeadline } from "components/NavbarLoginned/calculateNewDeadline";
 import { globalPhoneNumber } from "components/NavbarLoginned";
+import { ArrowRightEndOnRectangleIcon, BookOpenIcon, CheckCircleIcon, PhotoIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 
 const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -436,7 +437,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   return (
     <>
       <button className="hamburger-icon" onClick={() => setIsOpen(!isOpen)}>
-        {!isOpen ? <MenuIcon /> : <CloseIcon style={{ color: 'white' }} />}
+        {!isOpen ? <MenuIcon /> : <CloseIcon style={{ color: 'black' }} />}
       </button>
       <aside className={`sidebar-mobile ${isOpen ? "open" : ""}`}>
         {isOpen && (
@@ -444,10 +445,11 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
             <div className="forms-info-container-mobile">
               <div className="forms-mobile">
                 <Link className="forms-mobile-top" to="/">
-                  <img src={logo} alt="Logo" className="logo" />
-                  <div className="page-numberss">{pageFilled} страниц заполнено</div>
+                  <img src={logo} alt="Logo"  />
+                  
                 </Link>
                 <div className="forms-info">
+                  <div className="page-numberss">{pageFilled} страниц заполнено</div>
                   <progress value={pageFilled} max={templateDto.questions.length} />
                   {(originalDeliveryDate?.getTime() !== new Date("1970-01-01T00:00:00.000Z").getTime()) && address && deliveryDate && (
                     <div className="deadline" ref={deadlineRef}>
@@ -476,47 +478,63 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                   const isCurrent = index === currentPage;
                   const isAnswered = answerMap[templateQuestion._id]?.answer?.replaceAll(" ", "") ?? "";
 
-                  let bgColor = "transparent";
-                  if (isCurrent) {
-                    bgColor = "#4F545B";
-                  }
-                  if (isAnswered && !isCurrent) {
-                    bgColor = "#4F545B";
-                  }
-                  if (isAnswered && isCurrent) {
-                    bgColor = "#3C4045";
-                  }
+                  let icon = <QuestionMarkCircleIcon style={{color: '#9ca3af'}} />;
+            if (isAnswered) {
+              icon = <CheckCircleIcon style={{color: 'black'}}/>;
+            }
 
-                  return (
-                    <li key={index}>
-                      <button
-                        onClick={() => wrappedSetCurrentPage(index)}
-                        style={{
-                          backgroundColor: bgColor,
-                          borderRadius: "4px",
-                        }}
-                      >
-                        {index + 1}. {templateQuestion.question}
-                      </button>
-                    </li>
-                  );
+            let color = "#9ca3af";
+            if (isAnswered) {
+              color = "black";
+            }
+
+            let bgColor = "transparent";
+            if (isCurrent) {
+              bgColor = "#f2f3f5";
+            }
+
+            return (
+              <li key={index}>
+                <button
+                  onClick={() => wrappedSetCurrentPage(index)}
+                  style={{
+                    backgroundColor: bgColor,
+                    borderRadius: "4px",
+                  }}
+                >
+                  {icon}{" "}
+                  <div style={{color: color}}>
+                    {index + 1}. {templateQuestion.question}
+                  </div>
+                </button>
+              </li>
+            );
                 })}
               </ul>
             )}
 
             <div className="sidebar-bottom-fixed-mobile">
-              <button className="sidebar-bottom-fixed-cover" onClick={handleTogglePhotos}>
-                {isViewingPhotos ? "Перейти к вопросам" : "Перейти к фото"}
-              </button>
-              <button className="sidebar-bottom-fixed-cover" onClick={showCoverPage}>
-                Изменить обложку
-              </button>
-              <button className="sidebar-bottom-fixed-cover" onClick={handleFinishBookClick}>
-                Завершить книгу
-              </button>
-              <button className="sidebar-bottom-fixed-cover" onClick={handleLogout}>
-                Выйти из аккаунта
-              </button>
+               <button
+          className="sidebar-bottom-fixed-cover"
+          onClick={handleTogglePhotos}
+        >
+          {isViewingPhotos ? <><QuestionMarkCircleIcon /><div>Вопросы</div></> : <><PhotoIcon /><div>Изображения</div></>}
+        </button>
+        <button
+          className={`sidebar-bottom-fixed-cover`}
+          onClick={showCoverPage}
+        >
+          <BookOpenIcon /> <div>Обложка</div>
+        </button>
+        <button
+          className={`sidebar-bottom-fixed-cover`}
+          onClick={handleFinishBookClick}
+        >
+          <CheckCircleIcon /> <div>Завершить</div>
+        </button>
+        <button className={`sidebar-bottom-fixed-cover`} onClick={handleLogout}>
+          <ArrowRightEndOnRectangleIcon /> <div>Выйти из аккаунта</div>
+        </button>
             </div>
           </>
         )}

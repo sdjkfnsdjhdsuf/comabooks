@@ -19,7 +19,7 @@
     flex-direction: column;
     padding: 60px;
     border-radius: 6px;
-    background: linear-gradient(0deg, rgba(34,38,47,1) 0%, rgba(42,52,76,1) 100%);
+    background: #27272a;
     gap: 10px;
     width: 100%;
     align-items: center;

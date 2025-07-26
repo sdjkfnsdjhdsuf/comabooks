@@ -73,15 +73,15 @@ export const calculateDeadline = (
     return <span>Желательно завершить книгу за {remainingDays} д.</span>;
   } else {
     return (
-      <span style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        Желательно было завершить книгу {Math.abs(remainingDays)} дней назад{' '}
-        <span
-          style={{ textDecoration: 'underline', cursor: 'pointer' }}
-          onClick={onLearnMoreClick}
-        >
-          Узнать больше
-        </span>
-      </span>
+      <span>
+    Желательно было завершить книгу {Math.abs(remainingDays)} дней назад{' '}
+    <span
+      style={{ textDecoration: 'underline', cursor: 'pointer', display: 'inline' }}
+      onClick={onLearnMoreClick}
+    >
+      Узнать больше
+    </span>
+  </span>
     );
   }
 };
