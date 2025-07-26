@@ -53,10 +53,30 @@ const NavbarLoginned = ({
     setMinDate(today);
   }, []);
 
+  const [phoneWp, setPhoneWp] = useState<string>("");
+        useEffect(() => {
+          async function fetchPhone() {
+            try {
+              const res = await fetch("https://api.comabooks.org/sales/phoneNumber", {
+                headers: {
+                  Authorization:
+                    "fbhadbfjaebnjrnajrnjkanrkaenrkenrjeanrkeanrknarkneakrnakrn",
+                },
+              });
+              if (!res.ok) throw new Error("Не удалось получить номер");
+              const data = await res.json();
+              setPhoneWp(data.phone || "");
+            } catch (err) {
+              console.error(err);
+            }
+          }
+          fetchPhone();
+        }, []);
+
   const handleSupport = () => {
     const message = `Здравствуйте! Я хотел(-а) узнать на счет успеваемости сроков моей книги.`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/${phoneWp}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');
   };
 

@@ -34,6 +34,25 @@ function Landing() {
 
     const [isNavVisible, setIsNavVisible] = useState(false);
     const toggleNav = () => setIsNavVisible(!isNavVisible);
+    const [phone, setPhone] = useState<string>("");
+      useEffect(() => {
+        async function fetchPhone() {
+          try {
+            const res = await fetch("https://api.comabooks.org/sales/phoneNumber", {
+              headers: {
+                Authorization:
+                  "fbhadbfjaebnjrnajrnjkanrkaenrkenrjeanrkeanrknarkneakrnakrn",
+              },
+            });
+            if (!res.ok) throw new Error("Не удалось получить номер");
+            const data = await res.json();
+            setPhone(data.phone || "");
+          } catch (err) {
+            console.error(err);
+          }
+        }
+        fetchPhone();
+      }, []);
 
     // useEffect(() => {
     //     const handleResize = () => {
@@ -199,7 +218,7 @@ function Landing() {
     const handleOrder = () => {
         const message = `Здравствуйте! Я по поводу книги, можете проконсультировать ?`;
         const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
+        const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
     };
   
