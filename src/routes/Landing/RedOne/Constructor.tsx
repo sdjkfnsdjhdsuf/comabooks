@@ -1,4 +1,4 @@
-import React, { useState, memo, ChangeEvent } from "react";
+import React, { useState, memo, ChangeEvent, useEffect } from "react";
 import process11 from "./assets/proccess11.png";
 import process13 from "./assets/proccess13.png";
 import process15 from "./assets/proccess15.png";
@@ -136,6 +136,26 @@ const BookConstructor: React.FC = () => {
   const [photoText, setPhotoText] = useState<string>("Подарок мужу на Новый Год :)");
   const [selectedDate, setSelectedDate] = useState<string>("2025-01-01");
 
+  const [phone, setPhone] = useState<string>("");
+    useEffect(() => {
+      async function fetchPhone() {
+        try {
+          const res = await fetch("https://api.comabooks.org/sales/phoneNumber", {
+            headers: {
+              Authorization:
+                "fbhadbfjaebnjrnajrnjkanrkaenrkenrjeanrkeanrknarkneakrnakrn",
+            },
+          });
+          if (!res.ok) throw new Error("Не удалось получить номер");
+          const data = await res.json();
+          setPhone(data.phone || "");
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      fetchPhone();
+    }, []);
+
   const handleNext = (): void => {
     if (currentStep < 4) setCurrentStep(currentStep + 1);
   };
@@ -171,7 +191,7 @@ const BookConstructor: React.FC = () => {
   const handleOrder = () => {
     const message = `Здравствуйте! Я по поводу книги, можете проконсультировать ?`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
   };
 

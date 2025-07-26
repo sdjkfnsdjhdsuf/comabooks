@@ -34,6 +34,26 @@ function LandingUpdated() {
     return () => clearInterval(scrollInterval);
   }, []);
 
+  const [phone, setPhone] = useState<string>("");
+  useEffect(() => {
+    async function fetchPhone() {
+      try {
+        const res = await fetch("https://api.comabooks.org/sales/phoneNumber", {
+          headers: {
+            Authorization:
+              "fbhadbfjaebnjrnajrnjkanrkaenrkenrjeanrkeanrknarkneakrnakrn",
+          },
+        });
+        if (!res.ok) throw new Error("Не удалось получить номер");
+        const data = await res.json();
+        setPhone(data.phone || "");
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchPhone();
+  }, []);
+
   const words = [
     "любимому человеку",
     "девушке",
@@ -64,14 +84,14 @@ function LandingUpdated() {
   const handleOrder = () => {
     const message = `Здравствуйте! Хочу сделать заказ. Можете проконсультировать?`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
   };
 
   const handleAsk = () => {
     const message = `Здравствуйте! Хочу узнать подробнее о книге`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
   };
 
