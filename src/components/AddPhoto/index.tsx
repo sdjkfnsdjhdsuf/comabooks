@@ -15,7 +15,7 @@ import {
   updatePhoto,
 } from "slicers/photos_slicer";
 import { AppDispatch, RootState } from "store";
-import { CoverEntityDto, PhotoService, UplaodService } from "generated";
+import { CoverEntityDto, PhotoEnityDto, PhotoService, UplaodService } from "generated";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import horizontal from "assets/horizontal.png";
@@ -183,9 +183,13 @@ const AddPhoto = () => {
     }
   };
 
+  const photos = useSelector<RootState, PhotoEnityDto[]>((state) =>
+      Object.values(state.photos.photos)
+    );
+
   const handleSave = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
+    
     // If we are not in edit mode, just toggle to edit mode without validating
     if (!isEditable) {
       setIsEditable(true);
@@ -214,6 +218,7 @@ const AddPhoto = () => {
       if (photoId) {
         dispatch(updatePhoto({ ...photoData, photoId, userId: "" }));
       } else {
+        if (photos.length > 50) return;
         dispatch(addPhoto(photoData));
       }
       // After saving, toggle to non-editable (view) mode

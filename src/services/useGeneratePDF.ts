@@ -31,8 +31,7 @@ export const generatePdfForCurrentUser =
     });
 
     /* строим questionAnswerPairs строго по порядку tpl.questions ------- */
-    const pagesMap: Record<string, number> = {};
-    let currentPage = 7;
+
     const questionAnswerPairs = tpl.questions.map((q, idx) => {
       const ans = answersById[q._id]; // undefined, если ответа нет
 

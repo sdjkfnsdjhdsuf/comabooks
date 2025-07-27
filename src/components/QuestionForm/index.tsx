@@ -7,7 +7,7 @@ import {
 import "./index.css";
 import { Preview } from "../Preview";
 
-import { AnswerEntityDto, AnswerService, QuestionTemplateDto } from "generated";
+import { AnswerEntityDto, AnswerService, PhotoEnityDto, QuestionTemplateDto } from "generated";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store";
 import { setAnswers } from "slicers/answers_slice";
@@ -22,6 +22,14 @@ const QuestionForm = ({ question, templateId }: { question: QuestionTemplateDto;
       return state.activeAnswers.answers[question._id];
     }
   );
+
+  const answerMap = useSelector<RootState, Record<string, AnswerEntityDto>>(
+      (state) => state.activeAnswers.answers
+    );
+
+  const photos = useSelector<RootState, PhotoEnityDto[]>((state) =>
+      Object.values(state.photos.photos)
+    );
 
   const [newAnswer, setAnswer] = useState(answerSelector?.answer ?? "");
   const [newClientQuestion, setClientQuestion] = useState(
@@ -71,6 +79,18 @@ const QuestionForm = ({ question, templateId }: { question: QuestionTemplateDto;
     }
     
   };
+
+  const calculatePagesFilled = () => {
+    const charsPerPage = 250;
+    const initialPages = 8;
+    const pageCounts = Object.values(answerMap).reduce((total, val) => {
+      const answerLength = val.answer.replaceAll(" ", "").length;
+      return total + Math.ceil(answerLength / charsPerPage);
+    }, 0);
+    const photoPages = photos.length;
+    return initialPages + pageCounts + photoPages;
+  };
+  const pageFilled = calculatePagesFilled();
 
   return (
     <div className="question-form">

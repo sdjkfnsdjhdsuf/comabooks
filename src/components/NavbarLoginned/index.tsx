@@ -129,6 +129,10 @@ const NavbarLoginned = ({
     fetchDeliveryData();
   }, []);
 
+  const photos = useSelector<RootState, PhotoEnityDto[]>((state) =>
+    Object.values(state.photos.photos)
+  );
+
   const calculatePagesFilled = () => {
     const charsPerPage = 250;
     const initialPages = 8;
@@ -136,7 +140,8 @@ const NavbarLoginned = ({
       const answerLength = val.answer.replaceAll(" ", "").length;
       return total + Math.ceil(answerLength / charsPerPage);
     }, 0);
-    return initialPages + pageCounts;
+    const photoPages = photos.length;
+    return initialPages + pageCounts + photoPages;
   };
   const pageFilled = calculatePagesFilled();
 
@@ -146,9 +151,7 @@ const NavbarLoginned = ({
     }
   }, [dispatch, isViewingPhotos, templateId]);
 
-  const photos = useSelector<RootState, PhotoEnityDto[]>((state) =>
-    Object.values(state.photos.photos)
-  );
+  
 
   const navigate = useNavigate();
 
@@ -170,6 +173,7 @@ const NavbarLoginned = ({
   };
 
   const addNewPhoto = () => {
+    if (photos.length > 50) return;
     navigate(`/addphoto/${templateId}`);
   };
 
@@ -522,9 +526,11 @@ const NavbarLoginned = ({
                 <div className="photo-list-one">{photo.description}</div>
               </li>
             ))}
-            <div className="sidebar-bottom-fixed-add-photo">
-              <button onClick={addNewPhoto}>+ Добавить фото </button>
-            </div>
+            {photos.length < 50 && (
+              <div className="sidebar-bottom-fixed-add-photo">
+                <button onClick={addNewPhoto}>+ Добавить фото </button>
+              </div>
+            )}
           </ul>
         </>
       ) : (
@@ -535,9 +541,9 @@ const NavbarLoginned = ({
               answerMap[templateQuestion._id]?.answer?.replaceAll(" ", "") ??
               "";
 
-            let icon = <QuestionMarkCircleIcon style={{color: '#9ca3af'}} />;
+            let icon = <QuestionMarkCircleIcon style={{ color: "#9ca3af" }} />;
             if (isAnswered) {
-              icon = <CheckCircleIcon style={{color: 'black'}}/>;
+              icon = <CheckCircleIcon style={{ color: "black" }} />;
             }
 
             let color = "#9ca3af";
@@ -560,7 +566,7 @@ const NavbarLoginned = ({
                   }}
                 >
                   {icon}{" "}
-                  <div style={{color: color}}>
+                  <div style={{ color: color }}>
                     {index + 1}. {templateQuestion.question}
                   </div>
                 </button>

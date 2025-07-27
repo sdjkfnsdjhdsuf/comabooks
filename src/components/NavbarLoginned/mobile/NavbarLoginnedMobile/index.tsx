@@ -3,20 +3,22 @@ import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "assets/comabooks-black.svg";
 import { calculateDeadline } from "../../deadlineCounter"; // Import the function
-import {
-  AnswerEntityDto,
-  PhotoEnityDto,
-  TempalteResponceDto,
-} from "generated";
+import { AnswerEntityDto, PhotoEnityDto, TempalteResponceDto } from "generated";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store";
 import { thunkSetPage } from "slicers/page_slicer";
 import { fetchPhotos } from "slicers/photos_slicer";
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 import { calculateNewDeadline } from "components/NavbarLoginned/calculateNewDeadline";
 import { globalPhoneNumber } from "components/NavbarLoginned";
-import { ArrowRightEndOnRectangleIcon, BookOpenIcon, CheckCircleIcon, PhotoIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowRightEndOnRectangleIcon,
+  BookOpenIcon,
+  CheckCircleIcon,
+  PhotoIcon,
+  QuestionMarkCircleIcon,
+} from "@heroicons/react/24/outline";
 
 const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,12 +34,16 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isViewingPhotos, setIsViewingPhotos] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [popupType, setPopupType] = useState<"finishBook" | "learnMore" | "changeDate" | "changeDateAndFinish" | null>(null);
+  const [popupType, setPopupType] = useState<
+    "finishBook" | "learnMore" | "changeDate" | "changeDateAndFinish" | null
+  >(null);
   const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);
   const [address, setAddress] = useState<string | null>(null);
   const [street, setStreet] = useState<string | null>(null);
   const [phone, setPhone] = useState<string | null>(null);
-  const [originalDeliveryDate, setOriginalDeliveryDate] = useState<Date | null>(null);
+  const [originalDeliveryDate, setOriginalDeliveryDate] = useState<Date | null>(
+    null
+  );
   const [originalAddress, setOriginalAddress] = useState<string | null>(null);
   const [minDate, setMinDate] = useState<Date>(new Date());
   const [day, setDay] = useState<string>("");
@@ -45,26 +51,28 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   const [year, setYear] = useState<string>("");
 
   const [phoneWp, setPhoneWp] = useState<string>("");
-        useEffect(() => {
-          async function fetchPhone() {
-            try {
-              const res = await fetch("https://api.comabooks.org/sales/phoneNumber", {
-              });
-              if (!res.ok) throw new Error("Не удалось получить номер");
-              const data = await res.json();
-              setPhoneWp(data.phone || "");
-            } catch (err) {
-              console.error(err);
-            }
-          }
-          fetchPhone();
-        }, []);
+  useEffect(() => {
+    async function fetchPhone() {
+      try {
+        const res = await fetch(
+          "https://api.comabooks.org/sales/phoneNumber",
+          {}
+        );
+        if (!res.ok) throw new Error("Не удалось получить номер");
+        const data = await res.json();
+        setPhoneWp(data.phone || "");
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchPhone();
+  }, []);
 
   const handleSupport = () => {
     const message = `Здравствуйте! Я хотел(-а) узнать на счет успеваемости сроков моей книги.`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneWp}?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
+    window.open(whatsappUrl, "_blank");
   };
 
   useEffect(() => {
@@ -85,7 +93,8 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         const deliveryDateObj = new Date(deliveryTime);
 
         if (
-          deliveryDateObj.getTime() !== new Date("1970-01-01T00:00:00.000Z").getTime() &&
+          deliveryDateObj.getTime() !==
+            new Date("1970-01-01T00:00:00.000Z").getTime() &&
           address
         ) {
           setOriginalAddress(address);
@@ -103,6 +112,10 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     fetchDeliveryData();
   }, []);
 
+  const photos = useSelector<RootState, PhotoEnityDto[]>((state) =>
+    Object.values(state.photos.photos)
+  );
+
   const calculatePagesFilled = () => {
     const charsPerPage = 250;
     const initialPages = 8;
@@ -110,7 +123,8 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
       const answerLength = val.answer.replaceAll(" ", "").length;
       return total + Math.ceil(answerLength / charsPerPage);
     }, 0);
-    return initialPages + pageCounts;
+    const photoPages = photos.length;
+    return initialPages + pageCounts + photoPages;
   };
   const pageFilled = calculatePagesFilled();
 
@@ -120,9 +134,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     }
   }, [dispatch, isViewingPhotos, templateId]);
 
-  const photos = useSelector<RootState, PhotoEnityDto[]>((state) =>
-    Object.values(state.photos.photos)
-  );
+  
 
   const navigate = useNavigate();
 
@@ -145,6 +157,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   };
 
   const addNewPhoto = () => {
+    if (photos.length > 50) return;
     navigate(`/addphoto/${templateId}`);
   };
 
@@ -159,13 +172,16 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     if (!token) return;
 
     try {
-      const response2 = await fetch(`https://api.comabooks.org/cover/${templateId}`, {
-        method: 'GET',
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response2 = await fetch(
+        `https://api.comabooks.org/cover/${templateId}`,
+        {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const data2 = await response2.json();
       if (!data2.value) {
-        alert('У вас не заполнена обложка книги!');
+        alert("У вас не заполнена обложка книги!");
         return;
       }
 
@@ -179,7 +195,9 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
 
       const { address, deliveryTime, street, phone } = data;
 
-      const isDefaultDate = new Date(deliveryTime).getTime() === new Date("1970-01-01T00:00:00.000Z").getTime();
+      const isDefaultDate =
+        new Date(deliveryTime).getTime() ===
+        new Date("1970-01-01T00:00:00.000Z").getTime();
 
       setOriginalAddress(address);
       setOriginalDeliveryDate(new Date(deliveryTime));
@@ -188,14 +206,18 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
       setStreet(street);
       setPhone(phone);
 
-      if ((deadlineRef.current && deadlineRef.current.innerHTML.includes("Узнать больше") || isDefaultDate)) {
+      if (
+        (deadlineRef.current &&
+          deadlineRef.current.innerHTML.includes("Узнать больше")) ||
+        isDefaultDate
+      ) {
         let today = new Date();
         today.setHours(0, 0, 0, 0);
         let validDateFound = false;
-        
+
         while (!validDateFound) {
-          if(originalAddress) {
-            console.log(originalAddress)
+          if (originalAddress) {
+            console.log(originalAddress);
             today.setDate(today.getDate() + 1);
             validDateFound = calculateNewDeadline(today, originalAddress);
           } else {
@@ -203,7 +225,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
             validDateFound = true;
           }
         }
-      
+
         setMinDate(today);
         setPopupType("changeDateAndFinish");
       } else {
@@ -220,7 +242,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     address,
     deliveryTime,
     street,
-    phone
+    phone,
   }: {
     token: string;
     address: string;
@@ -228,7 +250,6 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     street: string;
     phone: string;
   }) => {
-
     try {
       const updatedData = {
         address: address || originalAddress,
@@ -272,10 +293,10 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     let today = new Date();
     today.setHours(0, 0, 0, 0);
     let validDateFound = false;
-    
+
     while (!validDateFound) {
-      if(originalAddress) {
-        console.log(originalAddress)
+      if (originalAddress) {
+        console.log(originalAddress);
         today.setDate(today.getDate() + 1);
         validDateFound = calculateNewDeadline(today, originalAddress);
       } else {
@@ -283,19 +304,17 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         validDateFound = true;
       }
     }
-  
+
     setMinDate(today);
     setPopupType("changeDate");
     setShowPopup(true);
   };
 
-
   const handleChangeDate = async () => {
-
     // const newDateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     // const newDate = new Date(newDateStr);
     // if (isNaN(newDate.getTime())) {
-       
+
     //   return;
     // }
 
@@ -316,7 +335,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
           address: originalAddress,
           street: street || "",
           phone: phone || "",
-          status: 'inProccess'
+          status: "inProccess",
         }),
       });
 
@@ -326,14 +345,12 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
       console.error("Error:", error);
     }
   };
-  
 
   const handleChangeDateAndFinish = async () => {
-
     // const newDateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     // const newDate = new Date(newDateStr);
     // if (isNaN(newDate.getTime())) {
-       
+
     //   return;
     // }
 
@@ -342,7 +359,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     const token = localStorage.getItem("token");
     if (!token) return;
     if (!deliveryDate) return;
-    console.log('handleChangeDateAndFinish')
+    console.log("handleChangeDateAndFinish");
     try {
       await fetch("https://api.comabooks.org/user_anal", {
         method: "POST",
@@ -355,7 +372,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
           address: originalAddress,
           street: street || "",
           phone: phone || "",
-          status: 'inProccess'
+          status: "inProccess",
         }),
       });
 
@@ -368,7 +385,8 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
     }
   };
 
-  const isFinishBookSaveDisabled = !address || !deliveryDate || !street || !phone;
+  const isFinishBookSaveDisabled =
+    !address || !deliveryDate || !street || !phone;
   const isChangeDateDisabled = !day || !month || !year;
 
   const renderDayOptions = (startDay: number) => {
@@ -377,7 +395,11 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
       deliveryDate ? deliveryDate.getMonth() + 1 : minDate.getMonth() + 1,
       0
     ).getDate();
-    const days = [<option key="" value="">Day</option>];
+    const days = [
+      <option key="" value="">
+        Day
+      </option>,
+    ];
     for (let i = startDay; i <= daysInMonth; i++) {
       days.push(
         <option key={i} value={i}>
@@ -389,7 +411,11 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   };
 
   const renderMonthOptions = (startMonth: number) => {
-    const months = [<option key="" value="">Month</option>];
+    const months = [
+      <option key="" value="">
+        Month
+      </option>,
+    ];
     for (let i = startMonth; i < 12; i++) {
       months.push(
         <option key={i} value={i + 1}>
@@ -402,7 +428,11 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
 
   const renderYearOptions = (startYear: number) => {
     const currentYear = new Date().getFullYear();
-    const years = [<option key="" value="">Year</option>];
+    const years = [
+      <option key="" value="">
+        Year
+      </option>,
+    ];
     for (let i = startYear; i <= currentYear + 5; i++) {
       years.push(
         <option key={i} value={i}>
@@ -437,7 +467,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   return (
     <>
       <button className="hamburger-icon" onClick={() => setIsOpen(!isOpen)}>
-        {!isOpen ? <MenuIcon /> : <CloseIcon style={{ color: 'black' }} />}
+        {!isOpen ? <MenuIcon /> : <CloseIcon style={{ color: "black" }} />}
       </button>
       <aside className={`sidebar-mobile ${isOpen ? "open" : ""}`}>
         {isOpen && (
@@ -445,17 +475,28 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
             <div className="forms-info-container-mobile">
               <div className="forms-mobile">
                 <Link className="forms-mobile-top" to="/">
-                  <img src={logo} alt="Logo"  />
-                  
+                  <img src={logo} alt="Logo" />
                 </Link>
                 <div className="forms-info">
-                  <div className="page-numberss">{pageFilled} страниц заполнено</div>
-                  <progress value={pageFilled} max={templateDto.questions.length} />
-                  {(originalDeliveryDate?.getTime() !== new Date("1970-01-01T00:00:00.000Z").getTime()) && address && deliveryDate && (
-                    <div className="deadline" ref={deadlineRef}>
-                      {calculateDeadline(deliveryDate, address, handleLearnMoreClick)}
-                    </div>
-                  )}
+                  <div className="page-numberss">
+                    {pageFilled} страниц заполнено
+                  </div>
+                  <progress
+                    value={pageFilled}
+                    max={templateDto.questions.length}
+                  />
+                  {originalDeliveryDate?.getTime() !==
+                    new Date("1970-01-01T00:00:00.000Z").getTime() &&
+                    address &&
+                    deliveryDate && (
+                      <div className="deadline" ref={deadlineRef}>
+                        {calculateDeadline(
+                          deliveryDate,
+                          address,
+                          handleLearnMoreClick
+                        )}
+                      </div>
+                    )}
                 </div>
               </div>
             </div>
@@ -463,97 +504,130 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
               <>
                 <ul className="photo-list-mobile">
                   {photos.map((photo) => (
-                    <li key={photo._id} onClick={() => handlePhotoClick(photo._id)}>
+                    <li
+                      key={photo._id}
+                      onClick={() => handlePhotoClick(photo._id)}
+                    >
                       <div className="photo-list-one">{photo.description}</div>
                     </li>
                   ))}
-                  <div className="sidebar-bottom-add-photo-mobile">
-                    <button onClick={addNewPhoto}>+ Добавить фото </button>
-                  </div>
+                  {photos.length < 50 && (
+                    <div className="sidebar-bottom-add-photo-mobile">
+                      <button onClick={addNewPhoto}>+ Добавить фото </button>
+                    </div>
+                  )}
                 </ul>
               </>
             ) : (
               <ul className="questions-list-mobile">
                 {templateDto.questions.map((templateQuestion, index) => {
                   const isCurrent = index === currentPage;
-                  const isAnswered = answerMap[templateQuestion._id]?.answer?.replaceAll(" ", "") ?? "";
+                  const isAnswered =
+                    answerMap[templateQuestion._id]?.answer?.replaceAll(
+                      " ",
+                      ""
+                    ) ?? "";
 
-                  let icon = <QuestionMarkCircleIcon style={{color: '#9ca3af'}} />;
-            if (isAnswered) {
-              icon = <CheckCircleIcon style={{color: 'black'}}/>;
-            }
+                  let icon = (
+                    <QuestionMarkCircleIcon style={{ color: "#9ca3af" }} />
+                  );
+                  if (isAnswered) {
+                    icon = <CheckCircleIcon style={{ color: "black" }} />;
+                  }
 
-            let color = "#9ca3af";
-            if (isAnswered) {
-              color = "black";
-            }
+                  let color = "#9ca3af";
+                  if (isAnswered) {
+                    color = "black";
+                  }
 
-            let bgColor = "transparent";
-            if (isCurrent) {
-              bgColor = "#f2f3f5";
-            }
+                  let bgColor = "transparent";
+                  if (isCurrent) {
+                    bgColor = "#f2f3f5";
+                  }
 
-            return (
-              <li key={index}>
-                <button
-                  onClick={() => wrappedSetCurrentPage(index)}
-                  style={{
-                    backgroundColor: bgColor,
-                    borderRadius: "4px",
-                  }}
-                >
-                  {icon}{" "}
-                  <div style={{color: color}}>
-                    {index + 1}. {templateQuestion.question}
-                  </div>
-                </button>
-              </li>
-            );
+                  return (
+                    <li key={index}>
+                      <button
+                        onClick={() => wrappedSetCurrentPage(index)}
+                        style={{
+                          backgroundColor: bgColor,
+                          borderRadius: "4px",
+                        }}
+                      >
+                        {icon}{" "}
+                        <div style={{ color: color }}>
+                          {index + 1}. {templateQuestion.question}
+                        </div>
+                      </button>
+                    </li>
+                  );
                 })}
               </ul>
             )}
 
             <div className="sidebar-bottom-fixed-mobile">
-               <button
-          className="sidebar-bottom-fixed-cover"
-          onClick={handleTogglePhotos}
-        >
-          {isViewingPhotos ? <><QuestionMarkCircleIcon /><div>Вопросы</div></> : <><PhotoIcon /><div>Изображения</div></>}
-        </button>
-        <button
-          className={`sidebar-bottom-fixed-cover`}
-          onClick={showCoverPage}
-        >
-          <BookOpenIcon /> <div>Обложка</div>
-        </button>
-        <button
-          className={`sidebar-bottom-fixed-cover`}
-          onClick={handleFinishBookClick}
-        >
-          <CheckCircleIcon /> <div>Завершить</div>
-        </button>
-        <button className={`sidebar-bottom-fixed-cover`} onClick={handleLogout}>
-          <ArrowRightEndOnRectangleIcon /> <div>Выйти из аккаунта</div>
-        </button>
+              <button
+                className="sidebar-bottom-fixed-cover"
+                onClick={handleTogglePhotos}
+              >
+                {isViewingPhotos ? (
+                  <>
+                    <QuestionMarkCircleIcon />
+                    <div>Вопросы</div>
+                  </>
+                ) : (
+                  <>
+                    <PhotoIcon />
+                    <div>Изображения</div>
+                  </>
+                )}
+              </button>
+              <button
+                className={`sidebar-bottom-fixed-cover`}
+                onClick={showCoverPage}
+              >
+                <BookOpenIcon /> <div>Обложка</div>
+              </button>
+              <button
+                className={`sidebar-bottom-fixed-cover`}
+                onClick={handleFinishBookClick}
+              >
+                <CheckCircleIcon /> <div>Завершить</div>
+              </button>
+              <button
+                className={`sidebar-bottom-fixed-cover`}
+                onClick={handleLogout}
+              >
+                <ArrowRightEndOnRectangleIcon /> <div>Выйти из аккаунта</div>
+              </button>
             </div>
           </>
         )}
         {showPopup && popupType === "finishBook" && (
           <div className="sidebar-popup">
             <div className="sidebar-popup-content">
-              {!originalAddress || originalDeliveryDate?.getTime() === new Date("1970-01-01T00:00:00.000Z").getTime() ? (
-                <div className="sidebar-popup-title">Заполните данные заказа</div>
+              {!originalAddress ||
+              originalDeliveryDate?.getTime() ===
+                new Date("1970-01-01T00:00:00.000Z").getTime() ? (
+                <div className="sidebar-popup-title">
+                  Заполните данные заказа
+                </div>
               ) : (
-                <div className="sidebar-popup-title">Отправляем книгу на редактуру?</div>
+                <div className="sidebar-popup-title">
+                  Отправляем книгу на редактуру?
+                </div>
               )}
-              <div className="sidebar-popup-text">Перепроверьте содержание, это действие нельзя вернуть!</div>
+              <div className="sidebar-popup-text">
+                Перепроверьте содержание, это действие нельзя вернуть!
+              </div>
               {!originalAddress && (
                 <div className="sidebar-popup-input">
                   <label>Город доставки</label>
                   <input
                     type="text"
                     value={address || ""}
-                    onChange={(e) => setAddress(e.target.value)} />
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
                 </div>
               )}
               <div className="sidebar-popup-input">
@@ -561,26 +635,32 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                 <input
                   type="text"
                   value={street || ""}
-                  onChange={(e) => setStreet(e.target.value)} />
+                  onChange={(e) => setStreet(e.target.value)}
+                />
               </div>
               <div className="sidebar-popup-input">
                 <label>Телефон</label>
                 <input
                   type="text"
                   value={phone || ""}
-                  onChange={(e) => setPhone(e.target.value)} />
+                  onChange={(e) => setPhone(e.target.value)}
+                />
               </div>
               <div className="sidebar-popup-buttons">
                 <button
                   className="sidebar-popup-button"
                   disabled={isFinishBookSaveDisabled}
-                  onClick={() => handleFinishBook({
-                    token: localStorage.getItem("token")!,
-                    address: address || "",
-                    deliveryTime: (deliveryDate || originalDeliveryDate)?.toISOString() as string,
-                    street: street || "",
-                    phone: phone || ""
-                  })}
+                  onClick={() =>
+                    handleFinishBook({
+                      token: localStorage.getItem("token")!,
+                      address: address || "",
+                      deliveryTime: (
+                        deliveryDate || originalDeliveryDate
+                      )?.toISOString() as string,
+                      street: street || "",
+                      phone: phone || "",
+                    })
+                  }
                 >
                   Завершить
                 </button>
@@ -594,13 +674,25 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         {showPopup && popupType === "learnMore" && (
           <div className="sidebar-popup">
             <div className="sidebar-popup-content">
-              <div className="sidebar-popup-title">Вы чуть-чуть не успеваете</div>
-              <div className="sidebar-popup-text2">Могут возникнуть трудности с редактурой или печатью. Вы можете перенести дату доставки или связаться с нашим менеджером для уточнения сроков.</div>
+              <div className="sidebar-popup-title">
+                Вы чуть-чуть не успеваете
+              </div>
+              <div className="sidebar-popup-text2">
+                Могут возникнуть трудности с редактурой или печатью. Вы можете
+                перенести дату доставки или связаться с нашим менеджером для
+                уточнения сроков.
+              </div>
               <div className="sidebar-popup-buttons2">
-                <button className="sidebar-popup-button" onClick={handleSupport}>
+                <button
+                  className="sidebar-popup-button"
+                  onClick={handleSupport}
+                >
                   Связаться с менеджером
                 </button>
-                <button className="sidebar-popup-button" onClick={handleChangeDateClick}>
+                <button
+                  className="sidebar-popup-button"
+                  onClick={handleChangeDateClick}
+                >
                   Cдвинуть дату доставки
                 </button>
                 <button className="sidebar-popup-button" onClick={closePopup}>
@@ -629,14 +721,22 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                 </div> */}
                 <input
                   type="date"
-                  value={deliveryDate ? deliveryDate.toISOString().split("T")[0] : ""}
-                  min={minDate.toISOString().split("T")[0]}
-                  onChange={(e) => setDeliveryDate(new Date(e.target.value))
+                  value={
+                    deliveryDate ? deliveryDate.toISOString().split("T")[0] : ""
                   }
+                  min={minDate.toISOString().split("T")[0]}
+                  onChange={(e) => setDeliveryDate(new Date(e.target.value))}
                 />
               </div>
               <div className="sidebar-popup-buttons">
-                <button disabled={!deliveryDate || new Date(deliveryDate.getTime() + 86400000) < minDate} className="sidebar-popup-button" onClick={handleChangeDate}>
+                <button
+                  disabled={
+                    !deliveryDate ||
+                    new Date(deliveryDate.getTime() + 86400000) < minDate
+                  }
+                  className="sidebar-popup-button"
+                  onClick={handleChangeDate}
+                >
                   Изменить
                 </button>
                 <button className="sidebar-popup-button" onClick={closePopup}>
@@ -665,14 +765,22 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                 </div> */}
                 <input
                   type="date"
-                  value={deliveryDate ? deliveryDate.toISOString().split("T")[0] : ""}
-                  min={minDate.toISOString().split("T")[0]}
-                  onChange={(e) => setDeliveryDate(new Date(e.target.value))
+                  value={
+                    deliveryDate ? deliveryDate.toISOString().split("T")[0] : ""
                   }
+                  min={minDate.toISOString().split("T")[0]}
+                  onChange={(e) => setDeliveryDate(new Date(e.target.value))}
                 />
               </div>
               <div className="sidebar-popup-buttons">
-                <button disabled={!deliveryDate || new Date(deliveryDate.getTime() + 86400000) < minDate} className="sidebar-popup-button" onClick={handleChangeDateAndFinish} >
+                <button
+                  disabled={
+                    !deliveryDate ||
+                    new Date(deliveryDate.getTime() + 86400000) < minDate
+                  }
+                  className="sidebar-popup-button"
+                  onClick={handleChangeDateAndFinish}
+                >
                   Изменить
                 </button>
                 <button className="sidebar-popup-button" onClick={closePopup}>
