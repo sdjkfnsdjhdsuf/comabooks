@@ -146,6 +146,34 @@
     width: 100%;
 }
 
+.question-form-motivation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px;
+    background-color: #cbd5e1;
+    border-radius: 6px;
+    width: 100%;
+    color: #1e293b;
+    font-family: 'Roboto';
+    font-weight: 600;
+    line-height: 1.1;
+    font-size: 14px;
+}
+
+.motivation-icon {
+    background-color: #f1f5f9;
+    padding: 8px;
+    border-radius: 12px;
+    margin-right: auto;
+}
+
+.question-form-motivation img {
+    height: 50px;
+    object-fit: cover;
+}
+
 
 .confirm-button:not(:disabled),
 .edit-button:not(:disabled) {
