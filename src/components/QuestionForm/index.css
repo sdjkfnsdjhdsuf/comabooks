@@ -272,4 +272,20 @@
 
         order: 6;
     }
+
+    .question-form-motivation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px;
+    background-color: #cbd5e1;
+    border-radius: 6px;
+    width: 100%;
+    color: #1e293b;
+    font-family: 'Roboto';
+    font-weight: 500;
+    line-height: 1.1;
+    font-size: 12px;
+}
 }
