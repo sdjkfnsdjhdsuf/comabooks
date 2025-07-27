@@ -81,7 +81,7 @@ const pageHeight = pageWidth * PAGE_RATIO;
   return (
     <div className="sq-wrapper" >
       {!fileUrl ? (
-        <p className="sq-loading">Генерируем PDF…</p>
+       <div className="sq-loader" aria-label="Загрузка PDF" />
       ) : (
         <div className="sq-scroll" ref={scrollRef}>
           <Document
