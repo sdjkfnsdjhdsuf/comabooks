@@ -144,7 +144,7 @@ const BookConstructor: React.FC = () => {
           });
           if (!res.ok) throw new Error("Не удалось получить номер");
           const data = await res.json();
-          setPhone(data.phone || "");
+          setPhone(data || "");
         } catch (err) {
           console.error(err);
         }
