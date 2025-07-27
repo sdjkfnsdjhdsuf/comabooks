@@ -60,7 +60,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         );
         if (!res.ok) throw new Error("Не удалось получить номер");
         const data = await res.json();
-        setPhoneWp(data.phone || "");
+        setPhoneWp(data || "");
       } catch (err) {
         console.error(err);
       }
