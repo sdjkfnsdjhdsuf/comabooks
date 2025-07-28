@@ -42,15 +42,16 @@ root.render(
         <Route path="/sales" element={<LandingNew />} />
         <Route path="/order" element={<SalePage />} />
         <Route path="/login" element={<Home />} />
-        <Route path="/forms" element={<Forms />} />
-        <Route path="/forms/:id" element={<FormsWrapper />} />
+        <Route path="/forms" element={<Forms />}>
+          <Route path=":id"     element={<FormsWrapper />} />
+          <Route path="new/:id" element={<Main />} />
+        </Route>
         <Route path="/addphoto/:templateId" element={<AddPhoto />} />
         <Route path="/addphoto/:templateId/:photoId" element={<AddPhoto />} />
         <Route path="/cover/:id" element={<CoverPage />}></Route>
         <Route path="/analytics" element={<Analytics />}></Route>
         <Route path="*" element={<Navigate to="/" replace={true} />} />
 
-        <Route path="/forms/new/:id" element={<Main />} />
         <Route path="/policies" element={<Policy />} />
         <Route path="/onhold" element={<Onhold />} />
       </Routes>

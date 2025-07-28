@@ -1,11 +1,17 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTemplates } from "slicers/templates/template_thrunk";
 import { AppDispatch, RootState } from "store";
 import { TempalteResponceDto } from "generated";
 
 import "./Forms.css";
+
+const TEMPLATE_IDS = [
+  '664c8b6cee4baadac60d5207',
+  '664b85f9f88f1b24892d6716'
+];
+
 
 function Forms() {
   const navigate = useNavigate();
@@ -29,22 +35,20 @@ function Forms() {
     }
   );
 
-  const templateIds: string[] = ['664c8b6cee4baadac60d5207', '664b85f9f88f1b24892d6716'];
 
   useEffect(() => {
     if (templateDto != null) {
-      if (templateDto.length === 1) {
-        const templateId = templateDto[0]._id;
-        if (templateIds.includes(templateId)) {
-          navigate(`new/${templateId}`);
-        } else {
-          navigate(templateId);
-        }
-      }
+      if (templateDto?.length === 1) {
+      navigate(
+        TEMPLATE_IDS.includes(templateDto[0]._id)
+          ? `new/${templateDto[0]._id}`
+          : templateDto[0]._id,
+        { replace: true }
+      );
     }
-  }, [templateDto, navigate, templateIds]);
-
-  return <div></div>;
+    }
+  }, [templateDto, navigate]);
+  return <Outlet/>
 }
 
 export default Forms;
