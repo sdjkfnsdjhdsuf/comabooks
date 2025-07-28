@@ -1,5 +1,5 @@
 import { jsPDF } from "jspdf";
-import heic2any from "heic2any";
+import { heicTo, isHeic } from "heic-to";
 import horizontal from "../assets/previewAssets/pdfhorizontal.png";
 import vertical from "../assets/previewAssets/pdfvertical.png";
 import square from "../assets/previewAssets/pdfsquare.png";
@@ -7,7 +7,6 @@ import { font } from "../assets/previewAssets/inter";
 import { font2 } from "../assets/previewAssets/playfair.js";
 import { font3 } from "../assets/previewAssets/playfairitalic.js";
 import { font4 } from "../assets/previewAssets/interbold.js";
-
 
 export interface PdfResult {
   doc: jsPDF;
@@ -56,7 +55,6 @@ export interface QuestionAnswerPair {
   isQuestionHidden: boolean;
 }
 
-
 export type Status =
   | "top"
   | "center"
@@ -78,7 +76,7 @@ export const generatePDF = async (
   user: User,
   change: number = 11.34
 ): Promise<PdfResult> => {
-  const pagesMap: Record<string, number> = {}; 
+  const pagesMap: Record<string, number> = {};
   const doc = new jsPDF({
     orientation: "p",
     unit: "px",
@@ -955,42 +953,39 @@ const preloadImages = async (photos: any[], change: number) => {
   return photosWithImages;
 };
 
-async function getImageBase64(
-  url: string,
-  status: Status,
-  change: number
-): Promise<string> {
-  const response = await fetch(url, {
-    headers: { "Cache-Control": "no-cache" },
-  });
-  const blob = await response.blob();
-  const isBrowserReadable = blob.type !== "image/heic";
+  async function getImageBase64(
+    url: string,
+    status: Status,
+    change: number
+  ): Promise<string> {
+    const response = await fetch(url, {
+      headers: { "Cache-Control": "no-cache" },
+    });
+    const blob = await response.blob();
 
-  /* tiny helper that decides which “prepare” fn to call */
-  const compose = (src: string) =>
-    ["vertical", "square", "horizontal"].includes(status)
-      ? prepareAssetImage(src, status as any, change)
-      : prepareFullScreenImage(src, change);
+    const compose = (src: string) =>
+      ["vertical", "square", "horizontal"].includes(status)
+        ? prepareAssetImage(src, status as any, change)
+        : prepareFullScreenImage(src, change);
 
-  /* ---------- HEIC branch ----------------------------------------- */
-  if (!isBrowserReadable) {
-    try {
-      const converted: Blob | Blob[] = await heic2any({
-        blob,
-        toType: "image/jpeg",
-      });
-      const fileBlob = Array.isArray(converted) ? converted[0] : converted;
-      return compose(URL.createObjectURL(fileBlob));
-    } catch (error: any) {
-      if (error.code === 1) {
-        return compose(URL.createObjectURL(blob)); // keep HEIC as‑is
-      }
-      if (
-        error?.code === 2 ||
-        (typeof error.message === "string" &&
-          error.message.includes("ERR_LIBHEIF format not supported"))
-      ) {
-        /* server‑side conversion fallback */
+    const heicFile = new File([blob], "upload.heic", {
+      type: blob.type || "image/heic",
+      lastModified: Date.now(),
+    });
+
+    if (await isHeic(heicFile)) {
+      try {
+        const converted = await heicTo({
+          blob,
+          type: "image/jpeg",
+          quality: 0.9,
+        });
+
+        return compose(URL.createObjectURL(converted));
+      } catch (error: any) {
+        if (error?.message?.includes("unsupported")) {
+          return compose(URL.createObjectURL(blob));
+        }
         const r = await fetch(
           "https://us-central1-analytics-f26ac.cloudfunctions.net/convertHeic",
           {
@@ -1000,17 +995,16 @@ async function getImageBase64(
           }
         );
         if (!r.ok) throw new Error("Server‑side HEIC conversion failed");
+
         const data = await r.json();
         if (!data?.base64) throw new Error("No base64 returned from server");
+
         return compose("data:image/jpeg;base64," + data.base64);
       }
-      throw error;
     }
-  }
 
-  /* ---------- normal branch --------------------------------------- */
-  return compose(URL.createObjectURL(blob));
-}
+    return compose(URL.createObjectURL(blob));
+  }
 
 async function getBlankImage(url: string, change: number): Promise<string> {
   const response = await fetch(url, {
@@ -1148,21 +1142,20 @@ function prepareFullScreenImage(url: string, change: number): Promise<string> {
   });
 }
 
-
 export const getChapter = (index: number, templateId: string) => {
   switch (templateId) {
-    case "65dda647dc778d94d0928969":           // RU ♀
+    case "65dda647dc778d94d0928969": // RU ♀
       return index <= 83 ? "Мы" : index <= 129 ? "Она" : "Что если..";
 
-    case "660e02b2ce933929f288c10c":           // RU ♂
-    case "65ec32bffc68f8ec35c47182":           // RU ♂ (ещё одна)
-    case "660e255e4d408cc2c1155322":           // RU ♂ (ещё одна)
-      return index <= 82 ? "Мы" : index <= 128 ? "Он"  : "Что если..";
+    case "660e02b2ce933929f288c10c": // RU ♂
+    case "65ec32bffc68f8ec35c47182": // RU ♂ (ещё одна)
+    case "660e255e4d408cc2c1155322": // RU ♂ (ещё одна)
+      return index <= 82 ? "Мы" : index <= 128 ? "Он" : "Что если..";
 
-    case "66163e630f78aa6b9f522b09":           // KZ
+    case "66163e630f78aa6b9f522b09": // KZ
       return index <= 89 ? "Біз" : index <= 137 ? "Ол" : "Егер де..";
 
-    case "66137cae18ab6072f1cea1df":           // EN
+    case "66137cae18ab6072f1cea1df": // EN
       return index <= 82 ? "We" : index <= 128 ? "He" : "What if..";
 
     default:
