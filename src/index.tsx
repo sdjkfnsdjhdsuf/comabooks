@@ -1,4 +1,3 @@
-import './promisePolyfills';
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -36,7 +35,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-    <AnalyticsChecker />
+      <AnalyticsChecker />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/ads" element={<Landing2 />} />
