@@ -87,8 +87,8 @@
     <script>
             if (typeof Promise.withResolvers === 'undefined') {
         Promise.withResolvers = function () {
-          let resolve!;
-          let reject!;
+          let resolve;
+          let reject;
 
           const promise = new Promise<T>((res, rej) => {
             resolve = res;
