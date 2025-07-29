@@ -84,21 +84,6 @@
     /></noscript>
   </head>
   <body>
-    <script>
-            if (typeof Promise.withResolvers === 'undefined') {
-        Promise.withResolvers = function () {
-          let resolve;
-          let reject;
-
-          const promise = new Promise<T>((res, rej) => {
-            resolve = res;
-            reject  = rej;
-          });
-
-          return { promise, resolve, reject };
-        };
-      }
-    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
