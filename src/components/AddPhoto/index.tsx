@@ -218,7 +218,7 @@ const AddPhoto = () => {
       if (photoId) {
         dispatch(updatePhoto({ ...photoData, photoId, userId: "" }));
       } else {
-        if (photos.length > 50) return;
+        if (photos.length > 100) return;
         dispatch(addPhoto(photoData));
       }
       // After saving, toggle to non-editable (view) mode

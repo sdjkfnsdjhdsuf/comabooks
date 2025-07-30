@@ -157,7 +157,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   };
 
   const addNewPhoto = () => {
-    if (photos.length > 50) return;
+    if (photos.length > 100) return;
     navigate(`/addphoto/${templateId}`);
   };
 
