@@ -30,9 +30,6 @@
 }
 
 
-
-
-
 .photo-preview-media {
     width: 404px;
     height: 630px;
@@ -40,7 +37,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    filter: brightness(60%);
+    
 }
 
 .photo-preview-media.centered {
@@ -48,7 +45,10 @@
     width: 190px;
     height: 190px;
     object-fit: cover;
+    
 }
+
+
 
 .photo-preview-media.vertical,
 .photo-preview-media.square,
@@ -60,7 +60,6 @@
   width: 70%;
   height: auto;
   object-fit: cover;
-  filter: brightness(60%);
   z-index: 0;
 }
 

@@ -15,7 +15,12 @@ import {
   updatePhoto,
 } from "slicers/photos_slicer";
 import { AppDispatch, RootState } from "store";
-import { CoverEntityDto, PhotoEnityDto, PhotoService, UplaodService } from "generated";
+import {
+  CoverEntityDto,
+  PhotoEnityDto,
+  PhotoService,
+  UplaodService,
+} from "generated";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import horizontal from "assets/horizontal.png";
@@ -184,12 +189,12 @@ const AddPhoto = () => {
   };
 
   const photos = useSelector<RootState, PhotoEnityDto[]>((state) =>
-      Object.values(state.photos.photos)
-    );
+    Object.values(state.photos.photos)
+  );
 
   const handleSave = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    
+
     // If we are not in edit mode, just toggle to edit mode without validating
     if (!isEditable) {
       setIsEditable(true);
@@ -481,12 +486,18 @@ const AddPhoto = () => {
 
         <div className="photo-preview-container">
           <div className={`photo-preview ${photoPosition}`}>
-                  
             {photoFile && (
               <img
                 className={`photo-preview-media ${photoPosition}`}
                 src={photoFile}
                 alt="Preview"
+                style={{
+                  filter:
+                    ["top", "center", "bottom"].includes(photoPosition) &&
+                    (!hideDate || !hideDescription)
+                      ? "brightness(60%)"
+                      : undefined,
+                }}
               />
             )}
             {["vertical", "square", "horizontal"].includes(photoPosition) && (
@@ -499,13 +510,15 @@ const AddPhoto = () => {
                     : horizontal
                 }
                 alt={`${photoPosition} asset`}
-                className="photo-preview-asset" 
+                className="photo-preview-asset"
               />
             )}
 
             <div className={`photo-preview-details ${photoPosition}`}>
               {photoDate && !hideDate && (
-                <div className={`photo-preview-date ${photoPosition}`}>{formattedDate}</div>
+                <div className={`photo-preview-date ${photoPosition}`}>
+                  {formattedDate}
+                </div>
               )}
               {photoDescription && !hideDescription && (
                 <div className={`photo-preview-description ${photoPosition}`}>

@@ -930,19 +930,10 @@ function formatDate(dateString: string) {
   return `${day}.${month}.${year}`;
 }
 
-function formatDate2(dateString: string | number | Date) {
-  const date = new Date(dateString);
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const year = date.getFullYear();
-  const hour = date.getHours().toString().padStart(2, "0");
-  const mins = date.getMinutes().toString().padStart(2, "0");
-  return `${day}.${month}.${year} ${hour}:${mins}`;
-}
-
 const preloadImages = async (photos: any[], change: number) => {
   const imagePromises = photos.map(async (photo) => {
-    const imgData = await getImageBase64(photo.photoUrl, photo.status, change);
+    const isContent = !photo.hideDate || !photo.hideDescription;
+    const imgData = await getImageBase64(photo.photoUrl, photo.status, change, isContent);
     return {
       ...photo,
       imgData,
@@ -956,7 +947,8 @@ const preloadImages = async (photos: any[], change: number) => {
   async function getImageBase64(
     url: string,
     status: Status,
-    change: number
+    change: number,
+    hasContnent: boolean,
   ): Promise<string> {
     const response = await fetch(url, {
       headers: { "Cache-Control": "no-cache" },
@@ -966,7 +958,7 @@ const preloadImages = async (photos: any[], change: number) => {
     const compose = (src: string) =>
       ["vertical", "square", "horizontal"].includes(status)
         ? prepareAssetImage(src, status as any, change)
-        : prepareFullScreenImage(src, change);
+        : prepareFullScreenImage(src, change, hasContnent);
 
     const heicFile = new File([blob], "upload.heic", {
       type: blob.type || "image/heic",
@@ -1111,7 +1103,7 @@ function urlToImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
-function prepareFullScreenImage(url: string, change: number): Promise<string> {
+function prepareFullScreenImage(url: string, change: number, hasContnent: boolean): Promise<string> {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.crossOrigin = "anonymous";
@@ -1132,8 +1124,12 @@ function prepareFullScreenImage(url: string, change: number): Promise<string> {
 
       ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
 
-      ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      if(hasContnent) {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.2)"
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      };
+      
 
       resolve(canvas.toDataURL("image/jpeg", 0.6));
     };
