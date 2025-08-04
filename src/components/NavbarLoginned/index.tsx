@@ -526,7 +526,7 @@ const NavbarLoginned = ({
                 <div className="photo-list-one">{photo.description}</div>
               </li>
             ))}
-            {photos.length < 50 && (
+            {photos.length < 100 && (
               <div className="sidebar-bottom-fixed-add-photo">
                 <button onClick={addNewPhoto}>+ Добавить фото </button>
               </div>
