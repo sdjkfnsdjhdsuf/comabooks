@@ -153,6 +153,9 @@ const QuestionForm = ({
           Вопрос {currentPage + 1}
         </label>
         <label className="question">{question.question}</label>
+
+
+        
       </div>
 
       <div className="question-form-answer">

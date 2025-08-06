@@ -48,7 +48,12 @@
     
 }
 
-
+.photo-positions-label {
+    display: flex;
+    width: 60%;
+    text-align: left;
+    font-family: 'Roboto';
+}
 
 .photo-preview-media.vertical,
 .photo-preview-media.square,
@@ -257,6 +262,10 @@
 }
 
 @media (max-width: 700px) {
+    .photo-positions-label {
+width: 100%;
+}
+
     .photo-preview { 
         height: 600px;
     }

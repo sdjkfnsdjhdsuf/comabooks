@@ -15,8 +15,8 @@ function Onhold() {
     <div className='onhold'>
         <img className='onhold-img' src={success} />
         <div className='onhold-title'>Ваша книга отправлена на редактуру!</div>
-        <div className='onhold-text'>Наши редакторы усердно трудятся и проверяют содержание на грамматику и пунктуацию.</div>
-        <div className='onhold-bold'>ОБЯЗАТЕЛЬНО СООБЩИТЕ РЕДАКТОРАМ О ЗАВЕРШЕНИИ КНИГИ</div>
+        <div className='onhold-text'>Редактура и печать занимают 5–7 рабочих дней. Чтобы открыть чат с отделом редактуры, нажмите на кнопку ниже.</div>
+        <div className='onhold-bold'>Также доступна ускоренная редактура и экспресс-печать. Срок: 1–2 рабочих дня, по стоимости просьба уточнить у менеджера.</div>
         <button onClick={handleSupport} className='onhold-button'>Сообщить о завершении</button>
     </div>
   )

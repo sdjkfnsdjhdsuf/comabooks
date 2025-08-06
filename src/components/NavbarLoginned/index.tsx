@@ -586,7 +586,7 @@ const NavbarLoginned = ({
           className="sidebar-bottom-fixed-cover"
           onClick={handleTogglePhotos}
         >
-          {isViewingPhotos ? <PhotoIcon /> : <QuestionMarkCircleIcon />}
+          {isViewingPhotos ? <QuestionMarkCircleIcon /> : <PhotoIcon />}
         </button>
         <button
           className={`sidebar-bottom-fixed-cover`}

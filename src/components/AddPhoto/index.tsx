@@ -374,6 +374,10 @@ const AddPhoto = () => {
             </select>
           </div>
 
+          <div className="photo-positions-label">
+              Формат полноэкранно
+            </div>
+
           <div className="photo-positions">
             <button
               disabled={!isEditable}
@@ -420,7 +424,15 @@ const AddPhoto = () => {
             >
               Сверху
             </button>
-            <button
+            
+          </div>
+
+
+          <div className="photo-positions-label">
+              Формат рамок
+            </div>
+          <div className="photo-positions">
+          <button
               disabled={!isEditable}
               style={{
                 backgroundColor: isEditable
@@ -465,7 +477,10 @@ const AddPhoto = () => {
             >
               Горизонтально
             </button>
-          </div>
+            </div>
+
+
+
           <div className="add-photo-buttons">
             <button
               className="input-save-button-add"
