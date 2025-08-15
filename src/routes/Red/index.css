@@ -61,7 +61,7 @@
 }
 
 .landing-upd-first {
-    background: url('/src/routes/Landing/RedOne/assets/bgmain.jpg');
+    background: url('/src/routes/Red/assets/bgmain.jpg');
     background-size: cover;
     background-position: center;
     /* height: 110vh; */
@@ -166,7 +166,7 @@
 }
 
 .landing-upd-third {
-    background: url('/src/routes/Landing/RedOne/assets/third.jpg');
+    background: url('/src/routes/Red/assets/third.jpg');
     background-size: cover;
     background-position: center;
     height: 105vh;
@@ -199,7 +199,7 @@
 }
 
 .landing-upd-fifth {
-    background: url('/src/routes/Landing/RedOne/assets/fifth.jpg');
+    background: url('/src/routes/Red/assets/fifth.jpg');
     background-size: cover;
     background-position: center;
     height: 110vh;
@@ -259,32 +259,32 @@
 }
 
 .landing-upd-fifth-grid-item:nth-child(1) {
-    background: url('/src/routes/Landing/RedOne/assets/review1.jpg');
+    background: url('/src/routes/Red/assets/review1.jpg');
     background-size: cover;
     background-position: center;
 }
 .landing-upd-fifth-grid-item:nth-child(2) {
-    background: url('/src/routes/Landing/RedOne/assets/review2.jpg');
+    background: url('/src/routes/Red/assets/review2.jpg');
     background-size: cover;
     background-position: center;
 }
 .landing-upd-fifth-grid-item:nth-child(3) {
-    background: url('/src/routes/Landing/RedOne/assets/review3.jpg');
+    background: url('/src/routes/Red/assets/review3.jpg');
     background-size: cover;
     background-position: center;
 }
 .landing-upd-fifth-grid-item:nth-child(4) {
-    background: url('/src/routes/Landing/RedOne/assets/review4.jpg');
+    background: url('/src/routes/Red/assets/review4.jpg');
     background-size: cover;
     background-position: center;
 }
 .landing-upd-fifth-grid-item:nth-child(5) {
-    background: url('/src/routes/Landing/RedOne/assets/review5.jpg');
+    background: url('/src/routes/Red/assets/review5.jpg');
     background-size: cover;
     background-position: center;
 }
 .landing-upd-fifth-grid-item:nth-child(6) {
-    background: url('/src/routes/Landing/RedOne/assets/review6.jpg');
+    background: url('/src/routes/Red/assets/review6.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -387,70 +387,70 @@
 }
 
 .landing-upd-first-reviews-item-preview.s1 {
-    background: url('/src/routes/Landing/RedOne/assets/girlfriend.jpg');
+    background: url('/src/routes/Red/assets/girlfriend.jpg');
     mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
     background-size: cover;
     background-position: center;
 }
 
 .landing-upd-first-reviews-item-preview.s2 {
-    background: url('/src/routes/Landing/RedOne/assets/husband.jpg');
+    background: url('/src/routes/Red/assets/husband.jpg');
     mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
     background-size: cover;
     background-position: center;
 }
 
 .landing-upd-first-reviews-item-preview.s3 {
-    background: url('/src/routes/Landing/RedOne/assets/grands.jpg');
+    background: url('/src/routes/Red/assets/grands.jpg');
     mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
     background-size: cover;
     background-position: center;
 }
 
 .landing-upd-first-reviews-item-preview.s4 {
-    background: url('/src/routes/Landing/RedOne/assets/friendgirl.jpg');
+    background: url('/src/routes/Red/assets/friendgirl.jpg');
     mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
     background-size: cover;
     background-position: center;
 }
 
 .landing-upd-first-reviews-item-preview.s5 {
-    background: url('/src/routes/Landing/RedOne/assets/parets.jpg');
+    background: url('/src/routes/Red/assets/parets.jpg');
     mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
     background-size: cover;
     background-position: center;
 }
 
 .landing-upd-first-reviews-item-preview.s6 {
-    background: url('/src/routes/Landing/RedOne/assets/kids.jpg');
+    background: url('/src/routes/Red/assets/kids.jpg');
     mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
     background-size: cover;
     background-position: center;
 }
 
 .landing-upd-first-reviews-item-preview.s7 {
-    background: url('/src/routes/Landing/RedOne/assets/sister.jpg');
+    background: url('/src/routes/Red/assets/sister.jpg');
     mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
     background-size: cover;
     background-position: center;
 }
 
 .landing-upd-first-reviews-item-preview.s8 {
-    background: url('/src/routes/Landing/RedOne/assets/myself.jpg');
+    background: url('/src/routes/Red/assets/myself.jpg');
     mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
     background-size: cover;
     background-position: center;
 }
 
 .landing-upd-first-reviews-item-preview.s9 {
-    background: url('/src/routes/Landing/RedOne/assets/girlfriend\ 2.jpg');
+    background: url('/src/routes/Red/assets/girlfriend\ 2.jpg');
     mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
     background-size: cover;
     background-position: center;
 }
 
 .landing-upd-first-reviews-item-preview.s10 {
-    background: url('/src/routes/Landing/RedOne/assets/colleague.jpg');
+    background: url('/src/routes/Red/assets/colleague.jpg');
     mask: radial-gradient(16px at 40px 40px, transparent 98%, black) -40px -40px;
     background-size: cover;
     background-position: center;
@@ -605,7 +605,7 @@
     }
 
     .landing-upd-first {
-        background: url('/src/routes/Landing/RedOne/assets/mobile-bg.jpg');
+        background: url('/src/routes/Red/assets/mobile-bg.jpg');
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
@@ -623,7 +623,7 @@
     }
 
     .landing-upd-third {
-        background: url('/src/routes/Landing/RedOne/assets/third-mob.jpg');
+        background: url('/src/routes/Red/assets/third-mob.jpg');
         background-size: cover;
         background-position: center;
         height: 105vh;
@@ -696,7 +696,7 @@
 
     .landing-upd-fifth {
         flex-direction: column;
-        background: url('/src/routes/Landing/RedOne/assets/fifth-mob.jpg');
+        background: url('/src/routes/Red/assets/fifth-mob.jpg');
         background-size: cover;
         background-position: center;
         padding: 80px 20px;
