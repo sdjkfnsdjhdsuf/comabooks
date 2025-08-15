@@ -70,10 +70,10 @@ const Analytics: React.FC = () => {
 
   return (
     <div className='analytics-container'>
-      <div className='analytics-title'>Укажите детали вашего заказа</div>
+      <div className='analytics-title'>Provide your order details</div>
       <form onSubmit={handleSubmit}>
         <div className='analytics-input'>
-          <label htmlFor="deliveryDate">Дата доставки</label>
+          <label htmlFor="deliveryDate">Delivery date</label>
           <input
             type="date"
             id="deliveryDate"
@@ -89,58 +89,25 @@ const Analytics: React.FC = () => {
               checked={isDateUnknown}
               onChange={() => setIsDateUnknown(!isDateUnknown)}
             />
-            Не могу сказать точно
+            Can’t say for sure
           </label>
         </div>
         <div className='analytics-input'>
-          <label htmlFor="city">Город доставки</label>
-          <select id="city" onChange={handleCityChange} disabled={isAddressUnknown} required>
-            <option value="">Выберите город</option>
-            <option value="Алматы">Алматы</option>
-            <option value="Астана">Астана</option>
-            <option value="Шымкент">Шымкент</option>
-            <option value="Бишкек">Бишкек</option>
-            <option value="Караганда">Караганда</option>
-            <option value="Павлодар">Павлодар</option>
-            <option value="Кокшетау">Кокшетау</option>
-            <option value="Костанай">Костанай</option>
-            <option value="Петропавловск">Петропавловск</option>
-            <option value="Тараз">Тараз</option>
-            <option value="Атырау">Атырау</option>
-            <option value="Актау">Актау</option>
-            <option value="Уральск">Уральск</option>
-            <option value="Актобе">Актобе</option>
-            <option value="Кызылорда">Кызылорда</option>
-            <option value="Семей">Семей</option>
-            <option value="Усть-каменогорск">Усть-каменогорск</option>
-            <option value="Экибастуз">Экибастуз</option>
-            <option value="Жаркент">Жаркент</option>
-            <option value="Конаев">Конаев</option>
-            <option value="Талгар">Талгар</option>
-            <option value="Жезказган">Жезказган</option>
-            <option value="Талдыкорган">Талдыкорган</option>
-            <option value="Ташкент">Ташкент</option>
-            <option value="Москва">Москва</option>
-            <option value="Другое">Другое</option>
-          </select>
-          {isOtherCity && !isAddressUnknown && (
-            <>
-              <input
+          <label htmlFor="city">Delivery City</label>
+          <input
                 type="text"
                 id="address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                placeholder="Введите город"
+                placeholder="Type your city"
                 required
               />
-            </>
-          )}
               <input
                 type="text"
                 id="street"
                 value={street}
                 onChange={(e) => setStreet(e.target.value)}
-                placeholder="Введите точный адрес"
+                placeholder="Type your street address"
                 required={!isAddressUnknown}
                 disabled={isAddressUnknown}
               />
@@ -150,21 +117,21 @@ const Analytics: React.FC = () => {
               checked={isAddressUnknown}
               onChange={() => setIsAddressUnknown(!isAddressUnknown)}
             />
-            Не могу сказать точно
+            Can’t say for sure
           </label>
         </div>
         <div className='analytics-input'>
-          <label htmlFor="phone">Телефон</label>
+          <label htmlFor="phone">Phone number</label>
           <input
             type="text"
             id="phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="Введите телефон"
+            placeholder="Enter your phone number.."
             required
           />
         </div>
-        <button className='analytics-button' type="submit">Сохранить</button>
+        <button className='analytics-button' type="submit">Save</button>
       </form>
     </div>
   );

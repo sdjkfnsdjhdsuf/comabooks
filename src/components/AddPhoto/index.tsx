@@ -164,7 +164,7 @@ const AddPhoto = () => {
       ];
 
       if (!allowedFormats.includes(file.type)) {
-        alert("Допустимый формат для фото: PNG, JPEG, JPG, HEIC");
+        alert("Available image formats: PNG, JPEG, JPG, HEIC");
         return;
       }
 
@@ -287,13 +287,13 @@ const AddPhoto = () => {
         {notify && (
           <div className="notify-popup">
             <div className="notify-popup-content">
-              Для сохранения заполните все поля!
+              To save, fill in all fields!
             </div>
           </div>
         )}
         <form className="add-photo-form" onSubmit={(e) => e.preventDefault()}>
           <div className="form-group-photo">
-            <label htmlFor="photoFile">Фото</label>
+            <label htmlFor="photoFile">Image</label>
             <input
               type="file"
               id="photoFile"
@@ -312,7 +312,7 @@ const AddPhoto = () => {
             </label>
           </div>
           <div className="form-group">
-            <label htmlFor="photoDate">Дата</label>
+            <label htmlFor="photoDate">Date</label>
             <input
               type="date"
               id="photoDate"
@@ -330,11 +330,11 @@ const AddPhoto = () => {
                 onChange={() => setHideDate(!hideDate)}
                 disabled={!isEditable}
               />
-              Скрыть дату
+              Hide date
             </label>
           </div>
           <div className="form-group">
-            <label htmlFor="photoDescription">Описание</label>
+            <label htmlFor="photoDescription">Description</label>
             <textarea
               ref={textareaRef}
               id="photoDescription"
@@ -352,12 +352,12 @@ const AddPhoto = () => {
                 onChange={() => setHideDescription(!hideDescription)}
                 disabled={!isEditable}
               />
-              Скрыть описание
+              Hide description
             </label>
           </div>
           <div className="form-group">
             <label htmlFor="questionTxt">
-              После какого вопроса поставить фото
+              Which question should the image go after?
             </label>
             <select
               id="questionTxt"
@@ -365,7 +365,7 @@ const AddPhoto = () => {
               onChange={(e) => setQuestionTxt(e.target.value)}
               disabled={!isEditable}
             >
-              <option value="">Выбрать вопрос</option>
+              <option value="">Select question</option>
               {questions.map((pair, idx) => (
                 <option key={idx} value={pair.question}>
                   {pair.number}. {pair.question}
@@ -374,7 +374,7 @@ const AddPhoto = () => {
             </select>
           </div>
 
-          <div className="photo-positions-label">
+          {/* <div className="photo-positions-label">
               Формат полноэкранно
             </div>
 
@@ -425,11 +425,11 @@ const AddPhoto = () => {
               Сверху
             </button>
             
-          </div>
+          </div> */}
 
 
           <div className="photo-positions-label">
-              Формат рамок
+              Frame formats
             </div>
           <div className="photo-positions">
           <button
@@ -445,7 +445,7 @@ const AddPhoto = () => {
                 setPhotoPosition("vertical");
               }}
             >
-              Вертикально
+              Vertical
             </button>
             <button
               disabled={!isEditable}
@@ -460,7 +460,7 @@ const AddPhoto = () => {
                 setPhotoPosition("square");
               }}
             >
-              Квадрат
+              Square
             </button>
             <button
               disabled={!isEditable}
@@ -475,7 +475,7 @@ const AddPhoto = () => {
                 setPhotoPosition("horizontal");
               }}
             >
-              Горизонтально
+              Horizontal
             </button>
             </div>
 
@@ -487,14 +487,14 @@ const AddPhoto = () => {
               type="button"
               onClick={handleSave}
             >
-              {isEditable ? "Сохранить" : "Изменить"}
+              {isEditable ? "Save" : "Edit"}
             </button>
             <button
               className="input-save-button-add"
               type="button"
               onClick={handleDelete}
             >
-              Удалить
+              Delete
             </button>
           </div>
         </form>

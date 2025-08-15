@@ -111,26 +111,26 @@ const QuestionForm = ({
     if (pages >= 200)
       return {
         icon: icons200,
-        text: `Уже ${pages} страниц?! Ты точно не бывалый писатель? Твоему получателю можно лишь позавидовать..`,
+        text: `Already ${pages} pages?! Are you sure you’re not a seasoned writer? Your recipient is one lucky person!`,
       };
     if (pages >= 141)
       return {
         icon: icons140,
-        text: `Финальный рывок - ${pages} страниц на месте! Совсем скоро книга будет готова <33`,
+        text: `Final push — ${pages} pages done! Your book will be ready very soon <33`,
       };
     if (pages >= 81)
       return {
         icon: icons80,
-        text: `${pages} страниц позади! Больше половины пути. Налей чай и добавь ещё пару историй!`,
+        text: `${pages} pages behind you! More than halfway there. Grab a cup of tea and add a few more stories!`,
       };
     if (pages >= 41)
       return {
         icon: icons40,
-        text: `Отличный темп - ${pages} страниц! Давай дополним книгу новыми тёплыми воспоминаниями :)`,
+        text: `Great pace — ${pages} pages! Let’s fill your book with more warm memories :)`,
       };
     return {
       icon: icons20,
-      text: `${pages} заполненных страниц - начало положено! Представь, как обрадуется твой человек, увидев первые истории :3`,
+      text: `${pages} completed pages — the journey has begun! Just imagine how happy your special someone will be to see these first stories :3`,
     };
   };
 
@@ -150,7 +150,7 @@ const QuestionForm = ({
 
       <div className="question-form-question">
         <label className="question-number-title">
-          Вопрос {currentPage + 1}
+          Question {currentPage + 1}
         </label>
         <label className="question">{question.question}</label>
 
@@ -160,7 +160,7 @@ const QuestionForm = ({
 
       <div className="question-form-answer">
         <label className="question-answer-label">
-          Отображение вопроса в книге
+          Display question in book
         </label>
         <textarea
           ref={clientTextareaRef}
@@ -179,18 +179,18 @@ const QuestionForm = ({
             onChange={handleClientQuestionCheckboxChange}
             disabled={!isEditable}
           />
-          Не показывать вопрос в книге
+          Hide question in the book
         </div>
       </div>
 
       <div className="question-form-answer">
-        <label className="question-answer-label">Ответ</label>
+        <label className="question-answer-label">Your answer</label>
         <textarea
           ref={textareaRef}
           className="answer-area"
           defaultValue={answerSelector?.answer ?? ""}
           onChange={handleInputChange}
-          placeholder="Напишите сюда ответ..."
+          placeholder="Enter your answer..."
           disabled={!isEditable}
         />
         <div className="edit-buttons">
@@ -211,7 +211,7 @@ const QuestionForm = ({
               }
             }}
           >
-            {isEditable ? "Сохранить" : "Изменить"}
+            {isEditable ? "Save" : "Edit"}
           </button>
         </div>
       </div>

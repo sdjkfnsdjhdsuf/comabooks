@@ -58,7 +58,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
           "https://api.comabooks.org/sales/phoneNumber",
           {}
         );
-        if (!res.ok) throw new Error("Не удалось получить номер");
+        if (!res.ok) throw new Error("Couldn't get the number");
         const data = await res.json();
         setPhoneWp(data || "");
       } catch (err) {
@@ -69,7 +69,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
   }, []);
 
   const handleSupport = () => {
-    const message = `Здравствуйте! Я хотел(-а) узнать на счет успеваемости сроков моей книги.`;
+    const message = `Hello! I’d like to check on the timeline and progress for my book.`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneWp}?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
@@ -181,7 +181,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
       );
       const data2 = await response2.json();
       if (!data2.value) {
-        alert("У вас не заполнена обложка книги!");
+        alert("Please add your book cover!");
         return;
       }
 
@@ -208,7 +208,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
 
       if (
         (deadlineRef.current &&
-          deadlineRef.current.innerHTML.includes("Узнать больше")) ||
+          deadlineRef.current.innerHTML.includes("Learn more")) ||
         isDefaultDate
       ) {
         let today = new Date();
@@ -479,7 +479,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                 </Link>
                 <div className="forms-info">
                   <div className="page-numberss">
-                    {pageFilled} страниц заполнено
+                    {pageFilled} filled pages
                   </div>
                   <progress
                     value={pageFilled}
@@ -513,7 +513,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                   ))}
                   {photos.length < 100 && (
                     <div className="sidebar-bottom-add-photo-mobile">
-                      <button onClick={addNewPhoto}>+ Добавить фото </button>
+                      <button onClick={addNewPhoto}>+ Add new image </button>
                     </div>
                   )}
                 </ul>
@@ -573,12 +573,12 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                 {isViewingPhotos ? (
                   <>
                     <PhotoIcon />
-                    <div>К изображениям</div>
+                    <div>Go to photos</div>
                   </>
                 ) : (
                   <>
                     <QuestionMarkCircleIcon />
-                    <div>К вопросам</div>
+                    <div>Go to questions</div>
                   </>
                 )}
               </button>
@@ -586,19 +586,19 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                 className={`sidebar-bottom-fixed-cover`}
                 onClick={showCoverPage}
               >
-                <BookOpenIcon /> <div>Обложка</div>
+                <BookOpenIcon /> <div>Cover</div>
               </button>
               <button
                 className={`sidebar-bottom-fixed-cover`}
                 onClick={handleFinishBookClick}
               >
-                <CheckCircleIcon /> <div>Завершить</div>
+                <CheckCircleIcon /> <div>Finish the book</div>
               </button>
               <button
                 className={`sidebar-bottom-fixed-cover`}
                 onClick={handleLogout}
               >
-                <ArrowRightEndOnRectangleIcon /> <div>Выйти из аккаунта</div>
+                <ArrowRightEndOnRectangleIcon /> <div>Logout</div>
               </button>
             </div>
           </>
@@ -610,19 +610,19 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
               originalDeliveryDate?.getTime() ===
                 new Date("1970-01-01T00:00:00.000Z").getTime() ? (
                 <div className="sidebar-popup-title">
-                  Заполните данные заказа
+                  Complete your order details
                 </div>
               ) : (
                 <div className="sidebar-popup-title">
-                  Отправляем книгу на редактуру?
+                  Send the book for editing?
                 </div>
               )}
               <div className="sidebar-popup-text">
-                Перепроверьте содержание, это действие нельзя вернуть!
+                Make sure everything is correct — you won’t be able to undo this!
               </div>
               {!originalAddress && (
                 <div className="sidebar-popup-input">
-                  <label>Город доставки</label>
+                  <label>Delivery city</label>
                   <input
                     type="text"
                     value={address || ""}
@@ -631,7 +631,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                 </div>
               )}
               <div className="sidebar-popup-input">
-                <label>Улица доставки</label>
+                <label>Street address</label>
                 <input
                   type="text"
                   value={street || ""}
@@ -639,7 +639,7 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                 />
               </div>
               <div className="sidebar-popup-input">
-                <label>Телефон</label>
+                <label>Phone number</label>
                 <input
                   type="text"
                   value={phone || ""}
@@ -662,10 +662,10 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                     })
                   }
                 >
-                  Завершить
+                  Finish
                 </button>
                 <button className="sidebar-popup-button" onClick={closePopup}>
-                  Отменить
+                  Back
                 </button>
               </div>
             </div>
@@ -675,28 +675,26 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
           <div className="sidebar-popup">
             <div className="sidebar-popup-content">
               <div className="sidebar-popup-title">
-                Вы чуть-чуть не успеваете
+                Just a bit behind schedule
               </div>
               <div className="sidebar-popup-text2">
-                Могут возникнуть трудности с редактурой или печатью. Вы можете
-                перенести дату доставки или связаться с нашим менеджером для
-                уточнения сроков.
+                We might experience some delays with editing or printing. You can change your delivery date or contact our manager to confirm the timeline.
               </div>
               <div className="sidebar-popup-buttons2">
                 <button
                   className="sidebar-popup-button"
                   onClick={handleSupport}
                 >
-                  Связаться с менеджером
+                  Contact our manager
                 </button>
                 <button
                   className="sidebar-popup-button"
                   onClick={handleChangeDateClick}
                 >
-                  Cдвинуть дату доставки
+                  Change delivery date
                 </button>
                 <button className="sidebar-popup-button" onClick={closePopup}>
-                  Закрыть
+                  Back
                 </button>
               </div>
             </div>
@@ -705,9 +703,9 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         {showPopup && popupType === "changeDate" && (
           <div className="sidebar-popup">
             <div className="sidebar-popup-content">
-              <div className="sidebar-popup-title">Изменить дату доставки</div>
+              <div className="sidebar-popup-title">Change delivery date</div>
               <div className="sidebar-popup-input">
-                <label>Новая дата доставки</label>
+                <label>New delivery date</label>
                 {/* <div className="date-selects">
                   <select value={day} onChange={handleDayChange}>
                     {renderDayOptions(minDate.getDate())}
@@ -737,10 +735,10 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                   className="sidebar-popup-button"
                   onClick={handleChangeDate}
                 >
-                  Изменить
+                  Change
                 </button>
                 <button className="sidebar-popup-button" onClick={closePopup}>
-                  Отменить
+                  Back
                 </button>
               </div>
             </div>
@@ -749,9 +747,9 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
         {showPopup && popupType === "changeDateAndFinish" && (
           <div className="sidebar-popup">
             <div className="sidebar-popup-content">
-              <div className="sidebar-popup-title">Изменить дату доставки</div>
+              <div className="sidebar-popup-title">Change delivery date</div>
               <div className="sidebar-popup-input">
-                <label>Новая дата доставки</label>
+                <label>New delivery date</label>
                 {/* <div className="date-selects">
                   <select value={day} onChange={handleDayChange}>
                     {renderDayOptions(minDate.getDate())}
@@ -781,10 +779,10 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
                   className="sidebar-popup-button"
                   onClick={handleChangeDateAndFinish}
                 >
-                  Изменить
+                  Change
                 </button>
                 <button className="sidebar-popup-button" onClick={closePopup}>
-                  Отменить
+                  Back
                 </button>
               </div>
             </div>

@@ -182,13 +182,13 @@ function Cover() {
 
   const receiverHolder = (templateId: string | undefined) => {
     if (templateId === '65fb40c5b63f0df17f6ce6ae') {
-      return 'Полное имя мамы';
+      return 'What’s your mother’s full name?';
     } else if (templateId === '65fb7789f6d6c9118d3caead') {
-      return 'Полное имя сестры';
+      return 'What’s your sister’s full name?';
     } else if (templateId === '661970fd80f5c5317e0882c3') {
-      return 'Полное имя подруги';
+      return 'What’s your friend’s full name?';
     } else {
-      return 'Полное имя партнера';
+      return 'What’s your partner’s full name?';
     }
   };
 
@@ -206,7 +206,7 @@ function Cover() {
       setBookTitle(title);
     } else {
       // Optionally provide feedback to the user
-      alert("Название книги не может быть больше 30 символов и включать эмодзи");
+      alert("Your book title should be 30 characters or fewer, with no emojis");
     }
   };
 
@@ -233,10 +233,10 @@ function Cover() {
 
         <div className="cover-inputs">
           <div className="input">
-            <div className="input-title">Ваше полное имя</div>
+            <div className="input-title">Your full name</div>
             <input
               type="text"
-              placeholder="Напишите сюда ответ..."
+              placeholder="Enter your full name.."
               value={authorName}
               onChange={(e) => setAuthorName(e.target.value)}
               disabled={!isEditable}
@@ -247,7 +247,7 @@ function Cover() {
             <div className="input-title">{receiverHolder(templateId)}</div>
             <input
               type="text"
-              placeholder="Напишите сюда ответ..."
+              placeholder="Enter here.."
               value={partnerName}
               onChange={(e) => setPartnerName(e.target.value)}
               disabled={!isEditable}
@@ -259,16 +259,16 @@ function Cover() {
                   checked={!displayPartnerName}
                   onChange={() => setDisplayPartnerName(!displayPartnerName)}
                 />
-                Не отображать на обложке
+                Hide receiver's name on the cover
               </label>
             </div>
           </div>
 
           <div className="input">
-            <div className="input-title">Название книги</div>
+            <div className="input-title">Book name</div>
             <input
               type="text"
-              placeholder="Напишите сюда ответ..."
+              placeholder="Enter a book name.."
               value={bookTitle}
               onChange={handleBookTitleChange}
               disabled={!isEditable}
@@ -276,7 +276,7 @@ function Cover() {
           </div>
 
           <div className="input">
-            <div className="input-title">Выберите обложку</div>
+            <div className="input-title">Select cover</div>
             <div className="cover-selector">
               {allCovers.map((cover) => (
                 <button
@@ -308,7 +308,7 @@ function Cover() {
 
         <div className="input-save-button">
           <button onClick={handleSave}>
-            {isEditable ? "Сохранить" : "Изменить"}
+            {isEditable ? "Save" : "Edit"}
           </button>
         </div>
       </div>

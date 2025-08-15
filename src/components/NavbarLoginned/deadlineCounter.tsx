@@ -64,22 +64,22 @@ export const calculateDeadline = (
   const remainingDays = daysLeft - editingDays - adjustedProductionDays - deliveryDays - 1;
 
   if (remainingDays === 0) {
-    return <span>Желательно завершить книгу сегодня</span>;
+    return <span>It’s best to finish the book today</span>;
   } else if (remainingDays === 1) {
-    return <span>Желательно завершить книгу завтра</span>;
+    return <span>It’s best to finish the book tomorrow</span>;
   } else if (remainingDays === 2) {
-    return <span>Желательно завершить книгу послезавтра</span>;
+    return <span>It’s best to finish the book the day after tomorrow</span>;
   } else if (remainingDays > 2) {
-    return <span>Желательно завершить книгу за {remainingDays} д.</span>;
+    return <span>It’s best to finish the book in {remainingDays} days</span>;
   } else {
     return (
       <span>
-    Желательно было завершить книгу {Math.abs(remainingDays)} дней назад{' '}
+    It would’ve been best to finish the book {Math.abs(remainingDays)} days ago{' '}
     <span
       style={{ textDecoration: 'underline', cursor: 'pointer', display: 'inline' }}
       onClick={onLearnMoreClick}
     >
-      Узнать больше
+      Learn more
     </span>
   </span>
     );

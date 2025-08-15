@@ -88,7 +88,7 @@ const pageHeight = pageWidth * PAGE_RATIO;
         <div className="sq-scroll" ref={scrollRef}>
           <Document
             file={fileUrl}
-            loading="Загружаем PDF…"
+            loading="Loading.."
             onLoadSuccess={onLoadSuccess}
           >
             {Array.from({ length: numPages ?? 0 }, (_, i) => (
