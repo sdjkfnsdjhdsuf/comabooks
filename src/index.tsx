@@ -21,7 +21,7 @@ import Analytics from "routes/Analytics";
 import Onhold from "routes/Onhold";
 import AnalyticsChecker from "routes/AnalyticsChecker";
 import SalePage from "routes/SalePage";
-import LandingUpdated from "routes/RedOne";
+import LandingUpdated from "routes/Red";
 // import AddPhoto from "components/AddPhoto";
 
 export const instance = axios.create({
