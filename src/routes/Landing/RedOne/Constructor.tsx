@@ -9,6 +9,7 @@ import process2 from "./assets/proccess2.png";
 import process3 from "./assets/proccess3.png";
 import example from "./assets/example.jpg";
 import "./Constructor.css";
+import { buildWhatsappUrl } from "./utm";
 
 export const globalPhoneNumber = '77024759835'
 
@@ -185,9 +186,7 @@ const BookConstructor: React.FC = () => {
   };
 
   const handleOrder = () => {
-    const message = `Здравствуйте! Я по поводу книги, можете проконсультировать ?`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+    const whatsappUrl = buildWhatsappUrl(phone);
     window.open(whatsappUrl, "_blank");
   };
 

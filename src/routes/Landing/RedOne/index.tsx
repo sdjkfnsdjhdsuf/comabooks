@@ -6,6 +6,7 @@ import starsmall from "./assets/starsmall.svg";
 import review from "./assets/review2.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import BookConstructor, { globalPhoneNumber } from "./Constructor";
+import { buildWhatsappUrl } from "./utm";
 
 function LandingUpdated() {
   const navigate = useNavigate();
@@ -78,16 +79,12 @@ function LandingUpdated() {
   }, []);
 
   const handleOrder = () => {
-    const message = `Здравствуйте! Хочу сделать заказ. Можете проконсультировать?`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+    const whatsappUrl = buildWhatsappUrl(phone);
     window.open(whatsappUrl, "_blank");
   };
 
   const handleAsk = () => {
-    const message = `Здравствуйте! Хочу узнать подробнее о книге`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+    const whatsappUrl = buildWhatsappUrl(phone);
     window.open(whatsappUrl, "_blank");
   };
 
