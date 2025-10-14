@@ -5,6 +5,8 @@ import wpIcon from '../../assets/whatsappIcon.png';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
+import { buildWhatsappUrl } from 'routes/Landing/utm';
+import { globalPhoneNumber } from 'components/NavbarLoginned';
 
 function SalePage() {
   const [activeQuestion, setActiveQuestion] = useState(null);
@@ -17,10 +19,8 @@ function SalePage() {
   };
 
   const handleOrder = () => {
-    const message = `Здравствуйте! Я по поводу книги, можете проконсультировать ?`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/77018656947?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
+    const whatsappUrl = buildWhatsappUrl(globalPhoneNumber);
+        window.open(whatsappUrl, "_blank");
   };
 
   const faqs = [

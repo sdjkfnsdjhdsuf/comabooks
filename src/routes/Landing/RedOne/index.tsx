@@ -6,6 +6,7 @@ import starsmall from "./assets/starsmall.svg";
 import review from './assets/review2.jpg'
 import { Link, useNavigate } from "react-router-dom";
 import { globalPhoneNumber } from "components/NavbarLoginned";
+import { buildWhatsappUrl } from "../utm";
 
 function LandingUpdated() {
   const navigate = useNavigate();
@@ -49,10 +50,8 @@ function LandingUpdated() {
       }, []);
 
   const handleOrder = () => {
-    const message = `Здравствуйте! Я по поводу книги, можете проконсультировать ?`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${globalPhoneNumber}?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
+    const whatsappUrl = buildWhatsappUrl(globalPhoneNumber);
+    window.open(whatsappUrl, "_blank");
 };
 
 const handleAsk = () => {

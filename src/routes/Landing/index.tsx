@@ -18,9 +18,9 @@ import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import { globalPhoneNumber } from "components/NavbarLoginned";
+import { buildWhatsappUrl } from "./utm";
 
 function Landing() {
-  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentWord, setCurrentWord] = useState("девушке");
   const [recipient, setRecipient] = useState("Девушке");
@@ -241,9 +241,8 @@ function Landing() {
   };
 
   const handleOrder = () => {
-    const message = `Здравствуйте! Я по поводу книги, можете проконсультировать ?`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+    const whatsappUrl = buildWhatsappUrl(phone);
+    console.log(1)
     window.open(whatsappUrl, "_blank");
   };
 
