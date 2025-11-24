@@ -572,12 +572,12 @@ const NavbarLoginnedMobile = ({ templateId }: { templateId: string }) => {
               >
                 {isViewingPhotos ? (
                   <>
-                    <PhotoIcon />
+                    <QuestionMarkCircleIcon />
                     <div>К изображениям</div>
                   </>
                 ) : (
                   <>
-                    <QuestionMarkCircleIcon />
+                    <PhotoIcon />
                     <div>К вопросам</div>
                   </>
                 )}
