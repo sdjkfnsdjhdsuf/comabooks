@@ -119,6 +119,24 @@ const AddPhoto = () => {
     }
   };
 
+  const getDetailsStyle = () => {
+    if (photoPosition !== "bottom") return {};
+
+    const len = photoDescription.length;
+
+    let top = "80%";
+
+    if (len > 70 && len <= 100) {
+      top = "75%";
+    } else if (len > 100 && len <= 120) {
+      top = "70%";
+    } else if (len > 120 && len <= 200) {
+      top = "65%";
+    }
+
+    return { top };
+  };
+
   useEffect(() => {
     const fetchPhotoDetails = async () => {
       console.log(`Fetching details for photoId: ${photoId}`);
@@ -374,9 +392,7 @@ const AddPhoto = () => {
             </select>
           </div>
 
-          <div className="photo-positions-label">
-              Формат полноэкранно
-            </div>
+          <div className="photo-positions-label">Формат полноэкранно</div>
 
           <div className="photo-positions">
             <button
@@ -424,15 +440,11 @@ const AddPhoto = () => {
             >
               Сверху
             </button>
-            
           </div>
 
-
-          <div className="photo-positions-label">
-              Формат рамок
-            </div>
+          <div className="photo-positions-label">Формат рамок</div>
           <div className="photo-positions">
-          <button
+            <button
               disabled={!isEditable}
               style={{
                 backgroundColor: isEditable
@@ -477,9 +489,7 @@ const AddPhoto = () => {
             >
               Горизонтально
             </button>
-            </div>
-
-
+          </div>
 
           <div className="add-photo-buttons">
             <button
@@ -529,7 +539,10 @@ const AddPhoto = () => {
               />
             )}
 
-            <div className={`photo-preview-details ${photoPosition}`}>
+            <div
+              className={`photo-preview-details ${photoPosition}`}
+              style={getDetailsStyle()}
+            >
               {photoDate && !hideDate && (
                 <div className={`photo-preview-date ${photoPosition}`}>
                   {formattedDate}
