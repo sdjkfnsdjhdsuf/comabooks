@@ -248,6 +248,56 @@
     height: 20px;
 }
 
+.question-form-add-photo {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: white;
+    border-radius: 6px;
+    border: 1px solid #D9D9D9;
+    padding: 16px;
+    font-family: 'Noto Sans';
+    cursor: pointer;
+}
+
+.question-form-add-photo svg {
+    width: 24px;
+    color: rgb(122, 122, 122)
+}
+
+
+.question-form-photos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.question-form-photo-item {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: white;
+    border-radius: 6px;
+    border: 1px solid #D9D9D9;
+    padding: 16px;
+    font-family: 'Noto Sans';
+    cursor: pointer;
+    height: 80px;
+    font-size: 14px;
+    background-size: cover;
+    background-position: center;
+}
+
+.question-form-photo-item svg {
+    width: 20px;
+    color: white;
+}
+
 @media (max-width: 900px) {
     .answer-area {
         padding: 50px 30px 100px 30px;

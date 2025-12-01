@@ -17,6 +17,12 @@ import icons40 from "../../assets/gamefyicons/icon40.png";
 import icons80 from "../../assets/gamefyicons/icon80.png";
 import icons140 from "../../assets/gamefyicons/icon140.png";
 import icons200 from "../../assets/gamefyicons/icon200.png";
+import {
+  ArrowUpIcon,
+  ArrowUpRightIcon,
+  PhotoIcon,
+} from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 const QuestionForm = ({
   question,
@@ -43,6 +49,8 @@ const QuestionForm = ({
     Object.values(state.photos.photos)
   );
 
+  const navigate = useNavigate();
+
   const [newAnswer, setAnswer] = useState(answerSelector?.answer ?? "");
   const [newClientQuestion, setClientQuestion] = useState(
     answerSelector?.clientQuestion ?? ""
@@ -57,6 +65,18 @@ const QuestionForm = ({
   const [clientQuestionDisabled, setClientQuestionDisabled] = useState(
     newClientQuestion === "-" ? true : false
   );
+
+  const handlePhotoClick = (photoId: string) => {
+    navigate(`/addphoto/${templateId}/${photoId}`);
+  };
+
+  const addNewPhoto = (question: string) => {
+    if (photos.length > 100) return;
+
+    navigate(
+      `/addphoto/${templateId}?question=${encodeURIComponent(question)}`
+    );
+  };
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -136,6 +156,10 @@ const QuestionForm = ({
 
   const { icon, text } = getMotivation(pageFilled);
 
+  const relatedPhotos = photos.filter(
+    (photo) => photo.questionTxt === question.question
+  );
+
   return (
     <div className="question-form">
       {/* <div className="alarm-label">Печать не будет работать 19-25 числа включительно. Если хотите получить книгу до конца этой недели, вам нужно завершить ее сегодня до 21.00 по казахстанскому времени.
@@ -145,7 +169,6 @@ const QuestionForm = ({
       <div className="question-form-motivation">
         <img src={icon} alt="" className="motivation-icon" />
         {text}
-        
       </div>
 
       <div className="question-form-question">
@@ -153,9 +176,6 @@ const QuestionForm = ({
           Вопрос {currentPage + 1}
         </label>
         <label className="question">{question.question}</label>
-
-
-        
       </div>
 
       <div className="question-form-answer">
@@ -215,6 +235,35 @@ const QuestionForm = ({
           </button>
         </div>
       </div>
+
+      <div
+        className="question-form-add-photo"
+        onClick={() => {
+          addNewPhoto(question.question);
+        }}
+      >
+        <PhotoIcon />
+        Добавить фото
+      </div>
+
+      {relatedPhotos.length > 0 && (
+        <div className="question-form-photos-list">
+          {relatedPhotos.map((photo) => (
+            <div
+              onClick={() => handlePhotoClick(photo._id)}
+              key={photo._id}
+              style={{ backgroundImage: `url(${photo.photoUrl})` }}
+              className="question-form-photo-item"
+            >
+              {photo.description.length > 50
+                ? photo.description.slice(0, 50) + "..."
+                : photo.description}
+
+              <ArrowUpRightIcon />
+            </div>
+          ))}
+        </div>
+      )}
 
       <Preview questionKey={question.question} />
     </div>

@@ -22,7 +22,7 @@ import {
   UplaodService,
 } from "generated";
 import axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import horizontal from "assets/horizontal.png";
 import square from "assets/square.png";
 import vertical from "assets/vertical.png";
@@ -31,6 +31,12 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 const AddPhoto = () => {
   const { templateId, photoId } = useParams();
+  const location = useLocation();
+
+  const searchParams = new URLSearchParams(location.search);
+  const questionFromQuery = searchParams.get("question") || "";
+
+
   const [photoDate, setPhotoDate] = useState<Date | null>(null);
   const [photoDescription, setPhotoDescription] = useState<string>("");
   const [photoPosition, setPhotoPosition] = useState<string>("center");
@@ -60,6 +66,18 @@ const AddPhoto = () => {
       textarea.style.height = `${textarea.scrollHeight}px`;
     }
   }, []);
+
+    useEffect(() => {
+
+    const found = questions.find(
+      (q) => q.question === questionFromQuery
+    );
+
+    if (found) {
+      setQuestionTxt(found.question);
+    }
+  }, [questions, questionFromQuery, isEditable, questionTxt]);
+
 
   useEffect(() => {
     if (templateId) {
