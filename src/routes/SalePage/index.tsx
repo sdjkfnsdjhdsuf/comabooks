@@ -1,115 +1,331 @@
-import React, { useState } from 'react';
-import './index.css';
-import orderimg from '../../assets/order.png';
-import wpIcon from '../../assets/whatsappIcon.png';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from "react";
+import "./index.css";
+import video from "../Red/assets/video.mp4";
+import player from "../Red/assets/player.svg";
+import starsmall from "../Red/assets/starsmall.svg";
+import { Link, useNavigate } from "react-router-dom";
 
 function SalePage() {
-  const [activeQuestion, setActiveQuestion] = useState(null);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isNavVisible, setIsNavVisible] = useState(false);
-  const toggleNav = () => setIsNavVisible(!isNavVisible);
+  const navigate = useNavigate();
+  const [currentWord, setCurrentWord] = useState("любимому человеку");
 
-  const toggleQuestion = (index: any) => {
-    setActiveQuestion(activeQuestion === index ? null : index);
-  };
+  const reviewsRef = useRef<HTMLDivElement>(null);
 
-  const handleOrder = () => {
-    const message = `Здравствуйте! Я по поводу книги, можете проконсультировать ?`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/77018656947?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
-  };
+  const nav = useNavigate();
 
-  const faqs = [
-    {
-      question: 'Как заказать книгу?',
-      answer: 'Заказ можно оформить, написав нам в WhatsApp. Наши менеджеры проконсультируют вас и, после оплаты, предоставят данные для входа в личный кабинет.',
-    },
-    {
-      question: 'Сколько времени занимает создание книги?',
-      answer: 'Процесс занимает 5-7 рабочих дней (редактура и печать). При необходимости доступна ускоренная редактура (1 день) и экспресс-печать (1 день).',
-    },
-    {
-      question: 'Как осуществляется доставка?',
-      answer: 'Мы доставляем по всему миру. Доставка осуществляется почтой или через СДЭК. Сроки доставки: по странам СНГ — 3-10 дней, в другие страны — 7-15 дней.',
-    },
-    {
-      question: 'Могу ли я использовать собственный дизайн обложки?',
-      answer: 'Да, вы можете предложить свой вариант обложки. Наши дизайнеры бесплатно адаптируют её для вашей книги.',
-    },
-    {
-      question: 'Обязательно ли отвечать на все вопросы в книге?',
-      answer: 'Нет, вы можете ответить на любое количество вопросов. Главное — заполнить минимум от 60 страниц для полноты книги.',
-    },
+  useEffect(() => {
+    const container = reviewsRef.current;
+    if (!container) return;
+
+    const speed = 1; // pixels to scroll per interval
+    const intervalTime = 20; // milliseconds between scroll updates
+
+    const scrollInterval = setInterval(() => {
+      if (
+        container.scrollLeft >=
+        container.scrollWidth - container.clientWidth
+      ) {
+        container.scrollLeft = 0; // Reset scroll to the start
+      } else {
+        container.scrollLeft += speed;
+      }
+    }, intervalTime);
+
+    return () => clearInterval(scrollInterval);
+  }, []);
+
+  const [phone, setPhone] = useState<string>("");
+  useEffect(() => {
+    async function fetchPhone() {
+      try {
+        const res = await fetch("https://api.comabooks.org/sales/phoneNumber", {
+        });
+        if (!res.ok) throw new Error("Не удалось получить номер");
+        const data = await res.json();
+        setPhone(data.phone || "");
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchPhone();
+  }, []);
+
+  const words = [
+    "любимому человеку",
+    "девушке",
+    "парню",
+    "жене",
+    "мужу",
+    "маме",
+    "папе",
+    "родителям",
+    "брату",
+    "сестре",
+    "друзьям",
+    "коллеге",
   ];
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentWord((prevWord) => {
+        const currentIndex = words.indexOf(prevWord);
+        const nextIndex = (currentIndex + 1) % words.length;
+        return words[nextIndex];
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const handleOrder = () => {
+    const message = `Hello! I’d like to learn more about the book`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
+  const handleAsk = () => {
+    const message = `Здравствуйте! Хочу узнать подробнее о книге`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
+  const handleInst = () => {
+    const instUrl = `https://instagram.com/comabooks.global`;
+    window.open(instUrl, "_blank");
+  };
+
+  const handleLogin = () => {
+    nav('/login');
+  };
+  const handlePolicy = () => {
+    nav('/policies');
+  };
+
   return (
-    <div className='order-container'>
-              <div className={`landing-new-header ${isScrolled ? 'scrolled' : ''}`}>
-            <div className={`landing-new-menu ${isNavVisible ? 'show' : ''}`}>
-                <div className={`landing-new-menu-logo ${isScrolled ? 'scrolled' : ''}`}>comabooks</div>
-                <div className='landing-new-menu-right'>
-                    <button onClick={toggleNav} className='landing-new-menu-ham'><MenuIcon/></button>
-                    <button className='landing-new-menu-order' onClick={handleOrder}>Заказать</button>
-                </div>
-            </div>
-
-            <div className={`navigation ${isNavVisible ? 'show' : 'hide'}`}>
-                    <Link to="/login">Войти</Link>
-                    <Link to="https://www.instagram.com/comabooks/">Отзывы в Instagram</Link>
-                    <Link to="/policies">Условия использования</Link>
-                    <Link to="/order">Цены и частые вопросы</Link>
-                    <button onClick={handleOrder}>Заказать</button>
-            </div>
+    <div className="landing-upd">
+      <div className="landing-upd-header">
+        <div onClick={() => navigate("/")} className="landing-upd-header-logo">
+          comabooks
         </div>
-
-      <img src={orderimg} className='order-img' alt='Order' />
-
-      <div className='order-content'>
-        <div className='order-title'>Посвяти книгу любимым</div>
-
-        <div className='order-prices'>
-          <div className='order-main-price'>42,000.00 ₸</div>
-          <div className='order-prices-row'>
-            <div>9,000.00₽</div>
-            <div>7,000.00лв</div>
-            <div>$90.00</div>
-            <div>€80.00</div>
+        <div className="landing-upd-header-links">
+          <Link to={"https://www.instagram.com/comabooks.global/"}>Reviews</Link>
+          <Link to={"https:/comabooks.org/order"}>Pricing</Link>
+          <div onClick={handlePolicy}>
+            Policy
           </div>
-        </div>
-
-        <div className='order-buttons'>
-          <button onClick={handleOrder} className='order-button'>
-            <img src={wpIcon} alt='WhatsApp' />
-            Узнать подробнее
+          <button
+            onClick={handleLogin}
+            className="landing-upd-header-button-empty"
+          >
+            Login
           </button>
-          <button onClick={handleOrder} className='order-button active'>Заказать</button>
-        </div>
-
-        <div className='order-faq'>
-          {faqs.map((faq, index) => (
-            <div key={index} className='faq-item'>
-              <div
-                className='faq-question'
-                onClick={() => toggleQuestion(index)}
-              >
-                {faq.question}
-                <KeyboardArrowDownIcon />
-              </div>
-              {activeQuestion === index && (
-                <div className='faq-answer'>{faq.answer}</div>
-              )}
-            </div>
-          ))}
+          <button
+            onClick={handleOrder}
+            className="landing-upd-header-button-filled"
+          >
+            Order a book
+          </button>
         </div>
       </div>
 
-      <div className='order-footer'>
-        <div className='order-logo'>comabooks</div>
-        <div className='order-rek'>ИП COMAHOLDING, БИН 020621500121</div>
+      <div className="landing-upd-header-mobile">
+        <div className="landing-upd-header-logo">comabooks</div>
+        <button
+          onClick={handleLogin}
+          className="landing-upd-header-button-filled"
+        >
+          Login
+        </button>
+      </div>
+
+      <div className="landing-upd-fixed-mobile">
+        <button
+          onClick={handleAsk}
+          className="landing-upd-fixed-mobile-button-ask"
+        >
+          Ask a question
+        </button>
+        <button
+          onClick={handleOrder}
+          className="landing-upd-fixed-mobile-button-action"
+        >
+          Order a book
+        </button>
+      </div>
+
+
+
+      <div className="landing-upd-second">
+        <div className="landing-upd-second-content">
+          <div className="landing-upd-second-content-title">
+            Be the author<br/>Make your loved ones smile
+          </div>
+
+          <div className="landing-upd-second-content-item">
+            <div className="landing-upd-second-content-item-row">
+              <img src={starsmall} />
+              Can be dedicated to anyone
+            </div>
+            There are 30+ themes — for everyone who matters: your loved one, family, friends, colleagues, your boss, your ex, even yourself and etc.
+          </div>
+
+          <div className="landing-upd-second-content-item">
+            <div className="landing-upd-second-content-item-row">
+              <img src={starsmall} />
+              Easy to fill
+            </div>
+            Our books are created in an interview style — each theme comes with a unique set of 50–200 questions: Just answer them, add photos if you like, and choose your cover design.
+          </div>
+
+          <div className="landing-upd-second-content-item">
+            <div className="landing-upd-second-content-item-row">
+              <img src={starsmall} />
+              Editing and printing
+            </div>
+            Once you’ve finished answering, our editing team will review your answers for grammar, punctuation, and spelling. After they approve the final version, the book is printed. The whole process takes 5–7 business days.
+          </div>
+
+          <div className="landing-upd-second-content-item">
+            <div className="landing-upd-second-content-item-row">
+              <img src={starsmall} />
+              How to start
+            </div>
+            Just message us on WhatsApp, Facebook, or Instagram — our managers will guide you through everything. Once the payment is made, they’ll create a personal account for you so you can start your book.
+          </div>
+
+          <button onClick={handleOrder}>Order a book</button>
+        </div>
+
+        <video
+          className="landing-upd-second-video"
+          src={video}
+          loop
+          autoPlay
+          muted
+          playsInline
+        />
+
+        <div className="landing-upd-second-content-mobile">
+          <div className="landing-upd-second-content-title">
+            Be the author<br/>Make your loved ones smile
+          </div>
+
+          <video
+            className="landing-upd-second-video-mobile"
+            src={video}
+            loop
+            autoPlay
+            muted
+            playsInline
+          />
+
+          <div className="landing-upd-second-content-item">
+            <div className="landing-upd-second-content-item-row">
+              <img src={starsmall} />
+              Can be dedicated to anyone
+            </div>
+            There are 30+ themes — for everyone who matters: your loved one, family, friends, colleagues, your boss, your ex, even yourself and etc.
+          </div>
+
+          <div className="landing-upd-second-content-item">
+            <div className="landing-upd-second-content-item-row">
+              <img src={starsmall} />
+              Easy to fill
+            </div>
+            Our books are created in an interview style — each theme comes with a unique set of 50–200 questions: Just answer them, add photos if you like, and choose your cover design.
+          </div>
+
+          <div className="landing-upd-second-content-item">
+            <div className="landing-upd-second-content-item-row">
+              <img src={starsmall} />
+              Editing and printing
+            </div>
+            Once you’ve finished answering, our editing team will review your answers for grammar, punctuation, and spelling. After they approve the final version, the book is printed. The whole process takes 5–7 business days.
+          </div>
+
+          <div className="landing-upd-second-content-item">
+            <div className="landing-upd-second-content-item-row">
+              <img src={starsmall} />
+              How to start
+            </div>
+            Just message us on WhatsApp, Facebook, or Instagram — our managers will guide you through everything. Once the payment is made, they’ll create a personal account for you so you can start your book.
+          </div>
+
+          <button onClick={handleOrder}>Order a book</button>
+        </div>
+      </div>
+
+
+      <div className="landing-upd-fifth">
+        <div className="landing-upd-fifth-content">
+          +20,000 people have already become authors of their own books
+          <button onClick={handleInst}>More reviews on Instagram</button>
+        </div>
+
+        <div className="landing-upd-fifth-grid">
+          <Link
+            to="https://www.instagram.com/reel/C8ysJ4gN9Im/?utm_source=ig_web_copy_link"
+            className="landing-upd-fifth-grid-item"
+          >
+            <img src={player} />
+          </Link>
+          <Link
+            to="https://www.tiktok.com/@chakievaa/video/7364429063080971537?is_from_webapp=1&sender_device=pc"
+            className="landing-upd-fifth-grid-item"
+          >
+            <img src={player} />
+          </Link>
+          <Link
+            to="https://www.instagram.com/reel/C8UaVEXC95t/?igsh=ejV0djJiMHV3Y2t3"
+            className="landing-upd-fifth-grid-item"
+          >
+            <img src={player} />
+          </Link>
+          <Link
+            to="https://www.instagram.com/reel/C8CS1heN8if/?utm_source=ig_web_copy_link"
+            className="landing-upd-fifth-grid-item"
+          >
+            <img src={player} />
+          </Link>
+          <Link
+            to="https://www.instagram.com/reel/C9PpvKMtC7s/?igsh=MXFyMmIxeWhuYThzcw=="
+            className="landing-upd-fifth-grid-item"
+          >
+            <img src={player} />
+          </Link>
+          <Link
+            to="https://www.instagram.com/reel/DF-l9q2IH7F/?igsh=NGxqNTVsMHp1N2p6"
+            className="landing-upd-fifth-grid-item"
+          >
+            <img src={player} />
+          </Link>
+        </div>
+      </div>
+
+      <div className="landing-upd-footer">
+        <div className="landing-upd-footer-row">
+          <div>Give a gift they'll remember for a lifetime</div>
+          <button onClick={handleOrder}>Order a book</button>
+        </div>
+
+        <div className="landing-upd-footer-logo">comabooks</div>
+
+        <div className="landing-upd-footer-row-2">
+          <div>hello@comabooks.org</div>
+          <Link to={"https://www.instagram.com/comabooks.global/"}>Instagram</Link>
+        </div>
+
+        <div className="landing-upd-footer-row-mobile">
+          <div>hello@comabooks.org</div>
+          <Link to={"https://www.instagram.com/comabooks.global/"}>Instagram</Link>
+          <Link to={"https:/comabooks.org/order"}>Pricing</Link>
+          <div onClick={handlePolicy}>
+            Policy
+          </div>
+          <div>COMAHOLDING LLC, 2025</div>
+        </div>
       </div>
     </div>
   );

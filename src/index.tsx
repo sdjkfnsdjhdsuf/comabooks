@@ -51,6 +51,8 @@ root.render(
 
         <Route path="/policies" element={<Policy />} />
         <Route path="/onhold" element={<Onhold />} />
+
+        <Route path="/products/custom-book" element={<SalePage />} />
       </Routes>
     </BrowserRouter>
   </Provider>

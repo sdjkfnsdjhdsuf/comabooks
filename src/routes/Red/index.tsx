@@ -101,6 +101,9 @@ function LandingUpdated() {
   const handleLogin = () => {
     nav('/login');
   };
+  const handlePricing = () => {
+    nav('/products/custom-book');
+  };
   const handlePolicy = () => {
     nav('/policies');
   };
@@ -113,7 +116,9 @@ function LandingUpdated() {
         </div>
         <div className="landing-upd-header-links">
           <Link to={"https://www.instagram.com/comabooks.global/"}>Reviews</Link>
-          <Link to={"https:/comabooks.org/order"}>Pricing</Link>
+          <div onClick={handlePricing}>
+            Pricing
+          </div>
           <div onClick={handlePolicy}>
             Policy
           </div>
