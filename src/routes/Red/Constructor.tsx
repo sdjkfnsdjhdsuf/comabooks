@@ -58,17 +58,17 @@ interface PreviewProps {
           <div className="navigation-buttons">
             {currentStep > 1 && (
               <button className="navigation-button back" onClick={handleBack}>
-                Назад
+                Back
               </button>
             )}
             {currentStep < 4 && (
               <button className="navigation-button next" onClick={handleNext}>
-                Далее
+                Next
               </button>
             )}
             {currentStep === 4 && (
               <button className="navigation-button order" onClick={handleOrder}>
-                Дописать
+                Continue
               </button>
             )}
           </div>
@@ -82,12 +82,12 @@ interface PreviewProps {
           <div className="navigation-buttons">
             {currentStep > 1 && (
               <button className="navigation-button back" onClick={handleBack}>
-                Назад
+                Back
               </button>
             )}
             {currentStep < 4 && (
               <button className="navigation-button next" onClick={handleNext}>
-                Далее
+                Next
               </button>
             )}
           </div>
@@ -107,12 +107,12 @@ interface PreviewProps {
           <div className="navigation-buttons">
             {currentStep > 1 && (
               <button className="navigation-button back" onClick={handleBack}>
-                Назад
+                Back
               </button>
             )}
             {currentStep < 4 && (
               <button className="navigation-button next" onClick={handleNext}>
-                Далее
+                Next
               </button>
             )}
           </div>
@@ -125,15 +125,15 @@ interface PreviewProps {
 
 const BookConstructor: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [bookName, setBookName] = useState<string>("Навсегда в моем сердце");
-  const [author, setAuthor] = useState<string>("Алия Маташева");
-  const [receiver, setReceiver] = useState<string>("Моему любимому");
+  const [bookName, setBookName] = useState<string>("Forever in my heart");
+  const [author, setAuthor] = useState<string>("EMMA COLLINS");
+  const [receiver, setReceiver] = useState<string>("FOR MY HUSBAND");
   const [selectedCover, setSelectedCover] = useState<string>(process11);
   const [contentText, setContentText] = useState<string>(
-    "Меня зовут Алия, хотела посвятить книгу мужу.."
+    "My name is Sophia, I want to dedicate this book to my husband..."
   );
   const [photoURL, setPhotoURL] = useState<string | null>(example);
-  const [photoText, setPhotoText] = useState<string>("Подарок мужу на Новый Год :)");
+  const [photoText, setPhotoText] = useState<string>("Christmas gift to my husband :)");
   const [selectedDate, setSelectedDate] = useState<string>("2025-01-01");
 
   const [phone, setPhone] = useState<string>("");
@@ -195,17 +195,17 @@ const BookConstructor: React.FC = () => {
     <div className="landing-upd-constructor">
       <div className="landing-upd-constructor-editor">
         <div className="landing-upd-constructor-editor-title">
-          {currentStep === 1 && "Обложка"}
-          {currentStep === 2 && "Заполнение книги"}
-          {currentStep === 3 && "Фотографии"}
-          {currentStep === 4 && "Допишите свою книгу"}
+          {currentStep === 1 && "Cover"}
+          {currentStep === 2 && "Content"}
+          {currentStep === 3 && "Photo"}
+          {currentStep === 4 && "Bring your book to life with us ✨"}
         </div>
 
         {currentStep === 1 && (
           <>
             <div className="landing-upd-constructor-editor-box">
               <div className="landing-upd-constructor-editor-box-title">
-                Название книги
+                Book title
               </div>
               <input
                 type="text"
@@ -216,7 +216,7 @@ const BookConstructor: React.FC = () => {
               />
             </div>
             <div className="landing-upd-constructor-editor-box">
-              <div className="landing-upd-constructor-editor-box-title">Автор</div>
+              <div className="landing-upd-constructor-editor-box-title">Author</div>
               <input
                 type="text"
                 className="landing-upd-constructor-editor-box-input"
@@ -227,7 +227,7 @@ const BookConstructor: React.FC = () => {
             </div>
             <div className="landing-upd-constructor-editor-box">
               <div className="landing-upd-constructor-editor-box-title">
-                Получатель
+                Recipient
               </div>
               <input
                 type="text"
@@ -239,7 +239,7 @@ const BookConstructor: React.FC = () => {
             </div>
             <div className="landing-upd-constructor-editor-box">
               <div className="landing-upd-constructor-editor-box-title">
-                Дизайн обложки
+                Cover design
               </div>
               <div className="landing-upd-constructor-editor-box-selector">
                 {coverOptions.map((cover, index) => (
@@ -262,7 +262,7 @@ const BookConstructor: React.FC = () => {
         {currentStep === 2 && (
           <div className="landing-upd-constructor-editor-box">
             <div className="landing-upd-constructor-editor-box-title">
-              Содержание
+              Question 1
             </div>
             <textarea
               className="landing-upd-constructor-editor-box-textarea"
@@ -277,14 +277,14 @@ const BookConstructor: React.FC = () => {
           <>
             <div className="landing-upd-constructor-editor-box">
               <div className="landing-upd-constructor-editor-box-title">
-                Фото
+                Photo
               </div>
-              <label htmlFor="handlePhotoUpload">Загрузить фото</label>
+              <label htmlFor="handlePhotoUpload">Upload a photo</label>
               <input style={{display: 'none'}} id="handlePhotoUpload" type="file" onChange={handlePhotoUpload} />
             </div>
             <div className="landing-upd-constructor-editor-box">
               <div className="landing-upd-constructor-editor-box-title">
-                Текст
+                Description
               </div>
               <input
                 type="text"
@@ -295,7 +295,7 @@ const BookConstructor: React.FC = () => {
               />
             </div>
             <div className="landing-upd-constructor-editor-box">
-              <div className="landing-upd-constructor-editor-box-title">Дата</div>
+              <div className="landing-upd-constructor-editor-box-title">Date</div>
               <input
                 type="date"
                 className="landing-upd-constructor-editor-box-input"
@@ -309,17 +309,17 @@ const BookConstructor: React.FC = () => {
         <div className="navigation-buttons-mobile">
           {currentStep > 1 && (
             <button className="navigation-button back" onClick={handleBack}>
-              Назад
+              Back
             </button>
           )}
           {currentStep < 4 && (
             <button className="navigation-button next" onClick={handleNext}>
-              Далее
+              Next
             </button>
           )}
           {currentStep === 4 && (
             <button className="navigation-button order" onClick={handleOrder}>
-              Дописать
+              Continue
             </button>
           )}
         </div>

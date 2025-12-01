@@ -13,6 +13,8 @@ function LandingUpdated() {
 
   const reviewsRef = useRef<HTMLDivElement>(null);
 
+  const nav = useNavigate();
+
   useEffect(() => {
     const container = reviewsRef.current;
     if (!container) return;
@@ -78,7 +80,7 @@ function LandingUpdated() {
   }, []);
 
   const handleOrder = () => {
-    const message = `Здравствуйте! Хочу сделать заказ. Можете проконсультировать?`;
+    const message = `Hello! I’d like to learn more about the book`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
@@ -92,13 +94,15 @@ function LandingUpdated() {
   };
 
   const handleInst = () => {
-    const instUrl = `https://instagram.com/comabooks`;
+    const instUrl = `https://instagram.com/comabooks.global`;
     window.open(instUrl, "_blank");
   };
 
   const handleLogin = () => {
-    const instUrl = `https://comabooks.org/login`;
-    window.open(instUrl, "_blank");
+    nav('/login');
+  };
+  const handlePolicy = () => {
+    nav('/policies');
   };
 
   return (
@@ -108,22 +112,22 @@ function LandingUpdated() {
           comabooks
         </div>
         <div className="landing-upd-header-links">
-          <Link to={"https://www.instagram.com/comabooks/"}>Отзывы</Link>
-          <Link to={"https:/comabooks.org/order"}>Цены и вопросы</Link>
-          <Link to={"https:/comabooks.org/policies"}>
-            Условия использования
-          </Link>
+          <Link to={"https://www.instagram.com/comabooks.global/"}>Reviews</Link>
+          <Link to={"https:/comabooks.org/order"}>Pricing</Link>
+          <div onClick={handlePolicy}>
+            Policy
+          </div>
           <button
             onClick={handleLogin}
             className="landing-upd-header-button-empty"
           >
-            Войти
+            Login
           </button>
           <button
             onClick={handleOrder}
             className="landing-upd-header-button-filled"
           >
-            Заказать книгу
+            Order a book
           </button>
         </div>
       </div>
@@ -134,7 +138,7 @@ function LandingUpdated() {
           onClick={handleLogin}
           className="landing-upd-header-button-filled"
         >
-          Войти
+          Login
         </button>
       </div>
 
@@ -143,20 +147,20 @@ function LandingUpdated() {
           onClick={handleAsk}
           className="landing-upd-fixed-mobile-button-ask"
         >
-          Задать вопрос
+          Ask a question
         </button>
         <button
           onClick={handleOrder}
           className="landing-upd-fixed-mobile-button-action"
         >
-          Заказать книгу
+          Order a book
         </button>
       </div>
 
       <div className="landing-upd-first">
         <div className="landing-upd-first-action">
-          <div>Посвяти книгу любимому человеку</div>
-          <button onClick={handleOrder}>Заказать книгу</button>
+          <div>Dedicate a book for a loved one</div>
+          <button onClick={handleOrder}>Start your book</button>
         </div>
 
         <div className="landing-upd-first-reviews" ref={reviewsRef}>
@@ -167,7 +171,7 @@ function LandingUpdated() {
             <div className="landing-upd-first-reviews-item-preview s1">
               <img src={player} />
             </div>
-            <div>Девушке</div>
+            <div>For girlfriend</div>
           </Link>
 
           <Link
@@ -177,7 +181,7 @@ function LandingUpdated() {
             <div className="landing-upd-first-reviews-item-preview s2">
               <img src={player} />
             </div>
-            <div>Мужу</div>
+            <div>For husband</div>
           </Link>
 
           <Link
@@ -187,7 +191,7 @@ function LandingUpdated() {
             <div className="landing-upd-first-reviews-item-preview s3">
               <img src={player} />
             </div>
-            <div>Бабушке</div>
+            <div>For grandma</div>
           </Link>
 
           <Link
@@ -197,7 +201,7 @@ function LandingUpdated() {
             <div className="landing-upd-first-reviews-item-preview s4">
               <img src={player} />
             </div>
-            <div>Подруге</div>
+            <div>For bestie</div>
           </Link>
 
           <Link
@@ -207,7 +211,7 @@ function LandingUpdated() {
             <div className="landing-upd-first-reviews-item-preview s5">
               <img src={player} />
             </div>
-            <div>Родителям</div>
+            <div>For parents</div>
           </Link>
 
           <Link
@@ -217,7 +221,7 @@ function LandingUpdated() {
             <div className="landing-upd-first-reviews-item-preview s6">
               <img src={player} />
             </div>
-            <div>Детям</div>
+            <div>For kids</div>
           </Link>
 
           <Link
@@ -227,7 +231,7 @@ function LandingUpdated() {
             <div className="landing-upd-first-reviews-item-preview s7">
               <img src={player} />
             </div>
-            <div>Сестре</div>
+            <div>For sister</div>
           </Link>
 
           <Link
@@ -237,7 +241,7 @@ function LandingUpdated() {
             <div className="landing-upd-first-reviews-item-preview s8">
               <img src={player} />
             </div>
-            <div>Себе</div>
+            <div>For yourself</div>
           </Link>
 
           <Link
@@ -247,7 +251,7 @@ function LandingUpdated() {
             <div className="landing-upd-first-reviews-item-preview s9">
               <img src={player} />
             </div>
-            <div>Девушке</div>
+            <div>For girlfriend</div>
           </Link>
 
           <Link
@@ -257,7 +261,7 @@ function LandingUpdated() {
             <div className="landing-upd-first-reviews-item-preview s10">
               <img src={player} />
             </div>
-            <div>Коллеге</div>
+            <div>For collegue</div>
           </Link>
         </div>
       </div>
@@ -265,37 +269,42 @@ function LandingUpdated() {
       <div className="landing-upd-second">
         <div className="landing-upd-second-content">
           <div className="landing-upd-second-content-title">
-            Почувствуй себя в роли автора и порадуй близких
+            Be the author<br/>Make your loved ones smile
           </div>
 
           <div className="landing-upd-second-content-item">
             <div className="landing-upd-second-content-item-row">
               <img src={starsmall} />
-              Полноценная книга
+              Can be dedicated to anyone
             </div>
-            О любимом человеке с вашимии инициалами и содержанием на 200+
-            страниц.
+            There are 30+ themes — for everyone who matters: your loved one, family, friends, colleagues, your boss, your ex, even yourself and etc.
           </div>
 
           <div className="landing-upd-second-content-item">
             <div className="landing-upd-second-content-item-row">
               <img src={starsmall} />
-              Более 30 форматов
+              Easy to fill
             </div>
-            У нас есть форматы книг для: любимых, семьи, друзей, коллег,
-            начальства, бывших и даже себя.
+            Our books are created in an interview style — each theme comes with a unique set of 50–200 questions: Just answer them, add photos if you like, and choose your cover design.
           </div>
 
           <div className="landing-upd-second-content-item">
             <div className="landing-upd-second-content-item-row">
               <img src={starsmall} />
-              Доставляем по всему миру
+              Editing and printing
             </div>
-            По г. Алматы в течении 1 рабочего дня, по другим городам Казахстана
-            за 2-4 дня, по другим странам от 4-10 дней.
+            Once you’ve finished answering, our editing team will review your answers for grammar, punctuation, and spelling. After they approve the final version, the book is printed. The whole process takes 5–7 business days.
           </div>
 
-          <button onClick={handleOrder}>Заказать книгу</button>
+          <div className="landing-upd-second-content-item">
+            <div className="landing-upd-second-content-item-row">
+              <img src={starsmall} />
+              How to start
+            </div>
+            Just message us on WhatsApp, Facebook, or Instagram — our managers will guide you through everything. Once the payment is made, they’ll create a personal account for you so you can start your book.
+          </div>
+
+          <button onClick={handleOrder}>Order a book</button>
         </div>
 
         <video
@@ -309,7 +318,7 @@ function LandingUpdated() {
 
         <div className="landing-upd-second-content-mobile">
           <div className="landing-upd-second-content-title">
-            Почувствуй себя в роли автора и порадуй близких
+            Be the author<br/>Make your loved ones smile
           </div>
 
           <video
@@ -324,37 +333,42 @@ function LandingUpdated() {
           <div className="landing-upd-second-content-item">
             <div className="landing-upd-second-content-item-row">
               <img src={starsmall} />
-              Полноценная книга
+              Can be dedicated to anyone
             </div>
-            О любимом человеке с вашимии инициалами и содержанием на 200+
-            страниц.
+            There are 30+ themes — for everyone who matters: your loved one, family, friends, colleagues, your boss, your ex, even yourself and etc.
           </div>
 
           <div className="landing-upd-second-content-item">
             <div className="landing-upd-second-content-item-row">
               <img src={starsmall} />
-              Более 30 форматов
+              Easy to fill
             </div>
-            У нас есть форматы книг для: любимых, семьи, друзей, коллег,
-            начальства, бывших и даже себя.
+            Our books are created in an interview style — each theme comes with a unique set of 50–200 questions: Just answer them, add photos if you like, and choose your cover design.
           </div>
 
           <div className="landing-upd-second-content-item">
             <div className="landing-upd-second-content-item-row">
               <img src={starsmall} />
-              Доставляем по всему миру
+              Editing and printing
             </div>
-            По г. Алматы в течении 1 рабочего дня, по другим городам Казахстана
-            за 2-4 дня, по другим странам от 4-10 дней.
+            Once you’ve finished answering, our editing team will review your answers for grammar, punctuation, and spelling. After they approve the final version, the book is printed. The whole process takes 5–7 business days.
           </div>
 
-          <button onClick={handleOrder}>Заказать книгу</button>
+          <div className="landing-upd-second-content-item">
+            <div className="landing-upd-second-content-item-row">
+              <img src={starsmall} />
+              How to start
+            </div>
+            Just message us on WhatsApp, Facebook, or Instagram — our managers will guide you through everything. Once the payment is made, they’ll create a personal account for you so you can start your book.
+          </div>
+
+          <button onClick={handleOrder}>Order a book</button>
         </div>
       </div>
 
       <div className="landing-upd-third"></div>
       <div className="landing-upd-forth">
-        <div className="landing-upd-forth-title">Процесс написания книги</div>
+        <div className="landing-upd-forth-title">Let's try to start one</div>
 
         <BookConstructor />
         {/* <div className="landing-upd-constructor">
@@ -393,8 +407,8 @@ function LandingUpdated() {
 
       <div className="landing-upd-fifth">
         <div className="landing-upd-fifth-content">
-          Более 1 000 человек стали авторами собственных книг
-          <button onClick={handleInst}>Больше отзывов в Instagram</button>
+          +20,000 people have already become authors of their own books
+          <button onClick={handleInst}>More reviews on Instagram</button>
         </div>
 
         <div className="landing-upd-fifth-grid">
@@ -439,25 +453,25 @@ function LandingUpdated() {
 
       <div className="landing-upd-footer">
         <div className="landing-upd-footer-row">
-          <div>Сделай подарок, который запомнится на вcю жизнь</div>
-          <button onClick={handleOrder}>Заказать книгу</button>
+          <div>Give a gift they'll remember for a lifetime</div>
+          <button onClick={handleOrder}>Order a book</button>
         </div>
 
         <div className="landing-upd-footer-logo">comabooks</div>
 
         <div className="landing-upd-footer-row-2">
           <div>hello@comabooks.org</div>
-          <Link to={"https://www.instagram.com/comabooks/"}>Instagram</Link>
+          <Link to={"https://www.instagram.com/comabooks.global/"}>Instagram</Link>
         </div>
 
         <div className="landing-upd-footer-row-mobile">
           <div>hello@comabooks.org</div>
-          <Link to={"https://www.instagram.com/comabooks/"}>Instagram</Link>
-          <Link to={"https:/comabooks.org/order"}>Цены и вопросы</Link>
-          <Link to={"https:/comabooks.org/policies"}>
-            Условия использования
-          </Link>
-          <div>ИП COMAHOLDING, 2025</div>
+          <Link to={"https://www.instagram.com/comabooks.global/"}>Instagram</Link>
+          <Link to={"https:/comabooks.org/order"}>Pricing</Link>
+          <div onClick={handlePolicy}>
+            Policy
+          </div>
+          <div>COMAHOLDING LLC, 2025</div>
         </div>
       </div>
     </div>

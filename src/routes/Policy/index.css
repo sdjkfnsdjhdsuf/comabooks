@@ -17,6 +17,94 @@
     margin-bottom: 60px;
 }
 
+.landing-new-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10000;
+    background-color: rgba(31, 31, 31, 0.01);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(10px);
+    -moz-backdrop-filter: blur(10px);
+}
+
+.landing-new-menu {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.landing-new-menu-logo {
+    font-family: 'Forum';
+    color: white;
+    font-size: 18px;
+}
+
+.landing-new-menu-order {
+    font-family: 'Inter';
+    color: black;
+    background-color: white;
+    border-radius: 6px;
+    border: none;
+    font-size: 12px;
+    padding: 7px 12px;
+}
+
+.navigation {
+    height: 0;
+    overflow: hidden;
+    transition: 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+.navigation button {
+    display: flex;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    font-family: 'Inter';
+    padding-left: 20px;
+}
+
+.navigation a {
+    color: white;
+    font-size: 20px;
+    font-family: 'Inter';
+    padding-left: 20px;
+}
+  
+  .navigation.show {
+    height: 200px; 
+    padding-top: 10px;
+  }
+  
+  .navigation.hide {
+    height: 0;
+    padding-top: 0;
+  }
+
+  .landing-new-menu-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.landing-new-menu-ham {
+    background-color: white;
+    border-radius: 6px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 4px;
+}
+
 .policy-term {
     margin-bottom: 30px;
     gap: 5px;
