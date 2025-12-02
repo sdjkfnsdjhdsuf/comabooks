@@ -1,61 +1,439 @@
 .order-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  font-family: "Inter";
+  padding: 100px;
+  gap: 50px;
+  width: 100%;
+  justify-content: center;
+}
+
+.order-img {
+  width: 45vw;
+  height: 80vh;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.order-content {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 100px 20px;
+}
+
+.order-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 120px;
+}
+
+.order-prices {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 30px;
+}
+
+.order-main-price {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.order-prices-row {
+  display: flex;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.order-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.order-button {
+  border-radius: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  height: 46px;
+
+  color: black;
+  background-color: transparent;
+  border: 1px solid rgb(125, 125, 125);
+}
+
+.order-button.active {
+  color: white;
+  background-color: black;
+  border: none;
+}
+
+.order-button img {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+}
+
+.faq-item {
+  padding: 10px;
+  border: 1px solid rgb(214, 214, 214);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.faq-question {
+  font-weight: 600;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.faq-answer {
+  margin-top: 10px;
+}
+
+.order-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
+.order-logo {
+  font-family: "Forum";
+  font-size: 20px;
+}
+
+.order-rek {
+  font-size: 14px;
+}
+
+.product-first {
+  display: flex;
+  gap: 120px;
+  padding: 130px 160px;
+}
+
+.product-first-preview {
+  width: 50%;
+}
+
+.product-first-preview-main {
+  width: 100%;
+  border-radius: 6px;
+  display: block;
+  padding: 60px;
+  border: 1px solid rgb(217, 217, 217);
+}
+
+.product-first-thumbs {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.product-first-thumb {
+  height: 90px;
+  border: 1px solid rgb(217, 217, 217);
+  border-radius: 6px;
+  padding: 6px 30px;
+}
+
+.product-first-thumb img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.product-first-thumbs img:hover {
+  opacity: 1;
+}
+
+.product-first-content {
+  padding-top: 30px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-first-content-title {
+  font-family: "Leotaro";
+  font-size: 48px;
+  color: #5f0000;
+  line-height: 1.1;
+  width: 60%;
+  margin-bottom: 30px;
+}
+
+.product-first-content-text {
+  font-size: 18px;
+  color: #5f0000;
+  font-family: "TT Drugs";
+  margin-bottom: 20px;
+}
+
+.product-first-content-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-family: "TT Drugs";
+  font-size: 18px;
+  color: #666666;
+}
+
+.product-header-logo {
+  color: #820000;
+  font-size: 24px;
+  letter-spacing: -1px;
+}
+
+.product-first-actions {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.product-first-actions-main {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.product-first-qty {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 108px;
+  height: 58px;
+  border: 1px solid #b10f1a;
+  border-radius: 4px;
+  font-size: 32px;
+  font-weight: 500;
+  color: #b10f1a;
+}
+
+.product-first-qty-btn {
+  flex: 1;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-size: 36px;
+  font-weight: 400;
+  cursor: pointer;
+  color: #b10f1a;
+}
+
+.product-first-qty-value {
+  flex: 1;
+  text-align: center;
+  color: #666666;
+}
+
+.product-first-price {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+}
+
+.product-first-price-current {
+  font-size: 64px;
+  font-weight: 500;
+  color: #8b0000;
+  line-height: 1;
+  font-family: "Leotaro";
+}
+
+.product-first-price-old {
+  font-size: 36px;
+  color: #868686;
+  text-decoration: line-through;
+  line-height: 1;
+  font-family: "Leotaro";
+}
+
+.product-first-actions-bottom {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+}
+
+.product-first-order {
+  padding: 12px 30px;
+  background: #b10f1a;
+  color: #ffffff;
+  border: none;
+  border-radius: 2px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: "TT Drugs";
+}
+
+.product-first-payments button {
+  cursor: pointer;
+}
+
+.product-first-paypal {
+  background-color: #f7c640;
+  border-radius: 2px;
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.product-first-main {
+  display: flex;
+  gap: 16px;
+  height: 46.5px;
+}
+
+.product-first-socials {
+  display: flex;
+  gap: 16px;
+  height: 46.5px;
+}
+
+.product-first-paypal img {
+  object-fit: cover;
+  height: 100%;
+}
+
+.product-first-social-facebook {
+  padding: 12px 8px;
+  border-radius: 2px;
+  border: 0.5px solid #0069ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.product-first-social-whatsapp {
+  padding: 12px 8px;
+  border-radius: 2px;
+  border: 0.5px solid #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.product-first-social img {
+  width: 28px;
+  height: 28px;
+}
+
+@media (max-width: 900px) {
+  .product-first-actions-bottom {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .product-first-order, .product-first-paypal {
+    flex:1
+  }
+
+  .product-first {
+    padding: 80px 20px;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .product-first-social-facebook,  .product-first-social-whatsapp{
+flex:1
+  }
+
+  .product-first-preview {
+    width: 100%;
+  }
+
+  .product-first-content {
+    width: 100%;
+  }
+
+  .product-first-content-title {
+    width: 100%;
+  }
+
+  .order-container {
+    max-width: inherit;
+    margin: unset;
+    gap: unset;
+    padding: unset;
     position: absolute;
     top: 0;
     left: 0;
     display: flex;
-    font-family: 'Inter';
-    padding: 100px;
-    gap: 50px;
+    flex-direction: column;
+    font-family: "Inter";
+  }
+
+  .order-img {
     width: 100%;
-    justify-content: center;
-}
-
-.order-img {
-    width: 45vw;
-    height: 80vh;
+    height: 60vh;
     object-fit: cover;
-    border-radius: 6px;
-}
+    border-radius: 0px;
+  }
 
-.order-content {
+  .order-content {
     display: flex;
     flex-direction: column;
-    padding: 20px 20px 100px 20px
-}
+    padding: 20px 20px 150px 20px;
+  }
 
-.order-title {
+  .order-title {
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 120px;
-}
+  }
 
-.order-prices {
+  .order-prices {
     display: flex;
     flex-direction: column;
     gap: 5px;
     margin-bottom: 30px;
-}
+  }
 
-.order-main-price {
+  .order-main-price {
     font-size: 20px;
     font-weight: 600;
-}
+  }
 
-.order-prices-row {
+  .order-prices-row {
     display: flex;
     gap: 10px;
     font-size: 16px;
     font-weight: 600;
-}
+  }
 
-.order-buttons {
+  .order-buttons {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 30px;
-}
+  }
 
-.order-button {
+  .order-button {
     border-radius: 36px;
     display: flex;
     justify-content: center;
@@ -68,162 +446,35 @@
     color: black;
     background-color: transparent;
     border: 1px solid rgb(125, 125, 125);
-}
+  }
 
-.order-button.active {
+  .order-button.active {
     color: white;
     background-color: black;
     border: none;
-}
+  }
 
-.order-button img {
+  .order-button img {
     width: 24px;
     height: 24px;
     object-fit: cover;
-}
+  }
 
-.faq-item { 
+  .faq-item {
     padding: 10px;
     border: 1px solid rgb(214, 214, 214);
     border-radius: 12px;
     margin-bottom: 10px;
-    cursor: pointer;
-}
+  }
 
-.faq-question {
+  .faq-question {
     font-weight: 600;
     font-size: 18px;
     display: flex;
     justify-content: space-between;
-}
+  }
 
-.faq-answer {
+  .faq-answer {
     margin-top: 10px;
-}
-
-.order-footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 100px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    justify-content: center;
-    align-items: center;
-}
-
-.order-logo {
-    font-family: 'Forum';
-    font-size: 20px;
-}
-
-.order-rek {
-    font-size: 14px;
-}
-
-@media (max-width: 900px) {
-    .order-container {
-        max-width: inherit;
-        margin: unset;
-        gap: unset;
-        padding: unset;
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: flex;
-        flex-direction: column;
-        font-family: 'Inter';
-    }
-
-    .order-img {
-        width: 100%;
-        height: 60vh;
-        object-fit: cover;
-        border-radius: 0px;
-    }
-
-    .order-content {
-        display: flex;
-        flex-direction: column;
-        padding: 20px 20px 150px 20px
-    }
-
-    .order-title {
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 120px;
-    }
-
-    .order-prices {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        margin-bottom: 30px;
-    }
-
-    .order-main-price {
-        font-size: 20px;
-        font-weight: 600;
-    }
-
-    .order-prices-row {
-        display: flex;
-        gap: 10px;
-        font-size: 16px;
-        font-weight: 600;
-    }
-
-    .order-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-bottom: 30px;
-    }
-
-    .order-button {
-        border-radius: 36px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 5px;
-        font-size: 14px;
-        font-weight: 600;
-        height: 46px;
-
-        color: black;
-        background-color: transparent;
-        border: 1px solid rgb(125, 125, 125);
-    }
-
-    .order-button.active {
-        color: white;
-        background-color: black;
-        border: none;
-    }
-
-    .order-button img {
-        width: 24px;
-        height: 24px;
-        object-fit: cover;
-    }
-
-    .faq-item { 
-        padding: 10px;
-        border: 1px solid rgb(214, 214, 214);
-        border-radius: 12px;
-        margin-bottom: 10px;
-    }
-
-    .faq-question {
-        font-weight: 600;
-        font-size: 18px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .faq-answer {
-        margin-top: 10px;
-    }
+  }
 }

@@ -1,13 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./index.css";
-import video from "../Red/assets/video.mp4";
 import player from "../Red/assets/player.svg";
-import starsmall from "../Red/assets/starsmall.svg";
 import { Link, useNavigate } from "react-router-dom";
+
+import mainFront from "../Red/assets/product/main-front.png";
+import mainBack from "../Red/assets/product/main-back.png";
+import mainFull from "../Red/assets/product/main-full.png";
+
+import stars from "../Red/assets/product/stars.png";
+import google from "../Red/assets/product/google.png";
+import facebook from "../Red/assets/product/facebook.png";
+import whatsapp from "../Red/assets/product/whatsapp.png";
+import paypal from "../Red/assets/product/paypal.png";
 
 function SalePage() {
   const navigate = useNavigate();
-  const [currentWord, setCurrentWord] = useState("любимому человеку");
 
   const reviewsRef = useRef<HTMLDivElement>(null);
 
@@ -38,8 +45,10 @@ function SalePage() {
   useEffect(() => {
     async function fetchPhone() {
       try {
-        const res = await fetch("https://api.comabooks.org/sales/phoneNumber", {
-        });
+        const res = await fetch(
+          "https://api.comabooks.org/sales/phoneNumber",
+          {}
+        );
         if (!res.ok) throw new Error("Не удалось получить номер");
         const data = await res.json();
         setPhone(data.phone || "");
@@ -48,33 +57,6 @@ function SalePage() {
       }
     }
     fetchPhone();
-  }, []);
-
-  const words = [
-    "любимому человеку",
-    "девушке",
-    "парню",
-    "жене",
-    "мужу",
-    "маме",
-    "папе",
-    "родителям",
-    "брату",
-    "сестре",
-    "друзьям",
-    "коллеге",
-  ];
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentWord((prevWord) => {
-        const currentIndex = words.indexOf(prevWord);
-        const nextIndex = (currentIndex + 1) % words.length;
-        return words[nextIndex];
-      });
-    }, 1000);
-
-    return () => clearInterval(intervalId);
   }, []);
 
   const handleOrder = () => {
@@ -97,24 +79,27 @@ function SalePage() {
   };
 
   const handleLogin = () => {
-    nav('/login');
+    nav("/login");
   };
   const handlePolicy = () => {
-    nav('/policies');
+    nav("/policies");
+  };
+  const handlePricing = () => {
+    nav("/products/custom-book");
   };
 
   return (
     <div className="landing-upd">
       <div className="landing-upd-header">
-        <div onClick={() => navigate("/")} className="landing-upd-header-logo">
+        <div onClick={() => navigate("/")} className="product-header-logo">
           comabooks
         </div>
         <div className="landing-upd-header-links">
-          <Link to={"https://www.instagram.com/comabooks.global/"}>Reviews</Link>
-          <Link to={"https:/comabooks.org/order"}>Pricing</Link>
-          <div onClick={handlePolicy}>
-            Policy
-          </div>
+          <Link to={"https://www.instagram.com/comabooks.global/"}>
+            Reviews
+          </Link>
+          <div onClick={handlePricing}>Pricing</div>
+          <div onClick={handlePolicy}>Policy</div>
           <button
             onClick={handleLogin}
             className="landing-upd-header-button-empty"
@@ -131,7 +116,7 @@ function SalePage() {
       </div>
 
       <div className="landing-upd-header-mobile">
-        <div className="landing-upd-header-logo">comabooks</div>
+        <div className="product-header-logo">comabooks</div>
         <button
           onClick={handleLogin}
           className="landing-upd-header-button-filled"
@@ -155,108 +140,84 @@ function SalePage() {
         </button>
       </div>
 
-
-
-      <div className="landing-upd-second">
-        <div className="landing-upd-second-content">
-          <div className="landing-upd-second-content-title">
-            Be the author<br/>Make your loved ones smile
-          </div>
-
-          <div className="landing-upd-second-content-item">
-            <div className="landing-upd-second-content-item-row">
-              <img src={starsmall} />
-              Can be dedicated to anyone
+      <div className="product-first">
+        <div className="product-first-preview">
+          <img
+            src={mainFront}
+            alt="product preview"
+            className="product-first-preview-main"
+          />
+          <div className="product-first-thumbs">
+            <div className="product-first-thumb">
+              <img src={mainFront} />
             </div>
-            There are 30+ themes — for everyone who matters: your loved one, family, friends, colleagues, your boss, your ex, even yourself and etc.
-          </div>
-
-          <div className="landing-upd-second-content-item">
-            <div className="landing-upd-second-content-item-row">
-              <img src={starsmall} />
-              Easy to fill
+            <div className="product-first-thumb">
+              <img src={mainBack} />
             </div>
-            Our books are created in an interview style — each theme comes with a unique set of 50–200 questions: Just answer them, add photos if you like, and choose your cover design.
-          </div>
-
-          <div className="landing-upd-second-content-item">
-            <div className="landing-upd-second-content-item-row">
-              <img src={starsmall} />
-              Editing and printing
+            <div className="product-first-thumb">
+              <img src={mainFull} />
             </div>
-            Once you’ve finished answering, our editing team will review your answers for grammar, punctuation, and spelling. After they approve the final version, the book is printed. The whole process takes 5–7 business days.
           </div>
-
-          <div className="landing-upd-second-content-item">
-            <div className="landing-upd-second-content-item-row">
-              <img src={starsmall} />
-              How to start
-            </div>
-            Just message us on WhatsApp, Facebook, or Instagram — our managers will guide you through everything. Once the payment is made, they’ll create a personal account for you so you can start your book.
-          </div>
-
-          <button onClick={handleOrder}>Order a book</button>
         </div>
 
-        <video
-          className="landing-upd-second-video"
-          src={video}
-          loop
-          autoPlay
-          muted
-          playsInline
-        />
-
-        <div className="landing-upd-second-content-mobile">
-          <div className="landing-upd-second-content-title">
-            Be the author<br/>Make your loved ones smile
+        <div className="product-first-content">
+          <div className="product-first-content-title">
+            Book for a Loved One
           </div>
 
-          <video
-            className="landing-upd-second-video-mobile"
-            src={video}
-            loop
-            autoPlay
-            muted
-            playsInline
-          />
+          <div className="product-first-content-text">
+            You can dedicate a book for anyone — there are 30+ themes: your
+            loved one, family, friends, colleagues, your boss, your ex, even
+            yourself and etc.
+          </div>
 
-          <div className="landing-upd-second-content-item">
-            <div className="landing-upd-second-content-item-row">
-              <img src={starsmall} />
-              Can be dedicated to anyone
+          <div className="product-first-content-text">
+            Our books are created in an interview style - each theme comes with
+            a unique set of 50–200 questions: Just answer them, add photos if
+            you like, and choose your cover design.
+          </div>
+
+          <div className="product-first-content-row">
+            <img src={stars} />
+            <div>5.0 stars, 934+ reviews on</div>
+            <img src={google} />
+          </div>
+
+          <div className="product-first-actions">
+            <div className="product-first-actions-main">
+              <div className="product-first-qty">
+                <button className="product-first-qty-btn">-</button>
+                <span className="product-first-qty-value">1</span>
+                <button className="product-first-qty-btn">+</button>
+              </div>
+
+              <div className="product-first-price">
+                <span className="product-first-price-current">$120</span>
+                <span className="product-first-price-old">$150</span>
+              </div>
             </div>
-            There are 30+ themes — for everyone who matters: your loved one, family, friends, colleagues, your boss, your ex, even yourself and etc.
-          </div>
 
-          <div className="landing-upd-second-content-item">
-            <div className="landing-upd-second-content-item-row">
-              <img src={starsmall} />
-              Easy to fill
+            <div className="product-first-actions-bottom">
+              <div className="product-first-main">
+                <button className="product-first-order">Order now</button>
+
+                <button className="product-first-paypal">
+                  <img src={paypal} alt="PayPal" />
+                </button>
+              </div>
+
+              <div className="product-first-socials">
+                <button className="product-first-social product-first-social-facebook">
+                  <img src={facebook} alt="Facebook" />
+                </button>
+                <button className="product-first-social product-first-social-whatsapp">
+                  <img src={whatsapp} alt="WhatsApp" />
+                </button>
+              </div>
             </div>
-            Our books are created in an interview style — each theme comes with a unique set of 50–200 questions: Just answer them, add photos if you like, and choose your cover design.
           </div>
-
-          <div className="landing-upd-second-content-item">
-            <div className="landing-upd-second-content-item-row">
-              <img src={starsmall} />
-              Editing and printing
-            </div>
-            Once you’ve finished answering, our editing team will review your answers for grammar, punctuation, and spelling. After they approve the final version, the book is printed. The whole process takes 5–7 business days.
-          </div>
-
-          <div className="landing-upd-second-content-item">
-            <div className="landing-upd-second-content-item-row">
-              <img src={starsmall} />
-              How to start
-            </div>
-            Just message us on WhatsApp, Facebook, or Instagram — our managers will guide you through everything. Once the payment is made, they’ll create a personal account for you so you can start your book.
-          </div>
-
-          <button onClick={handleOrder}>Order a book</button>
         </div>
       </div>
-
 
       <div className="landing-upd-fifth">
         <div className="landing-upd-fifth-content">
@@ -314,16 +275,18 @@ function SalePage() {
 
         <div className="landing-upd-footer-row-2">
           <div>hello@comabooks.org</div>
-          <Link to={"https://www.instagram.com/comabooks.global/"}>Instagram</Link>
+          <Link to={"https://www.instagram.com/comabooks.global/"}>
+            Instagram
+          </Link>
         </div>
 
         <div className="landing-upd-footer-row-mobile">
           <div>hello@comabooks.org</div>
-          <Link to={"https://www.instagram.com/comabooks.global/"}>Instagram</Link>
-          <Link to={"https:/comabooks.org/order"}>Pricing</Link>
-          <div onClick={handlePolicy}>
-            Policy
-          </div>
+          <Link to={"https://www.instagram.com/comabooks.global/"}>
+            Instagram
+          </Link>
+          <div onClick={handlePricing}>Pricing</div>
+          <div onClick={handlePolicy}>Policy</div>
           <div>COMAHOLDING LLC, 2025</div>
         </div>
       </div>

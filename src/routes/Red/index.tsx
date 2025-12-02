@@ -87,7 +87,7 @@ function LandingUpdated() {
   };
 
   const handleAsk = () => {
-    const message = `Здравствуйте! Хочу узнать подробнее о книге`;
+    const message = `Hello! I’d like to learn more about the book`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
@@ -418,37 +418,37 @@ function LandingUpdated() {
 
         <div className="landing-upd-fifth-grid">
           <Link
-            to="https://www.instagram.com/reel/C8ysJ4gN9Im/?utm_source=ig_web_copy_link"
+            to="https://www.instagram.com/reel/DOilgjpjH-m/?igsh=MWdteXJpaGdoMjZzNQ=="
             className="landing-upd-fifth-grid-item"
           >
             <img src={player} />
           </Link>
           <Link
-            to="https://www.tiktok.com/@chakievaa/video/7364429063080971537?is_from_webapp=1&sender_device=pc"
+            to="https://www.instagram.com/reel/DOOVsx_DLR2/?igsh=MXYwaTZyZ2o4NmduNw=="
             className="landing-upd-fifth-grid-item"
           >
             <img src={player} />
           </Link>
           <Link
-            to="https://www.instagram.com/reel/C8UaVEXC95t/?igsh=ejV0djJiMHV3Y2t3"
+            to="https://www.instagram.com/reel/DRl7kXFkZim/?igsh=b3Y0b241OWhkdDFz"
             className="landing-upd-fifth-grid-item"
           >
             <img src={player} />
           </Link>
           <Link
-            to="https://www.instagram.com/reel/C8CS1heN8if/?utm_source=ig_web_copy_link"
+            to="https://www.instagram.com/reel/DRo7xqCjE22/?igsh=cmNhZGU3YXc5aTV6"
             className="landing-upd-fifth-grid-item"
           >
             <img src={player} />
           </Link>
           <Link
-            to="https://www.instagram.com/reel/C9PpvKMtC7s/?igsh=MXFyMmIxeWhuYThzcw=="
+            to="https://www.instagram.com/reel/DRmJRf4kdrG/?igsh=bGE1MWJ4ZGkxNzZm"
             className="landing-upd-fifth-grid-item"
           >
             <img src={player} />
           </Link>
           <Link
-            to="https://www.instagram.com/reel/DF-l9q2IH7F/?igsh=NGxqNTVsMHp1N2p6"
+            to="https://www.instagram.com/reel/DRjkeFhEbUo/?igsh=ZmVubmVlOWV4YTB6"
             className="landing-upd-fifth-grid-item"
           >
             <img src={player} />
@@ -472,7 +472,7 @@ function LandingUpdated() {
         <div className="landing-upd-footer-row-mobile">
           <div>hello@comabooks.org</div>
           <Link to={"https://www.instagram.com/comabooks.global/"}>Instagram</Link>
-          <Link to={"https:/comabooks.org/order"}>Pricing</Link>
+          <div onClick={handlePricing}>Pricing</div>
           <div onClick={handlePolicy}>
             Policy
           </div>
