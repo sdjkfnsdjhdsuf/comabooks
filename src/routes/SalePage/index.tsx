@@ -336,6 +336,78 @@ function SalePage() {
         </div>
       </div>
 
+      <div className="product-how">
+  <div className="product-how-header">
+    <div className="product-how-title">How to start</div>
+    <div className="product-how-subtitle">
+      From your first message to a finished book in their hands.
+    </div>
+  </div>
+
+  <div className="product-how-metrics">
+    <div className="product-how-metric">
+      <div className="product-how-metric-label">
+        Get a personal editors team
+      </div>
+      <div className="product-how-metric-value">2–4 editors</div>
+    </div>
+    <div className="product-how-metric">
+      <div className="product-how-metric-label">
+        Average editing and printing time
+      </div>
+      <div className="product-how-metric-value">5–7 business days</div>
+    </div>
+    <div className="product-how-metric">
+      <div className="product-how-metric-label">
+        Average delivery time
+      </div>
+      <div className="product-how-metric-value">3–5 business days</div>
+    </div>
+  </div>
+
+  <div className="product-how-steps">
+    <div className="product-how-step">
+      <div className="product-how-step-number">1</div>
+      <div className="product-how-step-title">Place your order</div>
+      <div className="product-how-step-text">
+        Contact our team, ask any questions, and make a secure payment via
+        PayPal or bank card.
+      </div>
+    </div>
+
+    <div className="product-how-step">
+      <div className="product-how-step-number">2</div>
+      <div className="product-how-step-title">Choose the recipient</div>
+      <div className="product-how-step-text">
+        Decide who the book is for: wife, husband, partner, parents, relatives,
+        friends – we have 30+ formats for different relationships.
+      </div>
+    </div>
+
+    <div className="product-how-step">
+      <div className="product-how-step-number">3</div>
+      <div className="product-how-step-title">Work with your editor</div>
+      <div className="product-how-step-text">
+        A personal editor stays with you from start to finish, helping refine
+        your answers and shape the tone, structure, and cover design of the
+        book.
+      </div>
+    </div>
+
+    <div className="product-how-step">
+      <div className="product-how-step-number">4</div>
+      <div className="product-how-step-title">
+        Layout, printing and delivery
+      </div>
+      <div className="product-how-step-text">
+        Once your content is ready, we prepare the layout, print your book,
+        pack it securely and arrange careful delivery straight to you.
+      </div>
+    </div>
+  </div>
+</div>
+
+
       <div className="product-third">
         <div className="product-third-row">
           Sample questions for different themes

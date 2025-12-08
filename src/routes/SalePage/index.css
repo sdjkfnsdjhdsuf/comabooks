@@ -878,3 +878,134 @@
   font-size: 20px;
   line-height: 1;
 }
+
+
+
+.product-how {
+  padding: 80px 60px;
+  background: #ffffff;
+  color: #3b0000;
+}
+
+.product-how-header {
+  max-width: 780px;
+  margin-bottom: 36px;
+}
+
+.product-how-title {
+  font-family: 'Leotaro', serif;
+  font-size: 44px;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.product-how-subtitle {
+  font-family: 'TT Drugs', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+/* метрики */
+
+.product-how-metrics {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.product-how-metric {
+  flex: 1 1 200px;
+  background: #5f0000;
+  border-radius: 12px;
+  padding: 16px 18px;
+  color: #ffffff;
+}
+
+.product-how-metric-label {
+  font-family: 'TT Drugs';
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 4px;
+}
+
+.product-how-metric-value {
+  font-family: 'TT Drugs';
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* шаги */
+
+.product-how-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.product-how-step {
+  background: #fff7f7;
+  border: 1px solid #f1d8d8;
+  border-radius: 16px;
+  padding: 20px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-how-step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #5f0000;
+  color: #ffffff;
+  font-family: 'TT Drugs';
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.product-how-step-title {
+  font-family: 'TT Drugs';
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.product-how-step-text {
+  font-family: 'TT Drugs';
+  font-size: 14px;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* мобильная адаптивка */
+
+@media (max-width: 900px) {
+  .product-how {
+    padding: 56px 20px;
+  }
+
+  .product-how-title {
+    font-size: 32px;
+  }
+
+  .product-how-metrics {
+    flex-direction: column;
+    gap: 8px
+  }
+
+  .product-how-metric {
+    flex: none
+  }
+
+  .product-how-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .product-how-step {
+    padding: 18px 16px 20px;
+  }
+}
