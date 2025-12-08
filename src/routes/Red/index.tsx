@@ -79,19 +79,7 @@ function LandingUpdated() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const handleOrder = () => {
-    const message = `Hello! I’d like to learn more about the book`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
-    window.open(whatsappUrl, "_blank");
-  };
 
-  const handleAsk = () => {
-    const message = `Hello! I’d like to learn more about the book`;
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
-    window.open(whatsappUrl, "_blank");
-  };
 
   const handleInst = () => {
     const instUrl = `https://instagram.com/comabooks.global`;
@@ -107,6 +95,56 @@ function LandingUpdated() {
   const handlePolicy = () => {
     nav('/policies');
   };
+
+  const [qty, setQty] = useState<number>(1);
+    const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
+  
+    const handleQtyMinus = () => {
+      setQty((prev) => (prev > 1 ? prev - 1 : 1));
+    };
+  
+    const handleQtyPlus = () => {
+      setQty((prev) => prev + 1);
+    };
+  
+    const getDirectMessage = () => {
+      if (qty <= 1) {
+        return "Hi! I want to order a book for my loved one";
+      }
+      return `Hi! I want to order ${qty} books for my loved ones`;
+    };
+  
+    const openContactPopup = () => {
+      setIsContactPopupOpen(true);
+    };
+  
+    const closeContactPopup = () => {
+      setIsContactPopupOpen(false);
+    };
+  
+    const handlePopupWhatsapp = () => {
+      const baseUrl = ""; // сюда потом вставишь реальный линк
+      const text = encodeURIComponent(getDirectMessage());
+      const url = `${baseUrl}?text=${text}`;
+      window.open(url, "_blank");
+      closeContactPopup();
+    };
+  
+    const handlePopupFacebook = () => {
+      const baseUrl = ""; // сюда потом вставишь реальный линк
+      const text = encodeURIComponent(getDirectMessage());
+      const url = `${baseUrl}?text=${text}`;
+      window.open(url, "_blank");
+      closeContactPopup();
+    };
+  
+    const handlePopupInstagram = () => {
+      const baseUrl = ""; // сюда потом вставишь реальный линк
+      const text = encodeURIComponent(getDirectMessage());
+      const url = `${baseUrl}?text=${text}`;
+      window.open(url, "_blank");
+      closeContactPopup();
+    };
 
   return (
     <div className="landing-upd">
@@ -129,7 +167,7 @@ function LandingUpdated() {
             Login
           </button>
           <button
-            onClick={handleOrder}
+            onClick={openContactPopup}
             className="landing-upd-header-button-filled"
           >
             Order a book
@@ -149,13 +187,13 @@ function LandingUpdated() {
 
       <div className="landing-upd-fixed-mobile">
         <button
-          onClick={handleAsk}
+          onClick={openContactPopup}
           className="landing-upd-fixed-mobile-button-ask"
         >
           Ask a question
         </button>
         <button
-          onClick={handleOrder}
+          onClick={openContactPopup}
           className="landing-upd-fixed-mobile-button-action"
         >
           Order a book
@@ -165,7 +203,8 @@ function LandingUpdated() {
       <div className="landing-upd-first">
         <div className="landing-upd-first-action">
           <div>Dedicate a book for a loved one</div>
-          <button onClick={handleOrder}>Start your book</button>
+          <button onClick={openContactPopup}>Start your book</button>
+          <button style={{background: 'none', color: 'white', padding: 0, fontWeight: 400}} onClick={() => {nav('/products/custom-book')}}>Learn more</button>
         </div>
 
         <div className="landing-upd-first-reviews" ref={reviewsRef}>
@@ -309,7 +348,7 @@ function LandingUpdated() {
             Just message us on WhatsApp, Facebook, or Instagram — our managers will guide you through everything. Once the payment is made, they’ll create a personal account for you so you can start your book.
           </div>
 
-          <button onClick={handleOrder}>Order a book</button>
+          <button onClick={openContactPopup}>Order a book</button>
         </div>
 
         <video
@@ -367,7 +406,7 @@ function LandingUpdated() {
             Just message us on WhatsApp, Facebook, or Instagram — our managers will guide you through everything. Once the payment is made, they’ll create a personal account for you so you can start your book.
           </div>
 
-          <button onClick={handleOrder}>Order a book</button>
+          <button onClick={openContactPopup}>Order a book</button>
         </div>
       </div>
 
@@ -459,7 +498,7 @@ function LandingUpdated() {
       <div className="landing-upd-footer">
         <div className="landing-upd-footer-row">
           <div>Give a gift they'll remember for a lifetime</div>
-          <button onClick={handleOrder}>Order a book</button>
+          <button onClick={openContactPopup}>Order a book</button>
         </div>
 
         <div className="landing-upd-footer-logo">comabooks</div>
@@ -479,6 +518,49 @@ function LandingUpdated() {
           <div>COMAHOLDING LLC, 2025</div>
         </div>
       </div>
+
+
+      {isContactPopupOpen && (
+  <div className="contact-popup-backdrop" onClick={closeContactPopup}>
+    <div
+      className="contact-popup"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        className="contact-popup-close"
+        onClick={closeContactPopup}
+      >
+        ×
+      </button>
+      <div className="contact-popup-title">
+        Average respond time: 3 minutes
+      </div>
+
+      <div className="contact-popup-buttons">
+        <button
+          className="contact-popup-btn contact-popup-btn-whatsapp"
+          onClick={handlePopupWhatsapp}
+        >
+          <span className="contact-popup-btn-label">WhatsApp</span>
+        </button>
+
+        <button
+          className="contact-popup-btn contact-popup-btn-facebook"
+          onClick={handlePopupFacebook}
+        >
+          <span className="contact-popup-btn-label">Facebook</span>
+        </button>
+
+        <button
+          className="contact-popup-btn contact-popup-btn-instagram"
+          onClick={handlePopupInstagram}
+        >
+          <span className="contact-popup-btn-label">Instagram</span>
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }

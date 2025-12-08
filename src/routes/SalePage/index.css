@@ -139,6 +139,7 @@
   display: block;
   padding: 60px;
   border: 1px solid rgb(217, 217, 217);
+  object-fit: cover;
 }
 
 .product-first-thumbs {
@@ -152,6 +153,7 @@
   border: 1px solid rgb(217, 217, 217);
   border-radius: 6px;
   padding: 6px 30px;
+  flex: 1;
 }
 
 .product-first-thumb img {
@@ -343,14 +345,326 @@
   height: 28px;
 }
 
+.product-second {
+  background: url("/src/routes/Red/assets/product/second.png");
+  background-size: cover;
+  padding: 80px;
+  height: 110vh;
+  color: white;
+  padding-left: 60%;
+}
+
+.product-second-title {
+  font-size: 36px;
+  font-family: "Leotaro";
+  width: 60%;
+  line-height: 1.1;
+  margin-bottom: 30px;
+}
+
+.product-second-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-second-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: "TT Drugs";
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 12px;
+}
+
+.product-second-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "TT Drugs";
+  font-size: 24px;
+}
+
+.product-third {
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+}
+
+.product-third-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #5f0000;
+  font-family: "Leotaro";
+  font-size: 42px;
+  margin-bottom: 60px;
+}
+
+.product-third-block {
+  position: relative;
+  border: 1px solid #5f0000;
+  padding: 72px;
+  margin-bottom: 60px;
+  background: #fff; /* цвет фона секции */
+}
+
+/* общие стили углов */
+.product-third-block .corner {
+  position: absolute;
+  width: 28px; /* размер выреза */
+  height: 28px;
+  background: #fff; /* цвет фона сайта */
+}
+
+/* левый верхний */
+.product-third-block .corner-tl {
+  top: -1px;
+  left: -1px;
+  border-right: 1px solid #5f0000;
+  border-bottom: 1px solid #5f0000;
+  border-bottom-right-radius: 20px;
+}
+
+/* правый верхний */
+.product-third-block .corner-tr {
+  top: -1px;
+  right: -1px;
+  border-left: 1px solid #5f0000;
+  border-bottom: 1px solid #5f0000;
+  border-bottom-left-radius: 20px;
+}
+
+/* левый нижний */
+.product-third-block .corner-bl {
+  bottom: -1px;
+  left: -1px;
+  border-right: 1px solid #5f0000;
+  border-top: 1px solid #5f0000;
+  border-top-right-radius: 20px;
+}
+
+/* правый нижний */
+.product-third-block .corner-br {
+  bottom: -1px;
+  right: -1px;
+  border-left: 1px solid #5f0000;
+  border-top: 1px solid #5f0000;
+  border-top-left-radius: 20px;
+}
+
+.product-third-block-row {
+  display: flex;
+  justify-content: space-between;
+  color: #5f0000;
+  font-family: "Leotaro";
+  margin-bottom: 30px;
+
+  border-bottom: 1px dashed #5f0000;
+  padding-bottom: 18px;
+}
+
+.product-third-block-row:last-child {
+  margin-bottom: 0;
+}
+
+.product-third-block-row-title {
+  font-size: 28px;
+  width: 30%;
+}
+
+.product-third-block-row-text {
+  font-size: 16px;
+  font-family: "TT Drugs";
+  width: 70%;
+}
+
+.product-forth {
+  position: relative;
+  background-color: #5f0000;
+  display: flex;
+  padding: 60px;
+  gap: 80px;
+  align-items: center;
+  overflow: visible;
+  margin: 80px 0 200px 0;
+}
+
+.product-forth-image {
+  position: relative;
+  object-fit: cover;
+  aspect-ratio: 653 / 739;
+
+  /* выпирание вверх и вниз */
+  margin-top: -120px;
+  margin-bottom: -120px;
+
+  background-color: white;
+  z-index: 2;
+}
+
+.product-forth-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ОБЩИЙ СТИЛЬ УГЛОВ */
+.product-forth-image::before,
+.product-forth-image::after {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: white;
+  z-index: 3;
+}
+
+/* ВЕРХНЫЕ УГЛЫ */
+.product-forth-image::before {
+  top: 0;
+  left: 0;
+  border-bottom-right-radius: 20px;
+}
+
+.product-forth-image::after {
+  top: 0;
+  right: 0;
+  border-bottom-left-radius: 20px;
+}
+
+/* НИЖНИЕ УГЛЫ */
+.product-forth-image .corner-bl,
+.product-forth-image .corner-br {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: white;
+  z-index: 3;
+}
+
+.product-forth-image .corner-bl {
+  bottom: 0;
+  left: 0;
+  border-top-right-radius: 20px;
+}
+
+.product-forth-image .corner-br {
+  bottom: 0;
+  right: 0;
+  border-top-left-radius: 20px;
+}
+
+.product-forth-content {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+.product-forth-content-title {
+  font-size: 48px;
+  font-family: "Leotaro";
+  margin-bottom: 12px;
+}
+.product-forth-content-text {
+  font-size: 16px;
+  font-family: "TT Drugs";
+  margin-bottom: 40px;
+}
+
 @media (max-width: 900px) {
+  .product-forth {
+    padding: 60px 20px;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 0;
+  }
+
+  .product-forth-content-title {
+  font-size: 36px;
+}
+
+  .product-forth-image {
+  position: relative;
+  object-fit: cover;
+  aspect-ratio: 653 / 839;
+
+  /* выпирание вверх и вниз */
+  margin-top: -120px;
+  margin-bottom: 0;
+
+  background-color: white;
+  z-index: 2;
+}
+
+.product-forth-image .corner-bl,
+.product-forth-image .corner-br {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: #5f0000;
+  z-index: 3;
+}
+
+  .product-third {
+    padding: 60px 20px;
+  }
+
+  .product-third-block {
+    padding: 30px;
+  }
+
+  .product-third-block-row {
+    flex-direction: column;
+  }
+
+  .product-third-row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: start;
+    color: #5f0000;
+    font-family: "Leotaro";
+    font-size: 32px;
+    margin-bottom: 30px;
+    line-height: 1.1;
+  }
+
+  .product-third-block-row-title {
+    font-size: 28px;
+    width: 100%;
+  }
+
+  .product-third-block-row-text {
+    font-size: 16px;
+    font-family: "TT Drugs";
+    width: 100%;
+  }
+
+  .product-second {
+    background: url("/src/routes/Red/assets/product/second-mob.png");
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    aspect-ratio: 429 / 1216;
+    height: auto;
+    padding: 500px 20px 60px 20px;
+  }
+
+  .product-second-title {
+    width: 100%;
+  }
+
   .product-first-actions-bottom {
     flex-direction: column;
     width: 100%;
   }
 
-  .product-first-order, .product-first-paypal {
-    flex:1
+  .product-first-order,
+  .product-first-paypal {
+    flex: 1;
   }
 
   .product-first {
@@ -359,8 +673,9 @@
     gap: 20px;
   }
 
-  .product-first-social-facebook,  .product-first-social-whatsapp{
-flex:1
+  .product-first-social-facebook,
+  .product-first-social-whatsapp {
+    flex: 1;
   }
 
   .product-first-preview {
@@ -477,4 +792,89 @@ flex:1
   .faq-answer {
     margin-top: 10px;
   }
+}
+
+
+
+.contact-popup-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.contact-popup {
+  position: relative;
+  background: #5f0000;
+  padding: 28px 32px 32px;
+  border-radius: 6px;
+  color: #ffffff;
+  min-width: 290px;
+  max-width: 360px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.contact-popup-title {
+  font-family: "TT Drugs", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+.contact-popup-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-popup-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 12px 16px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "TT Drugs", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  font-size: 16px;
+}
+
+.contact-popup-btn-label {
+  font-weight: 500;
+}
+
+/* цвета логотипов как в скрине */
+.contact-popup-btn-whatsapp .contact-popup-btn-label {
+  color: #25d366;
+}
+
+.contact-popup-btn-facebook .contact-popup-btn-label {
+  color: #1877f2;
+}
+
+.contact-popup-btn-instagram .contact-popup-btn-label {
+  /* простая градиентная имитация через текст-цвет */
+  background: linear-gradient(90deg, #f58529, #dd2a7b, #8134af, #515bd4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.contact-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
 }

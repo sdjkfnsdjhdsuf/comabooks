@@ -35,6 +35,7 @@
   align-items: center;
   font-family: "TT Drugs";
   color: #820000;
+  cursor: pointer;
 }
 
 .landing-upd-header-button-empty {
@@ -63,7 +64,7 @@
 }
 
 .landing-upd-first {
-  background: url("/src/routes/Red/assets/bgmain.jpg");
+  background: url("/src/routes/Red/assets/bgmain.png");
   background-size: cover;
   background-position: center;
   /* height: 110vh; */
@@ -620,7 +621,7 @@
   }
 
   .landing-upd-first {
-    background: url("/src/routes/Red/assets/mobile-bg.jpg");
+    background: url("/src/routes/Red/assets/mobile-bg.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
