@@ -114,8 +114,6 @@ function SalePage() {
     fetchPhone();
   }, []);
 
-
-
   const handleInst = () => {
     const instUrl = `https://instagram.com/comabooks.global`;
     window.open(instUrl, "_blank");
@@ -337,81 +335,84 @@ function SalePage() {
       </div>
 
       <div className="product-how">
-  <div className="product-how-header">
-    <div className="product-how-title">How to start</div>
-    <div className="product-how-subtitle">
-      From your first message to a finished book in their hands.
-    </div>
-  </div>
+        <div className="product-how-header">
+          <div className="product-how-title">How to start</div>
+          <div className="product-how-subtitle">
+            From your first message to a finished book in their hands.
+          </div>
+        </div>
 
-  <div className="product-how-metrics">
-    <div className="product-how-metric">
-      <div className="product-how-metric-label">
-        Get a personal editors team
-      </div>
-      <div className="product-how-metric-value">2–4 editors</div>
-    </div>
-    <div className="product-how-metric">
-      <div className="product-how-metric-label">
-        Average editing and printing time
-      </div>
-      <div className="product-how-metric-value">5–7 business days</div>
-    </div>
-    <div className="product-how-metric">
-      <div className="product-how-metric-label">
-        Average delivery time
-      </div>
-      <div className="product-how-metric-value">3–5 business days</div>
-    </div>
-  </div>
+        <div className="product-how-metrics">
+          <div className="product-how-metric">
+            <div className="product-how-metric-label">
+              Get a personal editors team
+            </div>
+            <div className="product-how-metric-value">2–4 editors</div>
+          </div>
+          <div className="product-how-metric">
+            <div className="product-how-metric-label">
+              Average editing and printing time
+            </div>
+            <div className="product-how-metric-value">5–7 business days</div>
+          </div>
+          <div className="product-how-metric">
+            <div className="product-how-metric-label">
+              Average delivery time
+            </div>
+            <div className="product-how-metric-value">3–5 business days</div>
+          </div>
+        </div>
 
-  <div className="product-how-steps">
-    <div className="product-how-step">
-      <div className="product-how-step-number">1</div>
-      <div className="product-how-step-title">Place your order</div>
-      <div className="product-how-step-text">
-        Contact our team, ask any questions, and make a secure payment via
-        PayPal or bank card.
-      </div>
-    </div>
+        <div className="product-how-steps">
+          <div className="product-how-step">
+            <div className="product-how-step-number">1</div>
+            <div className="product-how-step-title">Place your order</div>
+            <div className="product-how-step-text">
+              Contact our team, ask any questions, and make a secure payment via
+              PayPal or bank card.
+            </div>
+          </div>
 
-    <div className="product-how-step">
-      <div className="product-how-step-number">2</div>
-      <div className="product-how-step-title">Choose the recipient</div>
-      <div className="product-how-step-text">
-        Decide who the book is for: wife, husband, partner, parents, relatives,
-        friends – we have 30+ formats for different relationships.
-      </div>
-    </div>
+          <div className="product-how-step">
+            <div className="product-how-step-number">2</div>
+            <div className="product-how-step-title">Choose the recipient</div>
+            <div className="product-how-step-text">
+              Decide who the book is for: wife, husband, partner, parents,
+              relatives, friends – we have 30+ formats for different
+              relationships.
+            </div>
+          </div>
 
-    <div className="product-how-step">
-      <div className="product-how-step-number">3</div>
-      <div className="product-how-step-title">Work with your editor</div>
-      <div className="product-how-step-text">
-        A personal editor stays with you from start to finish, helping refine
-        your answers and shape the tone, structure, and cover design of the
-        book.
-      </div>
-    </div>
+          <div className="product-how-step">
+            <div className="product-how-step-number">3</div>
+            <div className="product-how-step-title">Work with your editor</div>
+            <div className="product-how-step-text">
+              A personal editor stays with you from start to finish, helping
+              refine your answers and shape the tone, structure, and cover
+              design of the book.
+            </div>
+          </div>
 
-    <div className="product-how-step">
-      <div className="product-how-step-number">4</div>
-      <div className="product-how-step-title">
-        Layout, printing and delivery
+          <div className="product-how-step">
+            <div className="product-how-step-number">4</div>
+            <div className="product-how-step-title">
+              Layout, printing and delivery
+            </div>
+            <div className="product-how-step-text">
+              Once your content is ready, we prepare the layout, print your
+              book, pack it securely and arrange careful delivery straight to
+              you.
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="product-how-step-text">
-        Once your content is ready, we prepare the layout, print your book,
-        pack it securely and arrange careful delivery straight to you.
-      </div>
-    </div>
-  </div>
-</div>
-
 
       <div className="product-third">
         <div className="product-third-row">
           Sample questions for different themes
-          <button onClick={openContactPopup} className="product-first-order">Start your book</button>
+          <button onClick={openContactPopup} className="product-first-order">
+            Start your book
+          </button>
         </div>
 
         <div className="product-third-block">
@@ -554,49 +555,41 @@ function SalePage() {
         </div>
       </div>
 
-
       {isContactPopupOpen && (
-  <div className="contact-popup-backdrop" onClick={closeContactPopup}>
-    <div
-      className="contact-popup"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <button
-        className="contact-popup-close"
-        onClick={closeContactPopup}
-      >
-        ×
-      </button>
-      <div className="contact-popup-title">
-        Average respond time: 3 minutes
-      </div>
+        <div className="contact-popup-backdrop" onClick={closeContactPopup}>
+          <div className="contact-popup" onClick={(e) => e.stopPropagation()}>
+            <button className="contact-popup-close" onClick={closeContactPopup}>
+              ×
+            </button>
+            <div className="contact-popup-title">
+              Average respond time: 3 minutes
+            </div>
 
-      <div className="contact-popup-buttons">
-        <button
-          className="contact-popup-btn contact-popup-btn-whatsapp"
-          onClick={handlePopupWhatsapp}
-        >
-          <span className="contact-popup-btn-label">WhatsApp</span>
-        </button>
+            <div className="contact-popup-buttons">
+              <button
+                className="contact-popup-btn contact-popup-btn-whatsapp"
+                onClick={handlePopupWhatsapp}
+              >
+                <span className="contact-popup-btn-label">WhatsApp</span>
+              </button>
 
-        <button
-          className="contact-popup-btn contact-popup-btn-facebook"
-          onClick={handlePopupFacebook}
-        >
-          <span className="contact-popup-btn-label">Facebook</span>
-        </button>
+              <button
+                className="contact-popup-btn contact-popup-btn-facebook"
+                onClick={handlePopupFacebook}
+              >
+                <span className="contact-popup-btn-label">Facebook</span>
+              </button>
 
-        <button
-          className="contact-popup-btn contact-popup-btn-instagram"
-          onClick={handlePopupInstagram}
-        >
-          <span className="contact-popup-btn-label">Instagram</span>
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
+              <button
+                className="contact-popup-btn contact-popup-btn-instagram"
+                onClick={handlePopupInstagram}
+              >
+                <span className="contact-popup-btn-label">Instagram</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
